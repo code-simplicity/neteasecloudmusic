@@ -6,6 +6,8 @@ import Antd from 'ant-design-vue'
 import ElementUI from 'element-ui'
 import App from './App'
 import router from './router'
+// 引入store
+import store from './store'
 // 引入接口文档
 // import getApi from '@/api/index'
 import utils from './utils/utils'
@@ -26,6 +28,7 @@ Vue.prototype.utils = utils
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
   // 安装全局事件总线
