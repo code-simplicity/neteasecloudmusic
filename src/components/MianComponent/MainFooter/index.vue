@@ -37,6 +37,7 @@ export default {
 <style lang="less" scoped>
 .main-footer {
   width: 100%;
+  border-top: 1px solid @footer-border-top;
   background-color: @footer-background-color;
   .copyright {
     padding: 1.2rem 0;

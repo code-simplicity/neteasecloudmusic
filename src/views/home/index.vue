@@ -1,10 +1,16 @@
 <template>
   <div>
-      123
+    <Carousel></Carousel>
+    <div class="container">
+      <PopularRecommend></PopularRecommend>
+      
+    </div>
   </div>
 </template>
 
 <script>
+import Carousel from './components/Carousel'
+import PopularRecommend from './components/PopularRecommend'
 export default {
   name: 'Home',
   data () {
@@ -13,7 +19,8 @@ export default {
     }
   },
   components: {
-
+    Carousel,
+    PopularRecommend
   },
   mounted () {
 
@@ -24,6 +31,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
 </style>

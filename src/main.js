@@ -4,6 +4,9 @@ import Vue from 'vue'
 // 引入antd-vue
 import Antd from 'ant-design-vue'
 import ElementUI from 'element-ui'
+
+// 全局使用VueAwesomeSwiper
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import App from './App'
 import router from './router'
 // 引入store
@@ -13,13 +16,18 @@ import store from './store'
 import utils from './utils/utils'
 import 'ant-design-vue/dist/antd.css'
 import 'element-ui/lib/theme-chalk/index.css'
+// 引入swiper样式
+import 'swiper/css/swiper.css'
 
 import './assets/style/common.css'
+
+
 
 Vue.config.productionTip = false
 
 Vue.use(Antd)
 Vue.use(ElementUI)
+Vue.use(VueAwesomeSwiper)
 
 // Vue.prototype.$api = getApi
 Vue.prototype.utils = utils

@@ -36,6 +36,7 @@ export default {
     padding-top: 60px;
     .layoutView {
         min-height: 100%;
+        padding: 10px 0;
     }
 }
 </style>

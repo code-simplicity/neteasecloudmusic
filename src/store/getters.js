@@ -9,3 +9,9 @@ export const loginStatus = state => {
 export const userInfo = state => {
     return (state.userInfo || JSON.parse(window.localStorage.getItem('userInfo')))
 }
+
+// 当前播放状态
+export const playing = state => state.playing
+
+// 当前的索引值
+export const currentIndex = state => state.currentIndex
