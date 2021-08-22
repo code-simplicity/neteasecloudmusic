@@ -33,14 +33,18 @@ module.exports = {
             .add('.vue')
             .add('.less')
     },
-    // 配置less全局应用
-    css: {
-        loaderOptions: {
-            stylus: {
-                import: '~@/assets/styles/variable.less'
-            }
+
+    // 自动化导入less
+    pluginOptions: {
+        'style-resources-loader': {
+            preProcessor: 'less',
+            patterns: [
+                path.resolve(__dirname, './src/assets/style/variable.less') // 变量文件位置
+            ]
         }
     },
+
+    // 配置服务端口以及默认打开浏览器
     devServer: {
         port: 8082,
         open: true,
