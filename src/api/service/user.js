@@ -16,3 +16,9 @@ export const login = (phone, password) => api.get(`/login/cellphone?phone=${phon
  * @param {*} uid 用户id
  */
 export const getUserInfo = (uid) => api.get(`/user/detail?uid=${uid}`, {})
+
+/**
+ * 退出登录
+ * @returns 
+ */
+export const logout = () => api.get('/logout', {})
