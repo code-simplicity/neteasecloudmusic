@@ -15,7 +15,9 @@
           <router-link :to="{ name: 'recommend' }" tag="a">推荐</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'leaderboard' }" tag="a">排行榜</router-link>
+          <router-link :to="{ name: 'leaderboard' }" tag="a"
+            >排行榜</router-link
+          >
         </li>
         <li>
           <router-link :to="{ name: 'playlist' }" tag="a">歌单</router-link>
@@ -33,26 +35,30 @@
       <div class="mian-user">
         <div class=""></div>
         <div class="main-is-login flex-row" v-if="loginStatus">
-          <el-avatar
-            class="mian-avatar"
-            src="https://p1.music.126.net/T5i5Jm6GbwihfhJ0PuLW0g==/109951166297714006.jpg?param=30y30"
-          ></el-avatar>
+          <el-avatar class="mian-avatar" :src="userInfo.avatarUrl"></el-avatar>
           <el-dropdown trigger="hover" @command="handleCommand">
-            <span class="el-dropdown-link">
-              用户名
+            <span class="mian-username el-dropdown-link">
+              {{ userInfo.nickname }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-user">我的主页</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-message"
+              <el-dropdown-item icon="el-icon-user" command="myHomePage"
+                >我的主页</el-dropdown-item
+              >
+              <el-dropdown-item icon="el-icon-message" command="myMessage">
                 >我的消息</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-setting"
+              <el-dropdown-item icon="el-icon-setting" command="personalSetting"
                 >个人设置</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-medal">我的等级</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-switch-button"
-                >退出</el-dropdown-item
+              <el-dropdown-item icon="el-icon-medal" command="myRank"
+                >我的等级</el-dropdown-item
+              >
+              <el-dropdown-item
+                divided
+                icon="el-icon-switch-button"
+                command="logout"
+                >退出登录</el-dropdown-item
               >
             </el-dropdown-menu>
           </el-dropdown>
@@ -65,6 +71,8 @@
 </template>
 
 <script>
+import {logout} from '../../../api/service/user'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'MainHeader',
   data () {
@@ -75,11 +83,67 @@ export default {
   components: {
 
   },
+  // 计算属性
+  computed: {
+    ...mapGetters(['loginStatus', 'userInfo'])
+  },
+  
   mounted () {
 
   },
   methods: {
-
+   async handleCommand(command) {
+      switch(command) {
+        case 'myHomePage': {
+            this.$router.push({
+            name: 'home'
+          })
+          break
+        }
+        case 'myMessage': {
+          this.$router.push({
+            name: 'myMessage'
+          })
+          break
+        }
+        case 'personalSetting': {
+          this.$router.push({
+            name: 'personalSetting'
+          })
+          break
+        }
+        case 'myRank': {
+          this.$router.push({
+              name: 'myRank'
+          })
+          break
+        }
+        case 'logout': {
+          const res = await logout()
+          console.log(res);
+          if (res.code === 200) {
+            this.$message.success('成功退出登录!')
+            this.$router.push({
+              name: 'login'
+            })
+            localStorage.setItem('loginStatus', false)
+            localStorage.setItem('token', '')
+            localStorage.setItem('userInfo', '')
+          }
+          break
+        }
+        default:
+          break
+      }
+    },
+    // 实现登录
+    login() {
+      this.$router.push({
+        name: 'login'
+      })
+    },
+    // mapActions,响应状态的改变
+    ...mapActions([])
   }
 }
 </script>
@@ -173,7 +237,14 @@ export default {
         color: @color-theme;
       }
       .mian-avatar {
-        margin-right: 10px;
+        margin-left: 20px;
+      }
+    }
+    .mian-username {
+      padding-left: 10px;
+      color: @color-font-size-White;
+      &:hover {
+        color: @color-theme;
       }
     }
   }
