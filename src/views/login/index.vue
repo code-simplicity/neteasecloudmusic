@@ -43,10 +43,8 @@
                 >登录</el-button
               >
             </el-col>
-             <el-col :span="12">
-              <el-button  @click="resetForm('loginForm')"
-                >重置</el-button
-              >
+            <el-col :span="12">
+              <el-button @click="resetForm('loginForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -57,6 +55,7 @@
 
 <script>
 import {login, getUserInfo} from '../../api/service/user'
+import {mapMutations} from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -100,7 +99,8 @@ export default {
           this.getUserInfo(res.profile.userId)
           window.localStorage.setItem('cookie', res.cookie)
           window.localStorage.setItem('token', res.token)
-          window.localStorage.setItem('loginStatu', true)
+          window.localStorage.setItem('loginStatus', true)
+          this.setLoginStatus(true)
           console.log('获取的登录数据', res)
         } else {
           this.$message.error('登录失败,请重试！')
@@ -121,7 +121,7 @@ export default {
           userInfo.createTime = res.createTime
           userInfo.createDays = res.createDays
           window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
-          // this.setUserInfo(res.profile)
+          this.setUserInfo(res.profile)
           this.$message({
             message: '登录成功了',
             type: 'success'
@@ -139,6 +139,9 @@ export default {
         console.log(error.message)
       }
     },
+
+    // 提交状态，
+    ...mapMutations({setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO'}),
 
     resetForm (formName) {
       this.$refs[formName].resetFields()
