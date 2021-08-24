@@ -3,7 +3,7 @@
     <Carousel></Carousel>
     <div class="container">
       <PopularRecommend></PopularRecommend>
-      
+      <RecommendNewSong></RecommendNewSong>
     </div>
   </div>
 </template>
@@ -11,6 +11,7 @@
 <script>
 import Carousel from './components/Carousel'
 import PopularRecommend from './components/PopularRecommend'
+import RecommendNewSong from './components/RecommendNewSong'
 export default {
   name: 'Home',
   data () {
@@ -20,7 +21,8 @@ export default {
   },
   components: {
     Carousel,
-    PopularRecommend
+    PopularRecommend,
+    RecommendNewSong
   },
   mounted () {
 
