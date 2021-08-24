@@ -26,3 +26,10 @@ export const songMusic = () => api.post('/playlist/hot', {})
  * @returns 
  */
 export const getSongDetail = (ids,time) => api.post(`/song/detail?ids=${time}`,{ids})
+
+/**
+ * 推荐新音乐
+ * @param {*} limit 获取推荐新音乐的数量
+ * @returns 
+ */
+export const getNewSongs = (limit) => api.get(`/personalized/newsong?limit=${limit}`, {})
