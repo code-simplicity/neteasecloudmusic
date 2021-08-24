@@ -24,8 +24,13 @@
             </el-image>
           </div>
           <div class="count">
-            <i class="arrow"></i>
-            <span>{{ utils.tranNumber(item.playCount, 0) }}</span>
+            <i class="iconfont icon-bofangliang"></i>
+            <span class="playcount">{{
+              utils.tranNumber(item.playCount, 0)
+            }}</span>
+            <span class="play-music-status"
+              ><i class="iconfont icon-bofang"></i
+            ></span>
           </div>
         </div>
       </div>
@@ -73,12 +78,13 @@ export default {
 .r-playlist {
   display: flex;
   flex-wrap: wrap;
+  bottom: 10px;
   .r-playlist-item {
     flex: 0 0 25%;
     max-width: 25%;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     height: 100%;
-    padding: 0 15px 30px 30px;
+    padding: 0 15px 20px 30px;
     cursor: pointer;
     &.two {
       flex: 0 0 50%;
@@ -96,7 +102,7 @@ export default {
         content: "";
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(194, 194, 194, 0.2);
         position: absolute;
         top: 0;
         transition: all 0.4s;
@@ -121,7 +127,7 @@ export default {
         position: relative;
         z-index: 2;
         padding-top: 100%;
-        border-radius: 2px;
+        border-radius: 8px;
         background-color: #d9d9d9;
         .image {
           position: absolute;
@@ -130,7 +136,7 @@ export default {
           overflow: hidden;
           width: 100%;
           height: 100%;
-          border-radius: 4px;
+          border-radius: 8px;
           &:after {
             content: "";
             position: absolute;
@@ -154,20 +160,20 @@ export default {
         }
         .count {
           position: absolute;
-          right: 16px;
-          top: 1px;
-          height: 24px;
-          padding-left: 9px;
-          background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-            no-repeat 0;
+          width: 100%;
+          left: 0;
+          bottom: 0;
+          height: 28px;
+          background-position: 0 -577px;
+          background: url("../../../assets/images/coverall.png") no-repeat;
           background-size: cover;
-          color: #fff;
+          color: #ccc;
           font-size: 12px;
           font-weight: 700;
           line-height: 24px;
           display: flex;
           align-items: center;
-          justify-content: center;
+          // justify-content: center;
           .arrow {
             display: block;
             width: 0;
@@ -187,6 +193,25 @@ export default {
             background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
               no-repeat 100%;
             background-size: cover;
+          }
+          .icon-bofangliang {
+            float: left;
+            margin: 0 10px;
+          }
+          .playcount {
+            float: left;
+          }
+          .play-music-status {
+            margin-left: auto;
+            right: 0;
+            padding-right: 8px;
+            .icon-bofang {
+              font-size: 1rem;
+              color: #fff;
+              &:hover {
+                color: @color-theme;
+              }
+            }
           }
         }
       }
