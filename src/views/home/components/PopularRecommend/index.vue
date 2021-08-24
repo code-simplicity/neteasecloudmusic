@@ -11,7 +11,7 @@
       </span>
     </div>
     <!-- 热门歌单列表,推荐歌单 -->
-    <div>
+    <div class="p-recommend-detail">
       <PopularPlayList :songMusic="PopularList"></PopularPlayList>
     </div>
   </div>
@@ -56,17 +56,14 @@ export default {
   margin-top: 20px;
   padding: 20px;
   background-color: #fff;
-
   .p-recommend-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid red;
-
     .p-recommend-text {
       font-size: 1.4rem;
       float: left;
-
       .icon-rementuijian-copy {
         font-size: 1.3rem;
         color: red;
@@ -86,6 +83,9 @@ export default {
         }
       }
     }
+  }
+  .p-recommend-detail {
+    margin-top: 10px;
   }
 }
 </style>
