@@ -11,7 +11,19 @@ export const userInfo = state => {
 }
 
 // 当前播放状态
-export const playing = state => state.playing
+export const playStatus = state => state.playStatus
 
 // 当前的索引值
 export const currentIndex = state => state.currentIndex
+
+// 歌手信息
+export const singerInfo = state => state.singerInfo
+
+// 播放列表
+export const playList = state => state.playList
+
+// 顺序播放
+export const sequenceList = state => state.sequenceList
+
+// 当前播放模式(循环，单曲，随机)
+export const mode = state => state.modes
