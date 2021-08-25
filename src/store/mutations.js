@@ -4,7 +4,9 @@ import {
     USER_INFO,
     PLAY_STATUS,
     CURRENT_INDEX,
-    PLAY_MODE
+    PLAY_MODE,
+    SEQUENCE_LIST,
+    PLAY_LIST
 } from './mutation-type'
 
 const mutations = {
@@ -27,6 +29,14 @@ const mutations = {
     // 设置播放模式
     [PLAY_MODE](state,{mode}) {
         state.mode = mode
+    },
+    // 顺序播放
+    [SEQUENCE_LIST](state, {list}) {
+        state.sequenceList = list
+    },
+    // 播放列表
+    [PLAY_LIST](state, {list}) {
+        state.playList = list
     }
 }
 

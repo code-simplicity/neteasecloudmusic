@@ -6,7 +6,7 @@
       :key="item.id"
       :class="
         index === currentIndex && currentSong.id == item.id && playing
-          ? 'playing'
+          ? 'playStatus'
           : ''
       "
     >
@@ -85,17 +85,19 @@ export default {
           list: this.songMusic, 
           index
         })
+        console.log('点击了播放器');
       },
       // 暂停
       pauseSong() {
         this.pausePlay()
+        console.log('暂停了');
       },
       /**
        * 'selectPlay', ==>选择播放
        *  'pausePlay', ==>暂停
        *  'playAll'==>播放全部
        */
-      ...mapActions['selectPlay', 'pausePlay', 'playAll']
+      ...mapActions(['selectPlay', 'pausePlay', 'playAll'])
     }
 }
 </script>
@@ -160,7 +162,7 @@ export default {
         }
         .pause-btn {
           color: @color-theme;
-          font-size: 1.7rem;
+          font-size: 1.6rem;
           display: none;
           text-align: left;
           cursor: pointer;
