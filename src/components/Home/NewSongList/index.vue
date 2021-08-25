@@ -19,14 +19,32 @@
               fit="cover"
             ></el-image>
           </div>
-          <div play-icon>
-            <div class="line"></div>
+          <div class="play-icon">
+            <div class="line" style="animation-delay: -1.2s"></div>
+            <div class="line" style="animation-delay: -1s"></div>
+            <div class="line" style="animation-delay: -0.8s"></div>
+            <div class="line" style="animation-delay: -0.6s"></div>
+            <div class="line" style="animation-delay: -0.4s"></div>
           </div>
+          <i
+            class="iconfont icon-bofang1 play-btn"
+            @click="playSong(item, index)"
+          ></i>
+          <i
+            class="idonfont icon-zanting pause-btn"
+            @click="pauseSong(item, index)"
+          ></i>
         </div>
         <div class="r-info">
-          <span class="r-name">{{ item.name }}</span>
-          <span class="r-singer">{{ item.singer }}</span>
-          <span>{{ utils.formatSecondTime(item.duration) }}</span>
+          <div class="r-name">
+            <span>{{ item.name }}</span>
+          </div>
+          <div class="r-duration">
+            <span>{{ utils.formatSecondTime(item.duration) }}</span>
+          </div>
+          <div class="r-singer">
+            <span>{{ item.singer }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -55,13 +73,29 @@ export default {
     },
     // 计算属性获取vuex状态
     computed: {
-        ...mapGetters(['currentIndex', 'currentSong', 'playing'])
+        ...mapGetters(['currentIndex', 'currentSong', 'playStatus'])
     },
     mounted() {
-
+      console.log('this===>', this);
     },
     methods: {
-
+      // 播放
+      playSong(item, index) {
+        this.selectPlay({
+          list: this.songMusic, 
+          index
+        })
+      },
+      // 暂停
+      pauseSong() {
+        this.pausePlay()
+      },
+      /**
+       * 'selectPlay', ==>选择播放
+       *  'pausePlay', ==>暂停
+       *  'playAll'==>播放全部
+       */
+      ...mapActions['selectPlay', 'pausePlay', 'playAll']
     }
 }
 </script>
@@ -101,18 +135,104 @@ export default {
             border-radius: 8px;
           }
         }
+        .play-icon {
+          display: none;
+          height: 16px;
+          min-width: 18px;
+          overflow: hidden;
+          position: relative;
+          z-index: 1;
+          .line {
+            width: 2px;
+            height: 100%;
+            margin-left: 2px;
+            background-color: #ff410f;
+            animation: play 0.9s linear infinite alternate;
+          }
+        }
+        .play-btn {
+          color: @color-theme;
+          font-size: 1.6rem;
+          display: none;
+          text-align: left;
+          cursor: pointer;
+          position: relative;
+        }
+        .pause-btn {
+          color: @color-theme;
+          font-size: 1.7rem;
+          display: none;
+          text-align: left;
+          cursor: pointer;
+          position: relative;
+        }
       }
       .r-info {
         flex: 1;
         .r-name {
           font-size: 1rem;
           font-weight: 600;
-
         }
         .r-singer {
           font-size: 0.8rem;
-          color: chocolate;
           font-weight: 600;
+          &:after {
+            content: "/";
+            margin: 0 3px;
+          }
+          &:last-child {
+            &:after {
+              content: "";
+            }
+          }
+        }
+        .r-duration {
+          font-size: 1rem;
+          text-align: end;
+        }
+      }
+    }
+    &.playing {
+      div {
+        color: @color-theme;
+      }
+      i {
+        color: @color-theme;
+      }
+      .index-container {
+        .num {
+          display: none;
+        }
+        .play-icon {
+          display: flex;
+        }
+        .play-btn {
+          display: none;
+        }
+      }
+    }
+    &:hover {
+      .index-container {
+        .avatar {
+          &:after {
+            background-color: rgba(0, 0, 0, 0.5);
+          }
+        }
+        .play-btn {
+          display: block;
+        }
+      }
+      &.playing {
+        .index-container {
+          .play-btn {
+            display: none;
+          }
+          .play-icon {
+            display: none;
+          }
+          .pause-btn {
+            display: none;
+          }
         }
       }
     }
