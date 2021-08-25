@@ -2,8 +2,9 @@
 import {
     LOGIN_STATUS,
     USER_INFO,
-    PALYING,
-    CURRENT_INDEX
+    PLAY_STATUS,
+    CURRENT_INDEX,
+    PLAY_MODE
 } from './mutation-type'
 
 const mutations = {
@@ -16,12 +17,16 @@ const mutations = {
         state.userInfo = userInfo
     },
     // 播放状态
-    [PALYING](state, {flag}) {
-        state.playing = flag
+    [PLAY_STATUS](state, {flag}) {
+        state.playStatus = flag
     },
     // 播放索引
     [CURRENT_INDEX](state, {index}) {
         state.currentIndex = index
+    },
+    // 设置播放模式
+    [PLAY_MODE](state,{mode}) {
+        state.mode = mode
     }
 }
 
