@@ -6,7 +6,7 @@ export const LOGIN_STATUS = 'LOGIN_STATUS'
 export const USER_INFO = 'USER_INFO'
 
 // 播放状态
-export const PLAY_STATUS = 'PLAY_STATUS'
+export const PLAYING_STATUS = 'PLAYING_STATUS'
 
 // 播放索引
 export const CURRENT_INDEX = 'CURRENT_INDEX'
@@ -19,3 +19,6 @@ export const PLAY_LIST = 'PLAY_LIST'
 
 // 设置播放模式(循环，单曲，随机)
 export const PLAY_MODE = 'PLAY_MODE'
+
+// 获取歌手信息
+export const SINGER_INFO = 'SINGER_INFO'
