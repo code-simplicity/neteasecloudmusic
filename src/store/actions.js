@@ -8,9 +8,7 @@ import {
 import {
     playMode
 } from '@/utils/playConfig'
-import {
-    utils
-} from '@/utils/utils'
+import utils from '@/utils/utils'
 
 function findIndex(list, song) {
     return list.findIndex(item => {
