@@ -6,7 +6,7 @@
       :key="item.id"
       :class="
         index === currentIndex && currentSong.id == item.id && playing
-          ? 'playStatus'
+          ? 'playing'
           : ''
       "
     >
@@ -15,7 +15,7 @@
           <div class="avatar">
             <el-image
               class="avatar-img"
-              :src="item.iamge"
+              :src="item.image"
               fit="cover"
             ></el-image>
           </div>
@@ -31,8 +31,8 @@
             @click="playSong(item, index)"
           ></i>
           <i
-            class="idonfont icon-zanting pause-btn"
-            @click="pauseSong(item, index)"
+            class="iconfont icon-zanting2 pause-btn"
+            @click="pauseSong"
           ></i>
         </div>
         <div class="r-info">
@@ -73,7 +73,7 @@ export default {
     },
     // 计算属性获取vuex状态
     computed: {
-        ...mapGetters(['currentIndex', 'currentSong', 'playStatus'])
+        ...mapGetters(['currentIndex', 'currentSong', 'playing'])
     },
     mounted() {
       console.log('this===>', this);
@@ -86,6 +86,9 @@ export default {
           index
         })
         console.log('点击了播放器');
+        console.log('点击了播放器', item);
+        console.log('点击了播放器', this.songMusic);
+        console.log(this);
       },
       // 暂停
       pauseSong() {
@@ -233,7 +236,7 @@ export default {
             display: none;
           }
           .pause-btn {
-            display: none;
+            display: block;
           }
         }
       }
