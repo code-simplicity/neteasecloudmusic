@@ -9,7 +9,7 @@ export default class Song {
         singer, ==>歌手
         duration, ==>时长
         album,==>专辑
-        iamge,==>图片
+        image,==>图片
         url,==>播放地址
         playCount,==>播放次数
      * @param {*} param0 
@@ -20,7 +20,7 @@ export default class Song {
         singer,
         duration,
         album,
-        iamge,
+        image,
         url,
         playCount,
     }) {
@@ -29,7 +29,7 @@ export default class Song {
         this.singer = singer
         this.duration = duration
         this.album = album
-        this.iamge = iamge
+        this.image = image
         this.url = url
         this.playCount = playCount
     }
@@ -44,7 +44,7 @@ export function createSong(musicData) {
         singer: filterSinger(musicData.ar || musicData.artists),
         duration: utils.formatSecond(musicData.dt || musicData.duration),
         album: musicData.al ? musicData.al.name : musicData.album.name,
-        iamge: musicData.al ?
+        image: musicData.al ?
             musicData.al.picUrl :
             musicData.album.artist.img1v1Url,
         url: `https://music.163.com/song/media/outer/url?id=${musicData.id}.mp3`,
