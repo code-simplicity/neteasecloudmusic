@@ -12,7 +12,7 @@ const state = {
     singerInfo: {},
 
     //播放状态
-    playStatus: false,
+    playing: false,
     
     // 播放列表的索引
     currentIndex: -1,
@@ -20,10 +20,10 @@ const state = {
     // 播放列表
     playList: [],
 
-    // 顺序播放
+    // 顺序播放列表
     sequenceList: [],
 
-    // 播放模式
+    // 播放模式(循环，单曲，随机)
     mode: playMode.sequence
 }
 
