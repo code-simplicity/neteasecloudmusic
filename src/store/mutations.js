@@ -2,41 +2,46 @@
 import {
     LOGIN_STATUS,
     USER_INFO,
-    PLAY_STATUS,
+    PLAYING_STATUS,
     CURRENT_INDEX,
     PLAY_MODE,
     SEQUENCE_LIST,
-    PLAY_LIST
+    PLAY_LIST,
+    SINGER_INFO
 } from './mutation-type'
 
 const mutations = {
     // 是否登录
-    [LOGIN_STATUS](state, {loginStatus}) {
+    [LOGIN_STATUS](state, loginStatus) {
         state.loginStatus = loginStatus
     },
     // 用户信息
-    [USER_INFO](state, {userInfo}) {
+    [USER_INFO](state, userInfo) {
         state.userInfo = userInfo
     },
     // 播放状态
-    [PLAY_STATUS](state, {flag}) {
-        state.playStatus = flag
+    [PLAYING_STATUS](state, flag) {
+        state.playing = flag
     },
     // 播放索引
-    [CURRENT_INDEX](state, {index}) {
+    [CURRENT_INDEX](state, index) {
         state.currentIndex = index
     },
     // 设置播放模式
-    [PLAY_MODE](state,{mode}) {
+    [PLAY_MODE](state, mode) {
         state.mode = mode
     },
     // 顺序播放
-    [SEQUENCE_LIST](state, {list}) {
+    [SEQUENCE_LIST](state, list) {
         state.sequenceList = list
     },
     // 播放列表
-    [PLAY_LIST](state, {list}) {
+    [PLAY_LIST](state, list) {
         state.playList = list
+    },
+    // 获取歌手信息
+    [SINGER_INFO](state, singer) {
+        state.singerInfo = singer
     }
 }
 
