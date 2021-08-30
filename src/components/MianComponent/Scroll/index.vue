@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 // 引入滑动插件
 import BetterScroll from 'better-scroll'
 
