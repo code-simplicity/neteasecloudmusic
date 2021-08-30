@@ -26,7 +26,7 @@
               ></el-image>
             </div>
             <div class="info">
-              {{ currentLyricText }}
+              {{ currentLyricTxt }}
               <div class="top flex-between">
                 <h2 class="name">
                   {{ currentSong.name ? currentSong.name : "未选择播放歌曲" }}
@@ -61,7 +61,7 @@
             </div>
             <div class="tool">
               <i class="iconfont" :class="modeIcon" @click="changeMode"></i>
-              <i class="iconfont icon-geci"></i>
+              <i class="iconfont icon-geci" @click="openLyric"></i>
               <i class="iconfont icon-bofangliebiao"></i>
             </div>
           </div>
@@ -111,29 +111,29 @@
         <div class="player-page" v-show="showLyric">
           <div class="container">
             <div class="page-left">
-              <div class="cover-image" :class="playing ? 'playing' : ''">
-                <el-image
-                  style="width: 100px; height: 100px"
+              <div class="cover-image">
+                <img
+                  class="rotateIn"
+                  :class="playing ? 'playing' : ''"
                   :src="currentSong.image"
-                  fit="cover"
-                ></el-image>
+                  alt=""
+                />
               </div>
-              <div class="page-right">
-                <h3 class="name flex-between">
-                  {{ currentSong.name }}
-                  <i
-                    @click="openLyric"
-                    class="iconfont icon-zantingtingzhi"
-                  ></i>
-                </h3>
-                <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
-                <div class="lyric-wrap">
-                  <ScrollLyric
-                    ref="lyricRef"
-                    :currentLyric="currentLyric"
-                    :currentLyricNum="currentLyricNum"
-                  ></ScrollLyric>
-                </div>
+              <!-- <div class="ripple p1"></div>
+              <div class="ripple p2"></div> -->
+            </div>
+            <div class="page-right">
+              <h3 class="name flex-between">
+                {{ currentSong.name }}
+                <i @click="openLyric" class="iconfont icon-zantingtingzhi"></i>
+              </h3>
+              <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
+              <div class="lyric-wrap">
+                <ScrollLyric
+                  ref="lyricRef"
+                  :currentLyric="currentLyric"
+                  :currentLyricNum="currentLyricNum"
+                ></ScrollLyric>
               </div>
             </div>
           </div>
@@ -144,23 +144,23 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations} from 'vuex'
 // 歌词文本
 import Lyric from 'lyric-parser'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 import {playMode} from '@/utils/playConfig'
 import ScrollLyric from '@/components/MianComponent/Lyric'
+import { getLyric } from '../../../api/service/api'
 export default {
   name: 'MusicPlayer',
   data () {
     return {
       showDetail: false,
+      // 是否开启歌词
       showLyric: false,
       // 歌曲是否正在播放
       songReady: false,
-      // 是否开启歌词
-      lyricsAppear: false,
       // 歌词文本
-      currentLyricText: '',
+      currentLyricTxt: '',
       // 默认音乐封面
       defaultCover: require('@/assets/images/cdBackground.png'),
       // 音乐进度条
@@ -176,10 +176,13 @@ export default {
       // 音量
       volumeNum: 40,
       isPureMusic: false,
-      // 
+      // 歌词行数
       currentLyricNum: 0,
-      // 歌词文本
-      currentLyricTxt: '',
+      // 播放的歌词
+      playingLyric: '',
+       // 准备的歌曲id
+      id: '',
+      canLyricPlay: false
     }
   },
   components: {
@@ -220,12 +223,14 @@ export default {
         return
       }
       this.songReady = false
-      // this.lyricsAppear = false
+      this.canLyricPlay = false
       if (this.currentLyric) {
+        this.currentLyric.stop()
         // 重置为null
         this.currentLyric = null
         this.currentTime = 0
-
+        this.playingLyric = ''
+        this.currentLyricNum = 0
       }
       this.$nextTick(() => {
         const audio = this.$refs.audio
@@ -242,6 +247,8 @@ export default {
         this.songReady = true
       }, 3000)
       clearTimeout(this.timer)
+      // 获取歌曲id
+      this.getLyric(newSong.id)
     },
     // 监听播放状态
     playing(isPlaying) {
@@ -259,15 +266,64 @@ export default {
 
   mounted () {
     console.log('this.$refs.audio', this.$refs);
+    console.log('this.currentLyric===>', this.currentLyric)
+
     // console.log('this.utils', this.utils);
   },
   methods: {
     // 打开歌词
     openLyric() {
-      if (!this.showLyric) {
-        this.showLyric = true
-      } else {
+      if (this.showLyric) {
         this.showLyric = false
+      } else {
+        this.showLyric = true
+      }
+    },
+    // 异步获取歌词
+    async getLyric(id) {
+      try {
+        let res = await getLyric(id)
+        console.log(res)
+        if (res.code === 200) {
+          let lyric = res.lrc.lyric
+          this.currentLyric = new Lyric(lyric, this.lyricHandle)
+          if (this.isPureMusic) {
+            this.playingLyric = this.currentLyric.lrc.replace(
+              /\[(\d{2}):(\d{2}):(\d{2})\]/g,
+              ''
+            )
+          } else {
+            if (this.playing && this.canLyricPlay) {
+              this.currentLyric.seek(this.currentTime * 1000)
+            }
+          }
+        }
+      } catch(error) {
+        this.currentLyric = null
+        this.playingLyric = ''
+        this.currentLyricNum = 0
+      }
+    },
+    // 歌词的回调
+    lyricHandle({lineNum, txt}) {
+      if (!this.$refs.lyricRef.$refs.lyricList) {
+        return
+      }
+      this.currentLyricNum = lineNum
+      this.playingLyric = txt
+      if (lineNum > 10) {
+        let line = this.$refs.lyricRef.$refs.lyricLine[lineNum - 10]
+        if (this.$refs.lyricRef.$refs.lyricList) {
+          this.$nextTick(() => {
+            this.$refs.lyricRef.$refs.lyricList.scrollToElement(line, 1000)
+          })
+        }     
+      } else {
+        if (this.$refs.lyricRef.$refs.lyricList) {
+          this.$nextTick(() => {
+            this.$refs.lyricRef.$refs.lyricList.scrollTo(0, 0, 1000)
+          })
+        }
       }
     },
     // 重置当前播放歌曲序号
@@ -327,7 +383,7 @@ export default {
       this.progressBar = val
       console.log('changeProgress', val);
       if (this.currentLyric) {
-        this.currentLyric.seek(currentTime * 100)
+        this.currentLyric.seek(currentTime * 1000)
       }
     },
     // 自定义格式化进度条悬浮时间
@@ -347,7 +403,7 @@ export default {
       this.$refs.audio.currentTime = 0
       this.$refs.audio.play()
       this.setPlayingState(true)
-      if (this.currentLyric) {
+      if (this.currentLyric !== '') {
         this.currentLyric.seek(0)
       }
     },
@@ -374,7 +430,7 @@ export default {
         this.currentTime = e.target.currentTime
         this.progressBar = (e.target.currentTime / this.currentSong.duration) * 100
       }
-      console.log('改变了播放时间', e);
+      // console.log('改变了播放时间', e);
     },
     // 播放结束
     audioEnd() {
@@ -394,9 +450,7 @@ export default {
     },
     // 上一曲
     pervSong() {
-      // eslint-disable-next-line no-debugger
-      // debugger
-      // if (!this.songReady) {
+      // if (this.songReady === false) {
       //   return
       // }
       // 只有一首歌曲
@@ -420,24 +474,25 @@ export default {
     switchPlaying() {
        // eslint-disable-next-line no-debugger
       // debugger
-      // if (!this.songReady) {
+      // if (this.songReady === false) {
       //   return
       // }
       this.setPlayingState(!this.playing)
+      // 切换歌词播放状态
       if (this.currentLyric) {
-        this.currentLyric.switchPlay()
+        this.currentLyric.togglePlay()
       }
     },
     // 下一曲
     nextSong() {
-      // if (!this.songReady) {
+      // if (this.songReady === false) {
       //   return
       // }
       // 只有一首歌曲
       if (this.playList.length === 1) {
         // 显示播放信息,轮流播放
         this.loopSong()
-        return 
+        
       } else {
         // 是一个专辑或者歌单
         let index = this.currentIndex + 1
@@ -500,8 +555,14 @@ export default {
   .player-page {
     width: 100%;
     height: 100vh;
-    // height: 100px;
-    background: rgb(211, 211, 211);
+    // background-color: @lyric-background;
+    background-color: @lyric-background;
+    background-image: radial-gradient(
+        at 47% 33%,
+        hsl(0, 39%, 63%) 0,
+        transparent 59%
+      ),
+      radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
     position: fixed;
     top: 0px;
     left: 0;
@@ -515,61 +576,64 @@ export default {
           width: 400px;
           height: 400px;
           position: relative;
-          el-image {
+          img {
             width: 100%;
             height: 100%;
-            border-radius: 5px;
             position: relative;
             z-index: 2;
             opacity: 1;
-            overflow: hidden;
-            border-radius: 5px;
-            box-shadow: 5px 0 10px -5px #141414;
-          }
-          &::after {
-            content: "";
-            position: absolute;
-            left: 20%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            transition: all cubic-bezier(0.4, 0, 0.2, 1) 0.8s 0.5s;
-            // background: transparent url("../../../assets/images/cd-wrap.png")
-            // center no-repeat;
-            background-size: contain;
-          }
-          &.playing {
-            &::after {
-              -webkit-animation: rotate 2s linear infinite;
-              -moz-animation: rotate 2s linear infinite;
-              -ms-animation: rotate 2s linear infinite;
-              -o-animation: rotate 2s linear infinite;
-              animation: rotate 2s linear infinite;
+            border-radius: 40%;
+            &.playing {
+              animation-duration: 6s;
+              animation-delay: 6s;
+              animation: loading 6s linear infinite;
             }
           }
-          .page-right {
-            .name {
-              font-size: 24px;
-              font-weight: bold;
-              margin-bottom: 10px;
+          @keyframes rotate {
+            50% {
+              transform: translate(-50%, -73%) rotate(180deg);
             }
-            .iconfont {
-              font-size: 35px;
-              color: #888;
-              cursor: pointer;
-              transform: rotate(90deg);
-            }
-            .lyric-wrap {
-              width: 100%;
-              height: 480px;
-              border-radius: 4px;
-              padding: 30px;
-              overflow: hidden;
-              background: #f8f9ff;
-              margin-top: 30px;
+            100% {
+              transform: translate(-50%, -70%) rotate(360deg);
             }
           }
+          @keyframes loading {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+      .page-right {
+        .name {
+          font-size: 1.6rem;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .iconfont {
+          font-size: 1.8rem;
+          cursor: pointer;
+          transform: rotate(90deg);
+        }
+        .lyric-wrap {
+          width: 100%;
+          height: 400px;
+          border-radius: 8px;
+          padding: 26px;
+          font-size: 1rem;
+          overflow: hidden;
+          color: @color-blank;
+          background: @lyric-background-color;
+          background-image: radial-gradient(
+              at 47% 33%,
+              hsl(0, 0%, 84%) 0,
+              transparent 59%
+            ),
+            radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
+          margin-top: 30px;
         }
       }
     }
