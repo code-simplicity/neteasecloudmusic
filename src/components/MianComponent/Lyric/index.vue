@@ -11,13 +11,13 @@
             ref="lyricLine"
             class="lyric-text"
             :class="currentLyricNum === index ? 'active' : ''"
-            v-for="(item, index) of currentLyric.lines"
+            v-for="(item, index) in currentLyric.lines"
             :key="index"
           >
             {{ item.txt }}
           </p>
         </div>
-        <div class="no-lyric">暂无歌词,请搜索重试</div>
+        <div class="no-lyric" v-else>暂无歌词,请搜索重试</div>
       </div>
     </Scroll>
   </div>
@@ -44,7 +44,8 @@ export default {
         Scroll
     },
     mounted() {
-
+      console.log('this====>1', this.currentLyric);
+      console.log('currentLyricNum', this.currentLyricNum);
     },
     methods: {
 
