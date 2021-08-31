@@ -44,7 +44,7 @@ export default {
         Scroll
     },
     mounted() {
-      console.log('this====>1', this.currentLyric);
+      console.log('this====>', this.currentLyric);
       console.log('currentLyricNum', this.currentLyricNum);
     },
     methods: {
@@ -59,20 +59,22 @@ export default {
     display: inline-block;
     vertical-align: top;
     width: 100%;
-    height: 430px;
+    height: 400px;
     overflow: hidden;
-
     .lyric-wrapper {
       width: 100%;
       margin: 0 auto;
       overflow: hidden;
       .lyric-text {
-        margin: 5px 0;
+        margin: 6px 2px;
         line-height: 24px;
-        font-size: 14px;
-        font-weight: 300;
-        &:active {
+        font-size: 1rem;
+        font-weight: 400;
+        &.active {
           color: @color-theme;
+        }
+        &:after {
+          color: #000000;
         }
       }
     }
