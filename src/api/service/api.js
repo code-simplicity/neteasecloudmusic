@@ -40,3 +40,4 @@ export const getNewSongs = (limit) => api.get(`/personalized/newsong?limit=${lim
  * @returns 
  */
 export const getLyric = id => api.get(`/lyric?id=${id}`, {})
+
