@@ -8,11 +8,11 @@
           <!-- 左边内容 -->
           <div class="music-player-left flex-row">
             <div class="play-btn">
-              <i class="iconfont icon-shangyiqu1" @click="pervSong"></i>
-              <div class="icon-play flex-center" @click="switchPlaying">
+              <i class="iconfont icon-shangyiqu1" @click="prevSong" title="上一首"></i>
+              <div class="icon-play flex-center" @click="togglePlaying" title="播放/暂停">
                 <i class="iconfont" :class="playIcon"></i>
               </div>
-              <i class="iconfont icon-xiayiqu" @click="nextSong"></i>
+              <i class="iconfont icon-xiayiqu" @click="nextSong" title="下一首"></i>
             </div>
           </div>
           <!-- 中间内容 -->
@@ -56,13 +56,14 @@
                 class="iconfont volume-icon"
                 @click="changeMuted"
                 :class="mutedIcon"
+                title="开启/关闭"
               ></i>
               <a-slider v-model="volumeNum" @change="changeVolume" />
             </div>
             <div class="tool">
-              <i class="iconfont" :class="modeIcon" @click="changeMode"></i>
-              <i class="iconfont icon-geci" @click="openLyric"></i>
-              <i class="iconfont icon-bofangliebiao"></i>
+              <i class="iconfont" :class="modeIcon" @click="changeMode" title="切换播放模式"></i>
+              <i class="iconfont icon-geci" @click="openLyric" title="歌词"></i>
+              <i class="iconfont icon-bofangliebiao" @click="openPlayList" title="历史记录"></i>
             </div>
           </div>
           <!-- 音乐h5 -->
@@ -78,15 +79,28 @@
           ></audio>
           <!-- 播放列表 -->
           <transition name="player">
-            <div class="play-list-box shadow" v-show="showDetail">
+            <div class="play-list-box shadow" v-if="showPlayList">
               <div class="title flex-between">
                 播放列表
-                <i class="iconfont"></i>
+                <i
+                  class="iconfont icon--clear"
+                  title="清除播放历史"
+                  @click="clearHistory"
+                ></i>
               </div>
               <div class="list">
-                <div class="item flex-row">
+                <div
+                  class="item flex-row"
+                  v-for="(item, index) of historyList"
+                  :key="item.id"
+                  :class="
+                    currentSong.id === item.id && playing ? 'playing' : ''
+                  "
+                >
                   <div class="index-container flex-center">
-                    <span class="num"> </span>
+                    <span class="num">
+                      {{ utils.formatZero(index + 1, 2) }}
+                    </span>
                     <div class="play-icon">
                       <div class="line" style="animation-delay: -1.2s"></div>
                       <div class="line"></div>
@@ -94,11 +108,21 @@
                       <div class="line" style="animation-delay: -0.9s"></div>
                       <div class="line" style="animation-delay: -0.6s"></div>
                     </div>
-                    <i class="iconfont icon-bofang3 play-btn"> </i>
-                    <i class="iconfont icon-zantingtingzhi pause-btn"></i>
+                    <i
+                      class="iconfont icon-bofang3 play-btn"
+                      @click="playSong(index)"
+                    >
+                    </i>
+                    <i
+                      class="iconfont icon-zantingtingzhi pause-btn"
+                      @click="pauseSong"
+                    ></i>
                   </div>
-                  <p class="ellipsis"></p>
-                  <i class="iconfont"></i>
+                  <p class="ellipsis">{{ item.name }}</p>
+                  <i
+                    class="iconfont icon-guanbi"
+                    @click="deleteSong(item, index)"
+                  ></i>
                 </div>
               </div>
               <div class="foot"></div>
@@ -155,7 +179,8 @@ export default {
   name: 'MusicPlayer',
   data () {
     return {
-      showDetail: false,
+      // 是否打开播放列表
+      showPlayList: false,
       // 是否开启歌词
       showLyric: false,
       // 歌曲是否正在播放
@@ -197,7 +222,8 @@ export default {
       'currentSong',
       'currentIndex',
       'mode',
-      'sequenceList'
+      'sequenceList',
+      'historyList'
     ]),
     // 播放暂停按钮
     playIcon() {
@@ -240,6 +266,7 @@ export default {
           audio.src = newSong.url
           // 歌曲播放
           audio.play()
+          this.saveHistoryList(newSong)
           this.id = newSong.id
         }
       })
@@ -253,9 +280,9 @@ export default {
     },
     // 监听播放状态
     playing(isPlaying) {
-      // if (!this.songReady) {
-      //   return
-      // }
+      if (!this.songReady) {
+        return
+      }
       this.$nextTick(() => {
         const audio = this.$refs.audio
         if (audio) {
@@ -270,6 +297,39 @@ export default {
     console.log('this.currentLyric===>', this.currentLyric)
   },
   methods: {
+    // 删除历史播放记录
+    deleteSong(item) {
+      this.deleteHistoryList(item)
+      console.log('删除的历史记录', item);
+    },
+
+    // 暂停
+    pauseSong() {
+      this.pausePlay()
+    },
+
+    // 播放音乐
+    playSong(index) {
+      this.selectPlay({
+        list: this.historyList,
+        index
+      })
+    },
+
+    // 清除全部播放历史
+    clearHistory() {
+      this.clearHistoryList()
+    },
+
+    // 打开播放列表
+    openPlayList() {
+      if (this.showPlayList) {
+        this.showPlayList = false
+      } else {
+        this.showPlayList = true
+      }
+    },
+
     // 打开歌词
     openLyric() {
       if (this.showLyric) {
@@ -278,6 +338,7 @@ export default {
         this.showLyric = true
       }
     },
+
     // 异步获取歌词
     async getLyric(id) {
       try {
@@ -303,6 +364,7 @@ export default {
         this.currentLyricNum = 0
       }
     },
+
     // 歌词的回调
     lyricHandle({lineNum, txt}) {
       if (!this.$refs.lyricRef.$refs.lyricList) {
@@ -325,6 +387,7 @@ export default {
         }
       }
     },
+
     // 重置当前播放歌曲序号
     resetCurrentIndex(list) {
       let index = list.findIndex(item => {
@@ -332,6 +395,7 @@ export default {
       })
       this.setCurrentIndex(index)
     },
+
     // 切换播放模式
     changeMode() {
       const mode = (this.mode + 1) % 3
@@ -345,17 +409,18 @@ export default {
       this.resetCurrentIndex(list)
       this.setPlayList(list)
     },
+
     // 拖动结束
     changeProgressAfter(val) {
-      const currentTime = ((val / 100) * this.currentSong.duration) / 100
+      const currentTime = ((val / 100) * this.currentSong.duration) / 1000
       this.$refs.audio.currentTime = currentTime * 1000
       this.currentTime = currentTime * 1000
       this.progressState = false
-      console.log('val', val)
       if (!this.playing) {
-        this.switchPlaying()
+        this.togglePlaying()
       }
     },
+
     // 改变音量
     changeVolume(val) {
       val === 0 ? (this.isMuted = true) : (this.isMuted = false)
@@ -363,10 +428,12 @@ export default {
       this.$refs.audio.volume = val / 100
       console.log('changeVolume', val)
     },
+
     // 控制音量大小
     changeMuted() {
       this.isMuted ? this.mutedHandle(false, 40) : this.mutedHandle(true, 0)
     },
+    
     // 是否静音
     mutedHandle(state, num) {
       this.isMuted = state
@@ -374,17 +441,18 @@ export default {
       this.$refs.audio.volume = num / 100
       console.log('num', num)
     },
+
     // 改变进度条
     changeProgress(val) {
       this.progressState = true
       const currentTime = (val / 100) * this.currentSong.duration
       this.currentTime = currentTime
       this.progressBar = val
-      console.log('changeProgress', val);
       if (this.currentLyric) {
         this.currentLyric.seek(currentTime * 1000)
       }
     },
+
     // 自定义格式化进度条悬浮时间
     progressFormat() {
       return this.formatTime(this.currentTime)
@@ -417,12 +485,14 @@ export default {
         this.currentLyric.seek(this.currentTime * 1000)
       }
     },
+
     // 播放错误
     audioError() {
       clearTimeout(this.timer)
       this.songReady = true
       console.log('播放错误');
     },
+
     // 播放状态更新
     updataTime(e) {
       if (!this.progressState) {
@@ -431,6 +501,7 @@ export default {
       }
       // console.log('改变了播放时间', e);
     },
+
     // 播放结束
     audioEnd() {
       this.currentTime = 0
@@ -440,6 +511,7 @@ export default {
         this.nextSong()
       }
     },
+
     // 播放暂停
     audioPause() {
       this.setPlayingState(false)
@@ -447,51 +519,53 @@ export default {
         this.currentLyric.stop()
       }
     },
+
     // 上一曲
-    pervSong() {
-      // if (this.songReady === false) {
-      //   return
-      // }
+    prevSong() {
+      if (!this.songReady) {
+        return
+      }
       // 只有一首歌曲
       if (this.playList.length === 1) {
         // 显示播放信息
+        this.loopSong()
         return 
       } else {
         // 是一个专辑或者歌单
         let index = this.currentIndex - 1
-        if (index === 1) {
+        if (index === -1) {
           index = this.playList.length - 1
         }
         this.setCurrentIndex(index)
         if (!this.playing) {
-          this.switchPlaying()
+          this.togglePlaying()
         }
       }
       console.log('上一曲')
     },
+
     // 切换播放/暂停
-    switchPlaying() {
-       // eslint-disable-next-line no-debugger
-      // debugger
-      // if (this.songReady === false) {
-      //   return
-      // }
+    togglePlaying() {
+      if (!this.songReady) {
+        return
+      }
       this.setPlayingState(!this.playing)
       // 切换歌词播放状态
       if (this.currentLyric) {
         this.currentLyric.togglePlay()
       }
     },
+
     // 下一曲
     nextSong() {
-      // if (this.songReady === false) {
-      //   return
-      // }
+      if (!this.songReady) {
+        return
+      }
       // 只有一首歌曲
       if (this.playList.length === 1) {
         // 显示播放信息,轮流播放
         this.loopSong()
-        
+        return
       } else {
         // 是一个专辑或者歌单
         let index = this.currentIndex + 1
@@ -499,12 +573,11 @@ export default {
           index = 0
         }
         this.setCurrentIndex(index)
-        console.log('index', index);
         if (!this.playing) {
-          this.switchPlaying()
+          this.togglePlaying()
         }
       }
-      console.log('上一曲')
+      console.log('下一曲')
     },
 
     ...mapMutations({
@@ -515,7 +588,10 @@ export default {
     }),
     ...mapActions([
       'selectPlay',
-      'pausePlay'
+      'pausePlay',
+      'saveHistoryList',
+      'deleteHistoryList',
+      'clearHistoryList'
     ])
   }
 }
@@ -542,7 +618,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 999;
   padding: 0 10px 0 20px;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
@@ -646,21 +722,28 @@ export default {
   }
   // 播放列表
   .play-list-box {
-    width: 345px;
+    width: 350px;
     height: 550px;
     position: absolute;
     float: right;
     right: 5px;
-    bottom: 30px;
-    border-radius: 3px;
-    padding: 30px;
+    bottom: 70px;
+    border-radius: 8px;
+    padding: 20px;
+    background: @lyric-background-color;
+    background-image: radial-gradient(
+        at 47% 33%,
+        hsl(0, 0%, 84%) 0,
+        transparent 59%
+      ),
+      radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
     overflow: hidden;
     .title {
       margin: 10px 0 20px;
-      font-weight: 500;
-      font-size: 16px;
+      font-weight: 600;
+      font-size: 1rem;
       i {
-        font-size: 20px;
+        font-size: 1.4rem;
         cursor: pointer;
         &:hover {
           color: @color-theme;
@@ -669,17 +752,17 @@ export default {
     }
     .list {
       overflow-y: scroll;
-      max-height: calc(100% - 90px);
+      max-height: calc(100% - 60px);
       .item {
-        padding: 8px 0;
+        padding: 8px 6px 8px 0;
         height: 40px;
         .index-container {
           width: 30px;
           margin-right: 20px;
           flex-shrink: 0;
           .num {
-            font-size: 14px;
-            color: #4a4a4a;
+            font-size: 1rem;
+            color: @color-blank;
           }
           .play-icon {
             display: none;
@@ -709,6 +792,10 @@ export default {
             cursor: pointer;
           }
         }
+        .ellipsis {
+          font-size: 1rem;
+          color: @color-blank;
+        }
         p {
           cursor: pointer;
           flex: 1;
@@ -718,9 +805,12 @@ export default {
           }
         }
         i {
-          font-size: 16px;
+          font-size: 1rem;
+          color: @color-dark;
           cursor: pointer;
           &:hover {
+            display: block;
+            cursor: pointer;
             color: @color-theme;
           }
         }
