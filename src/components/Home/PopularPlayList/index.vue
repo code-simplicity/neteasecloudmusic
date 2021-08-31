@@ -66,10 +66,20 @@ export default {
       }
     },
     mounted() {
-
+     
     },
     methods: {
-
+      // 查看推荐详情
+      toDetail(item) {
+        console.log('toDetail', item);
+        let query = {
+          id: item.id
+        }
+        this.$router.push({
+          name: 'playlistdetail',
+          query
+        })
+      }
     }
 }
 </script>
@@ -180,7 +190,7 @@ export default {
             height: 0;
             border-style: solid;
             border-width: 4px 0 4px 6px;
-            border-color: transparent transparent transparent #ffffff;
+            border-color: transparent transparent transparent @color-dark;
             margin-right: 5px;
           }
           &:after {
@@ -197,9 +207,13 @@ export default {
           .icon-bofangliang {
             float: left;
             margin: 0 10px;
+            color: @color-blank;
+            font-size: 0.9rem;
           }
           .playcount {
             float: left;
+            color: @color-blank;
+            font-size: 0.9rem;
           }
           .play-music-status {
             margin-left: auto;
@@ -207,7 +221,7 @@ export default {
             padding-right: 8px;
             .icon-bofang {
               font-size: 1rem;
-              color: #fff;
+              color: @color-blank;
               &:hover {
                 color: @color-theme;
               }
