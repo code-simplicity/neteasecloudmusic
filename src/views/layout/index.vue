@@ -33,7 +33,7 @@ export default {
     width: auto;
     z-index: 999;
     min-width: 1024px;
-    padding-top: 60px;
+    padding-top: 54px;
     .layoutView {
         min-height: 100%;
         padding: 10px 0;
