@@ -7,7 +7,8 @@ import {
     PLAY_MODE,
     SEQUENCE_LIST,
     PLAY_LIST,
-    SINGER_INFO
+    SINGER_INFO,
+    HISTORY_LIST
 } from './mutation-type'
 
 const mutations = {
@@ -42,6 +43,11 @@ const mutations = {
     // 获取歌手信息
     [SINGER_INFO](state, singer) {
         state.singerInfo = singer
+    },
+
+    // 播放历史记录
+    [HISTORY_LIST](state, list) {
+        state.historyList = list
     }
 }
 
