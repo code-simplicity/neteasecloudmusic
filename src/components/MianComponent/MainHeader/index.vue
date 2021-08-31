@@ -180,6 +180,7 @@ export default {
   }
   .nav {
     flex: 1;
+    list-style:none;
     li {
       font-size: 16px;
       height: 100%;
