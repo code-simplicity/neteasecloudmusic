@@ -125,7 +125,7 @@
             <div class="page-right">
               <h3 class="name flex-between">
                 {{ currentSong.name }}
-                <i @click="openLyric" class="iconfont icon-zantingtingzhi"></i>
+                <i @click="openLyric" class="iconfont icon-guanbi"></i>
               </h3>
               <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
               <div class="lyric-wrap">
@@ -149,7 +149,8 @@ import Lyric from 'lyric-parser'
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 import {playMode} from '@/utils/playConfig'
 import ScrollLyric from '@/components/MianComponent/Lyric'
-import { getLyric } from '../../../api/service/api'
+// import { getLyric } from '../../../api/service/api'
+import {getLyric} from '@/api/service/api'
 export default {
   name: 'MusicPlayer',
   data () {
@@ -218,8 +219,8 @@ export default {
   watch: {
     // 观察歌曲的变化，做出相应的视图变化
     currentSong(newSong, oldSong) {
-      // 新歌曲不存在或者老歌曲不存在，获取是新歌曲和老歌曲不相等，返回
-      if (!newSong.id || !newSong.url || newSong.id !== oldSong.id) {
+      // 新歌曲不存在或者老歌曲不存在，获取是新歌曲和老歌曲相等，返回
+      if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
         return
       }
       this.songReady = false
@@ -267,8 +268,6 @@ export default {
   mounted () {
     console.log('this.$refs.audio', this.$refs);
     console.log('this.currentLyric===>', this.currentLyric)
-
-    // console.log('this.utils', this.utils);
   },
   methods: {
     // 打开歌词
@@ -612,6 +611,13 @@ export default {
           font-size: 1.6rem;
           font-weight: bold;
           margin-bottom: 10px;
+          .icon-guanbi {
+            font-size: 1.6rem;
+            color: @color-dark;
+            &:hover {
+              color: @color-theme;
+            }
+          }
         }
         .iconfont {
           font-size: 1.8rem;
@@ -620,7 +626,7 @@ export default {
         }
         .lyric-wrap {
           width: 100%;
-          height: 400px;
+          min-height: 420px;
           border-radius: 8px;
           padding: 26px;
           font-size: 1rem;
