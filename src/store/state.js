@@ -24,7 +24,10 @@ const state = {
     sequenceList: [],
 
     // 播放模式(循环，单曲，随机)
-    mode: playMode.sequence
+    mode: playMode.sequence,
+
+    // 播放历史记录列表
+    historyList: []
 }
 
 // 统一暴露
