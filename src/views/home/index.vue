@@ -5,6 +5,9 @@
       <PopularRecommend></PopularRecommend>
       <RecommendNewSong></RecommendNewSong>
     </div>
+    <!-- <div>
+      <router-view></router-view>
+    </div> -->
   </div>
 </template>
 
@@ -22,7 +25,7 @@ export default {
   components: {
     Carousel,
     PopularRecommend,
-    RecommendNewSong
+    RecommendNewSong,
   },
   mounted () {
 
