@@ -36,7 +36,7 @@ export const getNewSongs = (limit) => api.get(`/personalized/newsong?limit=${lim
 
 /**
  * 获取歌词
- * @param {*} id 音乐id
+ * @param {*id参数} id 歌词
  * @returns 
  */
-export const getLyric = (id) => api.get(`/lyric?id=${id}`, {})
+export const getLyric = id => api.get(`/lyric?id=${id}`, {})
