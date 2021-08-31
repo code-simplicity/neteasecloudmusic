@@ -25,9 +25,9 @@ export default {
         spaceBetween: 16,
         slidesPerGroup: 3,
         loop: true,
-        loopFillGroupWithBlank: true,
-        centeredSlides: true,
-        paginationClickable: true,
+        // loopFillGroupWithBlank: true,
+        // centeredSlides: true,
+        // paginationClickable: true,
         grabCursor: true,
         // 获取dom元素，实现轮播
         pagination: {
@@ -35,7 +35,7 @@ export default {
         },
         // 自动播放
         autoplay: {
-          delay: 2000,
+          delay: 4000,
           disableOnInteraction: false
         }
       }
@@ -67,6 +67,9 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.carousel {
+  top: 10px;
+}
 .carousel /deep/ .swiper-pagination {
   width: 100%;
   bottom: -20px;
