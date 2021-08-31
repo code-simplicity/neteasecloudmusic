@@ -4,11 +4,14 @@ import {
     PLAYING_STATUS,
     CURRENT_INDEX,
     PLAY_MODE,
+    HISTORY_LIST
 } from './mutation-type'
 import {
     playMode
 } from '@/utils/playConfig'
 import utils from '@/utils/utils'
+
+import {saveHistory, deleteHistory, clearHistory} from '@/utils/cache'
 
 function findIndex(list, song) {
     return list.findIndex(item => {
@@ -55,4 +58,19 @@ export const movePlay = function ({ commit }) {
     commit(SEQUENCE_LIST, [])
     // 播放索引置-1
     commit(CURRENT_INDEX, -1)
+}
+
+// 保存最近播放的歌曲列表
+export const saveHistoryList = function ({ commit }, song) {
+    commit(HISTORY_LIST, saveHistory(song))
+}
+
+// 删除最近播放的历史记录
+export const deleteHistoryList = function({commit}, song) {
+    commit(HISTORY_LIST, deleteHistory(song))
+}
+
+// 清除所有播放列表
+export const clearHistoryList = function({commit}) {
+    commit(HISTORY_LIST, clearHistory())
 }
