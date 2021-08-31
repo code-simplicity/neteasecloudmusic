@@ -1,4 +1,5 @@
 import Layout from '@/views/layout/index'
+// import LayoutChild from '../views/home/components/layout/index.vue'
 
 /**
  * 登录路由
@@ -24,7 +25,7 @@ export const mainRouter = [{
     name: 'home'
   },
   meta: {
-    title: '首页',
+    title: '推荐',
     keepAlive: true
   },
   component: Layout,
@@ -32,12 +33,49 @@ export const mainRouter = [{
       path: 'home',
       name: 'home',
       meta: {
-        title: '发现音乐',
+        title: '首页',
         keepAlive: true
       },
       component: resolve => {
         require(['@/views/home/index'], resolve)
-      }
+      },
+      children: [
+        // {
+        //   path: 'recommend',
+        //   name: 'recommend',
+        //   meta: {
+        //     title: '推荐',
+        //     keepAlive: true
+        //   },
+        //   // component: LayoutChild
+        //   component: resolve => {
+        //     require(['@/views/home/recommend/index'], resolve)
+        //   },
+        // },
+        
+        // {
+        //   path: 'leaderboard',
+        //   name: 'leaderBoard',
+        //   meta: {
+        //     title: '详情',
+        //     keepAlive: true
+        //   },
+        //   component: resolve => {
+        //     require(['@/views/leaderboard/index'], resolve)
+        //   },
+        // },
+      ]
+    },
+    {
+      path: 'playlistdetail',
+      name: 'playlistdetail',
+      meta: {
+        title: '详情',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/playlist/detail/index'], resolve)
+      },
     },
     {
       path: 'mymusic',
@@ -105,6 +143,7 @@ export const mainRouter = [{
         require(['@/views/mv/index'], resolve)
       }
     },
+    
   ]
 }]
 
