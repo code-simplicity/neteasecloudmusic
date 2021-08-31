@@ -53,9 +53,9 @@ export default {
 
 <style lang="less" scoped>
 .p-recommend {
-  margin-top: 20px;
+  margin-top: 36px;
   padding: 20px;
-  background-color: #fff;
+  background-color: @color-dark;
   .p-recommend-header {
     display: flex;
     align-items: center;
