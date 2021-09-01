@@ -4,44 +4,55 @@
     <div class="left shadow">
       <div class="top">
         <div class="avatar">
-          <el-image class="el-image"
-                    src="songDetail.url"
-                    fit="cover"></el-image>
+          <el-image
+            class="el-image"
+            :src="songDetail.coverImgUrl"
+            fit="cover"
+          ></el-image>
         </div>
         <div class="info">
           <div class="title flex-between">
-            <span>123</span>
+            <span>{{ songDetail.name }}</span>
           </div>
           <div class="user flex-row">
             <div class="avatar">
-              <el-image src="url"
-                        fit="cover"></el-image>
+              <el-image :src="creator.avatarUrl" fit="cover"></el-image>
             </div>
-            <span class="username">用户名</span>
-            <span class="createTime">2017-12-22 创建</span>
+            <span class="username">{{ creator.nickname }}</span>
+            <span class="createTime" v-if="creator.createTime">
+              {{ utils.dateFormat(detail.createTime, 'YYYY-MM-DD') }}</span
+            >
           </div>
           <div class="user-button">
-            <el-button type="primary"
-                       size="small">
+            <el-button type="primary" size="small">
               <i class="iconfont icon-bofang1"></i>
               播放
             </el-button>
           </div>
-          <div class="tag flex-row">标签：<a class="">列表</a></div>
+          <div
+            class="tag flex-row"
+            v-if="songDetail.tags && songDetail.tags.length > 0"
+          >
+            标签：<a class="" v-for="item of songDetail.tags" :key="item">{{
+              item
+            }}</a>
+          </div>
           <div class="description">
             <b>介绍:</b>
-            <p class="introduce"
-               v-html="123"></p>
-            <span class="flex-row">
-              展开
-              <i class="iconfont icon-shouqi"></i>
+            <p class="ellipsis-two" v-html="songDetail.description"></p>
+            <span
+              class="flex-row"
+              v-if="textLength(songDetail.description) > 10"
+              @click="openDes(songDetail.name, songDetail.description)"
+            >
+              展示
+              <i class="iconfont icon-zhankai"> </i>
             </span>
           </div>
         </div>
       </div>
       <!-- 中间内容 -->
-      <div class="content"
-           v-loading="loading">
+      <div class="content" v-loading="loading">
         <div class="title flex-row">
           <span class="song-list">歌曲列表</span>
           <span class="song-num">歌曲数量</span>
@@ -75,6 +86,17 @@ export default {
     SongDetailsList
   },
 
+  computed: {
+    // 计算获取的描述的文字长度
+    textLength() {
+      return function (txt) {
+        if (txt) {
+          return txt.length
+        }
+      }
+    }
+  },
+
   watch: {
     // 观察路由跳转携带过来的id
     $route(newId, oldId) {
@@ -93,6 +115,18 @@ export default {
     }
   },
   methods: {
+    // 展开介绍
+    openDes(title, content) {
+      this.$confirm(content, title, {
+        closeOnClickModal: true,
+        customClass: 'descBox',
+        showConfirmButton: false,
+        dangerouslyUseHTMLString: true,
+        // eslint-disable-next-line no-unused-vars
+      }).catch(error => {
+        // console.log(error)
+      })
+    },
     // 获取歌单详情
     async getPlayListDetail(id, s) {
       // 获取当前时间的节点值
@@ -110,6 +144,8 @@ export default {
           // 获取歌单详情
           this.songDetail = res.playlist
           this.creator = res.playlist.creator
+          console.log('this.songDetail', this.songDetail)
+          console.log('this.creator', this.creator)
           // 封装歌曲id
           let trackIds = res.playlist.trackIds
           // 数量超过一千，进行分割
@@ -299,7 +335,7 @@ export default {
         }
         .description {
           display: flex;
-          // flex-direction: column;
+          flex-direction: column;
           line-height: 1.6;
           margin-top: 15px;
           p {
@@ -311,7 +347,10 @@ export default {
           }
           span {
             flex-shrink: 0;
+            color: @color-theme;
             cursor: pointer;
+            margin-left: 10px;
+            width: 60px;
           }
         }
       }

@@ -1,64 +1,69 @@
 <template>
-  <div class="loginBox">
-    <div class="loginContent">
-      <el-form
-        :model="loginForm"
-        :rules="rules"
-        ref="loginForm"
-        label-width="100px"
-        label-suffix=":"
-      >
-        <el-row :gutter="6">
-          <el-col :span="22">
-            <el-form-item label="用户名" prop="phone">
-              <el-input
-                type="text"
-                v-model="loginForm.phone"
-                placeholder="请输入网易云音乐手机号"
-                autocomplete="off"
-              ></el-input>
+  <kinesis-container>
+    <div class="loginBox">
+      <kinesis-element :strength="20" type="depth">
+        <div class="loginContent">
+          <el-form
+            :model="loginForm"
+            :rules="rules"
+            ref="loginForm"
+            label-width="100px"
+            label-suffix=":"
+          >
+            <el-row :gutter="6">
+              <el-col :span="22">
+                <el-form-item label="用户名" prop="phone">
+                  <el-input
+                    type="text"
+                    v-model="loginForm.phone"
+                    placeholder="请输入网易云音乐手机号"
+                    autocomplete="off"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="6">
+              <el-col :span="22">
+                <el-form-item label="密码" prop="password">
+                  <el-input
+                    type="password"
+                    v-model="loginForm.password"
+                    placeholder="请输入密码"
+                    :show-password="true"
+                    @keyup.enter.native="submitForm('loginForm')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-form-item>
+              <el-row :gutter="10">
+                <el-col :span="12">
+                  <el-button
+                    type="primary"
+                    :loading="loading"
+                    @click="submitForm('loginForm')"
+                    >登录</el-button
+                  >
+                </el-col>
+                <el-col :span="12">
+                  <el-button @click="resetForm('loginForm')">重置</el-button>
+                </el-col>
+              </el-row>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="6">
-          <el-col :span="22">
-            <el-form-item label="密码" prop="password">
-              <el-input
-                type="password"
-                v-model="loginForm.password"
-                placeholder="请输入密码"
-                :show-password="true"
-                @keyup.enter.native="submitForm('loginForm')"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-button
-                type="primary"
-                :loading="loading"
-                @click="submitForm('loginForm')"
-                >登录</el-button
-              >
-            </el-col>
-            <el-col :span="12">
-              <el-button @click="resetForm('loginForm')">重置</el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-      </el-form>
+          </el-form>
+        </div>
+      </kinesis-element>
     </div>
-  </div>
+  </kinesis-container>
 </template>
 
 <script>
-import {login, getUserInfo} from '../../api/service/user'
-import {mapMutations} from 'vuex'
+import { KinesisContainer, KinesisElement } from 'vue-kinesis'
+import { login, getUserInfo } from '../../api/service/user'
+import { mapMutations } from 'vuex'
 export default {
   name: 'login',
-  data () {
+  data() {
     return {
       loginForm: {
         phone: '',
@@ -68,30 +73,33 @@ export default {
         phone: [{ required: true, message: '手机号呢!', trigger: 'blur' }],
         password: [{ required: true, message: '密码呢！', trigger: 'blur' }]
       },
-      loading: false
+      loading: false,
+      parallax: 'depth'
     }
   },
   components: {
+    KinesisContainer,
+    KinesisElement
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {
     // 登录操作
-    submitForm (formName) {
+    submitForm(formName) {
       this.loading = false
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true
           // 收集表单数据
-          const {phone, password} = this.loginForm
+          const { phone, password } = this.loginForm
           this.loginAsync(phone, password)
         }
       })
     },
 
     // 调用登录接口
-    loginAsync (phone, password) {
+    loginAsync(phone, password) {
       this.loading = false
       login(phone, password).then(res => {
         console.log(res)
@@ -111,7 +119,7 @@ export default {
     },
 
     // 获取个人登录信息
-    async getUserInfo (uid) {
+    async getUserInfo(uid) {
       try {
         let res = await getUserInfo(uid)
         if (res.code === 200) {
@@ -141,9 +149,9 @@ export default {
     },
 
     // 提交状态，
-    ...mapMutations({setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO'}),
+    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
 
-    resetForm (formName) {
+    resetForm(formName) {
       this.$refs[formName].resetFields()
     }
   }
@@ -157,7 +165,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../../assets/images/background.png) no-repeat;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  background: url(../../assets/images/nice-back.png) no-repeat;
   background-size: cover;
   .loginContent {
     width: 400px;
@@ -167,7 +179,7 @@ export default {
     max-width: 400px;
     border-radius: 16px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 3, 0.3);
-    background-image: url(../../assets/images/loginForm1.png);
+    background-image: url(../../assets/images/login-form-back.png);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;

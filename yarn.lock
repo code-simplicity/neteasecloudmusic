@@ -8762,6 +8762,11 @@
   "resolved" "https://registry.nlark.com/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz"
   "version" "2.3.4"
 
+"vue-kinesis@^1.3.3":
+  "integrity" "sha1-OcYePFsvD+94lP7E7si2Jm6ZhYw="
+  "resolved" "https://registry.nlark.com/vue-kinesis/download/vue-kinesis-1.3.3.tgz"
+  "version" "1.3.3"
+
 "vue-loader-v16@npm:vue-loader@^16.1.0":
   "integrity" "sha1-CcTgcSRmiZ40uZpoZSTxkWX7KJI="
   "resolved" "https://registry.nlark.com/vue-loader/download/vue-loader-16.5.0.tgz?cache=0&sync_timestamp=1628666727543&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-loader%2Fdownload%2Fvue-loader-16.5.0.tgz"
