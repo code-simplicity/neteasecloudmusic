@@ -12,6 +12,7 @@ export default class Song {
         image,==>图片
         url,==>播放地址
         playCount,==>播放次数
+        score,==>评分
      * @param {*} param0 
      */
     constructor({
@@ -23,6 +24,7 @@ export default class Song {
         image,
         url,
         playCount,
+        score
     }) {
         this.id = id
         this.name = name
@@ -32,6 +34,7 @@ export default class Song {
         this.image = image
         this.url = url
         this.playCount = playCount
+        this.score = score
     }
 }
 
@@ -49,6 +52,7 @@ export function createSong(musicData) {
             musicData.album.artist.img1v1Url,
         url: `https://music.163.com/song/media/outer/url?id=${musicData.id}.mp3`,
         playCount: musicData.playCount || '',
+        score: musicData.score || ''
     })
 }
 
