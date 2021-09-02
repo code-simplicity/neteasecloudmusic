@@ -48,4 +48,39 @@ export const getPlayListDetail = (id, s, time) => api.get(`/playlist/detail?id=$
  * @param {*} time 时间
  * @returns 
  */
- export const getSongDetail = (ids, time) => api.post(`/song/detail?timestamp=${time}`, { ids })
+export const getSongDetail = (ids, time) => api.post(`/song/detail?timestamp=${time}`, {
+    ids
+})
+
+/**
+ * 收藏/取消收藏歌单
+ * @param {*} t : 类型,1:收藏,2:取消收藏
+ * @param {*} id : 歌单 id
+ * @returns 
+ */
+export const playlistSubscribe = (t, id) => api.get(`/playlist/subscribe?t=${t}&id=${id}`, {})
+
+/**
+ * 歌单收藏者
+ * @param {*} id 歌单 id
+ * @param {*} limit 取出评论数量 , 默认为 20
+ * @param {*} offset 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
+ * @returns 
+ */
+export const getSubscribersList = params => api.get(`/playlist/subscribers`, {
+    params
+})
+
+/**
+ * 相关歌单推荐
+ * @param {*} id 歌单 id
+ * @returns 
+ */
+export const getRelatedList = id => api.get(`/related/playlist?id=${id}`, {})
+
+/**
+ * 歌单评论
+ * @param {*} id 歌单 id
+ * @returns 
+ */
+export const getCommentList = id => api.get(`/comment/playlist?id=${id}`, {})
