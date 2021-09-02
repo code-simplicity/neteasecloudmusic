@@ -80,7 +80,12 @@ export const getRelatedList = id => api.get(`/related/playlist?id=${id}`, {})
 
 /**
  * 歌单评论
- * @param {*} id 歌单 id
+ * @param {*} params id: 歌单 id
+ * @param {*} params limit: 取出评论数量 , 默认为 20
+ * @param {*} params offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
+ * @param {*} params before: 分页参数,取上一页最后一项的 time 获取下一页数据(获取超过5000条评论的时候需要用到)
  * @returns 
  */
-export const getCommentList = id => api.get(`/comment/playlist?id=${id}`, {})
+export const getCommentList = params => api.get(`/comment/playlist`, {
+    params
+})
