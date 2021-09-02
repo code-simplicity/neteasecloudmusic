@@ -23,12 +23,12 @@
               {{ utils.dateFormat(detail.createTime, 'YYYY-MM-DD') }}</span
             >
           </div>
-          <div class="user-button">
+          <!-- <div class="user-button">
             <el-button type="primary" size="small">
               <i class="iconfont icon-bofang1"></i>
               播放
             </el-button>
-          </div>
+          </div> -->
           <div
             class="tag flex-row"
             v-if="songDetail.tags && songDetail.tags.length > 0"
@@ -59,6 +59,7 @@
           :subscribed="songDetail.subscribed"
           @playlistSubscribe="playlistSubscribe"
         ></SongDetailsList>
+        <MainComment></MainComment>
       </div>
     </div>
     <div class="right">
@@ -108,13 +109,39 @@
         </ul>
       </div>
       <!-- 热门评论 -->
-      <div></div>
+      <div class="comment module shadow">
+        <div class="header-card flex-row">
+          <span>精彩评论</span>
+        </div>
+        <ul v-if="commentList.length > 0">
+          <li class="item" v-for="item of commentList" :key="item.time">
+            <div class="avatar">
+              <el-image
+                style="width: 50px; height: 50px"
+                :src="item.user.avatarUrl"
+                :alt="item.user.nickname"
+                :title="item.user.nickname"
+                fit="cover"
+              ></el-image>
+            </div>
+            <div class="info">
+              <h3 class="ellipsis" :title="item.user.nickname">
+                {{ item.user.nickname }}
+                <small> · {{ utils.formatMsgTime(item.time) }}</small>
+              </h3>
+              <p>{{ item.content }}</p>
+            </div>
+          </li>
+        </ul>
+        <p class="no-data-text" v-else>还没有人评论</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
+import MainComment from '@/components/MianComponent/MainComment'
 import { getPlayListDetail, getSongDetail, playlistSubscribe, getSubscribersList, getRelatedList, getCommentList } from '@/api/service/api'
 import { createSong } from '@/model/song'
 export default {
@@ -139,11 +166,13 @@ export default {
       subscribers: [],
       // 相关推荐
       relatedList: [],
+      // 热门评论列表
       commentList: []
     }
   },
   components: {
-    SongDetailsList
+    SongDetailsList,
+    MainComment
   },
 
   computed: {
@@ -177,10 +206,16 @@ export default {
   methods: {
     // 获取歌单评论
     async getCommentList(id) {
+      let params = {
+        id,
+        limit: 20,
+        offset: 1
+      }
       try {
-        let res = await getCommentList(id)
+        let res = await getCommentList(params)
         if (res.code === this.constants.code_status) {
           console.log('getCommentList', res);
+          this.commentList = res.comments
         }
       } catch (error) {
         console.log(error);
@@ -581,6 +616,67 @@ export default {
             }
           }
         }
+      }
+    }
+    .comment {
+      align-items: center;
+      cursor: pointer;
+      .header-card {
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid @color-theme;
+        cursor: pointer;
+        span {
+          font-size: 1rem;
+        }
+      }
+      ul {
+        margin: 0 -40px;
+        li {
+          padding: 10px 0;
+          width: 100%;
+          display: flex;
+          .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            cursor: pointer;
+            img {
+              width: 100%;
+              border-radius: 50%;
+            }
+          }
+          .info {
+            flex: 1;
+            h2 {
+              font-size: 1rem;
+              margin-right: 5px;
+              margin-bottom: 10px;
+              cursor: pointer;
+              small {
+                font-size: 12px;
+                color: #a5a5c1;
+                font-weight: 200;
+              }
+            }
+            p {
+              width: 90%;
+              font-size: 0.8rem;
+              color: @color-blank;
+              line-height: 1.6;
+              padding: 5px 10px;
+              background: @content-background;
+              margin-top: 5px;
+              border-radius: 3px;
+            }
+          }
+        }
+      }
+      .no-data-text {
+        padding-bottom: 10px;
       }
     }
   }
