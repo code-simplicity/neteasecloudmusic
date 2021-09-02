@@ -1,134 +1,149 @@
 <template>
   <!-- vue过度 -->
   <transition name="player">
-    <div class="music-player flex-row"
-         v-show="playList.length > 0">
+    <div class="music-player flex-row" v-show="playList.length > 0">
       <!-- <div class="music-player flex-row"> -->
-      <div class="container"
-           style="z-index: 30">
+      <div class="container" style="z-index: 30">
         <div class="wrapper flex-row">
           <!-- 左边内容 -->
           <div class="music-player-left flex-row">
             <div class="play-btn">
-              <i class="iconfont icon-shangyiqu1"
-                 @click="prevSong"
-                 title="上一首"></i>
-              <div class="icon-play flex-center"
-                   @click="togglePlaying"
-                   title="播放/暂停">
-                <i class="iconfont"
-                   :class="playIcon"></i>
+              <i
+                class="iconfont icon-shangyiqu1"
+                @click="prevSong"
+                title="上一首"
+              ></i>
+              <div
+                class="icon-play flex-center"
+                @click="togglePlaying"
+                title="播放/暂停"
+              >
+                <i class="iconfont" :class="playIcon"></i>
               </div>
-              <i class="iconfont icon-xiayiqu"
-                 @click="nextSong"
-                 title="下一首"></i>
+              <i
+                class="iconfont icon-xiayiqu"
+                @click="nextSong"
+                title="下一首"
+              ></i>
             </div>
           </div>
           <!-- 中间内容 -->
           <div class="music-player-center">
             <div class="cover">
-              <el-image style="width: 60px"
-                        :src="currentSong.image ? currentSong.image : defaultCover"
-                        fit="cover"
-                        @click="toPlayer(currentSong)"></el-image>
+              <el-image
+                style="width: 60px"
+                :src="currentSong.image ? currentSong.image : defaultCover"
+                fit="cover"
+                @click="toPlayer(currentSong)"
+              ></el-image>
             </div>
             <div class="info">
               {{ currentLyricTxt }}
               <div class="top flex-between">
                 <h2 class="name">
-                  {{ currentSong.name ? currentSong.name : "未选择播放歌曲" }}
+                  {{ currentSong.name ? currentSong.name : '未选择播放歌曲' }}
                   <span>{{ currentSong.singer }}</span>
                 </h2>
               </div>
               <div class="progress-wrap flex-row">
-                <a-slider v-model="progressBar"
-                          :tip-formatter="progressFormat"
-                          :disabled="currentIndex === -1"
-                          @change="changeProgress"
-                          @afterChange="changeProgressAfter" />
-                <span class="time"
-                      v-if="currentSong.duration">
+                <a-slider
+                  v-model="progressBar"
+                  :tip-formatter="progressFormat"
+                  :disabled="currentIndex === -1"
+                  @change="changeProgress"
+                  @afterChange="changeProgressAfter"
+                />
+                <span class="time" v-if="currentSong.duration">
                   {{ formatTime(currentTime) }}
                   {{ formatTime(currentSong.duration) }}
                 </span>
-                <span v-else
-                      class="time">00:00 / 00:00</span>
+                <span v-else class="time">00:00 / 00:00</span>
               </div>
             </div>
           </div>
           <!-- 右边内容 -->
           <div class="music-player-right flex-row">
             <div class="volume-wrap flex-row">
-              <i class="iconfont volume-icon"
-                 @click="changeMuted"
-                 :class="mutedIcon"
-                 title="开启/关闭"></i>
-              <a-slider v-model="volumeNum"
-                        @change="changeVolume" />
+              <i
+                class="iconfont volume-icon"
+                @click="changeMuted"
+                :class="mutedIcon"
+                title="开启/关闭"
+              ></i>
+              <a-slider v-model="volumeNum" @change="changeVolume" />
             </div>
             <div class="tool">
-              <i class="iconfont"
-                 :class="modeIcon"
-                 @click="changeMode"
-                 title="切换播放模式"></i>
-              <i class="iconfont icon-geci"
-                 @click="openLyric"
-                 title="歌词"></i>
-              <i class="iconfont icon-bofangliebiao"
-                 @click="openPlayList"
-                 title="历史记录"></i>
+              <i
+                class="iconfont"
+                :class="modeIcon"
+                @click="changeMode"
+                title="切换播放模式"
+              ></i>
+              <i class="iconfont icon-geci" @click="openLyric" title="歌词"></i>
+              <i
+                class="iconfont icon-bofangliebiao"
+                @click="openPlayList"
+                title="历史记录"
+              ></i>
             </div>
           </div>
           <!-- 音乐h5 -->
-          <audio ref="audio"
-                 :src="currentSong.url"
-                 @playing="audioReady"
-                 @error="audioError"
-                 @timeupdate="updataTime"
-                 @ended="audioEnd"
-                 @pause="audioPause"
-                 :muted="isMuted"></audio>
+          <audio
+            ref="audio"
+            :src="currentSong.url"
+            @playing="audioReady"
+            @error="audioError"
+            @timeupdate="updataTime"
+            @ended="audioEnd"
+            @pause="audioPause"
+            :muted="isMuted"
+          ></audio>
           <!-- 播放列表 -->
           <transition name="player">
-            <div class="play-list-box shadow"
-                 v-if="showPlayList">
+            <div class="play-list-box shadow" v-if="showPlayList">
               <div class="title flex-between">
                 播放列表
-                <i class="iconfont icon--clear"
-                   title="清除播放历史"
-                   @click="clearHistory"></i>
+                <i
+                  class="iconfont icon--clear"
+                  title="清除播放历史"
+                  @click="clearHistory"
+                ></i>
               </div>
               <div class="list">
-                <div class="item flex-row"
-                     v-for="(item, index) of historyList"
-                     :key="item.id"
-                     :class="
+                <div
+                  class="item flex-row"
+                  v-for="(item, index) of historyList"
+                  :key="item.id"
+                  :class="
                     currentSong.id === item.id && playing ? 'playing' : ''
-                  ">
+                  "
+                >
                   <div class="index-container flex-center">
                     <span class="num">
                       {{ utils.formatZero(index + 1, 2) }}
                     </span>
                     <div class="play-icon">
-                      <div class="line"
-                           style="animation-delay: -1.2s"></div>
+                      <div class="line" style="animation-delay: -1.2s"></div>
                       <div class="line"></div>
-                      <div class="line"
-                           style="animation-delay: -1.5s"></div>
-                      <div class="line"
-                           style="animation-delay: -0.9s"></div>
-                      <div class="line"
-                           style="animation-delay: -0.6s"></div>
+                      <div class="line" style="animation-delay: -1.5s"></div>
+                      <div class="line" style="animation-delay: -0.9s"></div>
+                      <div class="line" style="animation-delay: -0.6s"></div>
                     </div>
-                    <i class="iconfont icon-bofang3 play-btn"
-                       @click="playSong(index)">
+                    <i
+                      class="iconfont icon-bofang3 play-btn"
+                      @click="playSong(index)"
+                    >
                     </i>
-                    <i class="iconfont icon-zantingtingzhi pause-btn"
-                       @click="pauseSong"></i>
+                    <i
+                      class="iconfont icon-zantingtingzhi pause-btn"
+                      @click="pauseSong"
+                    ></i>
                   </div>
                   <p class="ellipsis">{{ item.name }}</p>
-                  <i class="iconfont icon-guanbi"
-                     @click="deleteSong(item, index)"></i>
+                  <i
+                    class="iconfont icon-guanbi"
+                    @click="deleteSong(item, index)"
+                  ></i>
                 </div>
               </div>
               <div class="foot"></div>
@@ -138,15 +153,16 @@
       </div>
       <!-- 播放详情 -歌词列表-->
       <transition name="player">
-        <div class="player-page"
-             v-show="showLyric">
+        <div class="player-page" v-show="showLyric">
           <div class="container">
             <div class="page-left">
               <div class="cover-image">
-                <img class="rotateIn"
-                     :class="playing ? 'playing' : ''"
-                     :src="currentSong.image"
-                     alt="" />
+                <img
+                  class="rotateIn"
+                  :class="playing ? 'playing' : ''"
+                  :src="currentSong.image"
+                  alt=""
+                />
               </div>
               <!-- <div class="ripple p1"></div>
               <div class="ripple p2"></div> -->
@@ -154,14 +170,15 @@
             <div class="page-right">
               <h3 class="name flex-between">
                 {{ currentSong.name }}
-                <i @click="openLyric"
-                   class="iconfont icon-guanbi"></i>
+                <i @click="openLyric" class="iconfont icon-guanbi"></i>
               </h3>
               <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
               <div class="lyric-wrap">
-                <ScrollLyric ref="lyricRef"
-                             :currentLyric="currentLyric"
-                             :currentLyricNum="currentLyricNum"></ScrollLyric>
+                <ScrollLyric
+                  ref="lyricRef"
+                  :currentLyric="currentLyric"
+                  :currentLyricNum="currentLyricNum"
+                ></ScrollLyric>
               </div>
             </div>
           </div>
