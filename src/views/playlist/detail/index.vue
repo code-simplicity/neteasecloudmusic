@@ -42,7 +42,7 @@
             <p class="ellipsis-two" v-html="songDetail.description"></p>
             <span
               class="flex-row"
-              v-if="textLength(songDetail.description) > 10"
+              v-if="textLength(songDetail.description) > 40"
               @click="openDes(songDetail.name, songDetail.description)"
             >
               展示
@@ -53,20 +53,69 @@
       </div>
       <!-- 中间内容 -->
       <div class="content" v-loading="loading">
-        <div class="title flex-row">
-          <span class="song-list">歌曲列表</span>
-          <span class="song-num">歌曲数量</span>
-        </div>
-        <SongDetailsList :songs="songs"></SongDetailsList>
+        <SongDetailsList
+          :songs="songs"
+          :isPerson="ordered ? true : false"
+          :subscribed="songDetail.subscribed"
+          @playlistSubscribe="playlistSubscribe"
+        ></SongDetailsList>
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <!-- 喜欢该歌单的人 -->
+      <div class="like-song module shadow">
+        <div class="header-card flex-row">
+          <span>喜欢这个歌单的人</span>
+        </div>
+        <ul v-if="subscribers.length > 0">
+          <li v-for="item of subscribers" :key="item.id">
+            <div class="avatar">
+              <el-image
+                style="width: 50px; height: 50px"
+                :src="item.avatarUrl"
+                :alt="item.nickname"
+                :title="item.nickname"
+                fit="cover"
+              ></el-image>
+            </div>
+          </li>
+        </ul>
+        <p v-else class="no-like">还没有喜欢该歌单的人</p>
+      </div>
+      <!-- 相关歌单推荐 -->
+      <div class="related module shadow">
+        <div class="header-card flex-row">
+          <span>相关歌单推荐</span>
+        </div>
+        <ul v-if="relatedList.length > 0">
+          <li v-for="item of relatedList" :key="item.id">
+            <div class="avatar">
+              <el-image
+                style="width: 50px; height: 50px"
+                :src="item.coverImgUrl"
+                :alt="item.name"
+                :title="item.name"
+                fit="cover"
+              ></el-image>
+            </div>
+            <div class="info">
+              <h3 class="ellipsis" :title="item.name">{{ item.name }}</h3>
+              <span :title="item.creator.nickname"
+                >by. <small> {{ item.creator.nickname }}</small></span
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 热门评论 -->
+      <div></div>
+    </div>
   </div>
 </template>
 
 <script>
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
-import { getPlayListDetail, getSongDetail } from '@/api/service/api'
+import { getPlayListDetail, getSongDetail, playlistSubscribe, getSubscribersList, getRelatedList, getCommentList } from '@/api/service/api'
 import { createSong } from '@/model/song'
 export default {
   name: 'PlayListDetail',
@@ -79,7 +128,18 @@ export default {
       // 歌曲列表
       songs: [],
       // 歌单创建者信息
-      creator: {}
+      creator: {},
+      // 收藏这个歌单的人数量
+      s: 50,
+      // 是否是我喜欢的歌单
+      ordered: false,
+      // 歌单id
+      articleId: '',
+      // 收藏这个歌单的人
+      subscribers: [],
+      // 相关推荐
+      relatedList: [],
+      commentList: []
     }
   },
   components: {
@@ -109,12 +169,70 @@ export default {
   },
   mounted() {
     let id = this.$route.query.id
-    this.artistId = id
+    this.articleId = id
     if (id) {
       this._initIaLize(id)
     }
   },
   methods: {
+    // 获取歌单评论
+    async getCommentList(id) {
+      try {
+        let res = await getCommentList(id)
+        if (res.code === this.constants.code_status) {
+          console.log('getCommentList', res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // 相关歌单推荐
+    async getRelatedList(id) {
+      try {
+        let res = await getRelatedList(id)
+        if (res.code === this.constants.code_status) {
+          this.relatedList = res.playlists
+          console.log('getRelatedList(id)', res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // 获取歌单收藏者
+    async getSubscribersList(id) {
+      let params = { id, limit: 16, offset: 1 }
+      try {
+        let res = await getSubscribersList(params)
+        if (res.code === this.constants.code_status) {
+          this.subscribers = res.subscribers
+          console.log('getSubscribersList(id)', res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // 歌单收藏与取消的方法调用
+    async playlistSubscribe() {
+      let t = this.songDetail.subscribed ? 2 : 1
+      let message = this.songDetail.subscribed ? '已取消收藏' : '收藏成功'
+      try {
+        let res = await playlistSubscribe(t, this.articleId)
+        if (res.code === this.constants.code_status) {
+          this.$message({
+            message,
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.getPlayListDetail(this.articleId, this.s)
+          }, 500)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     // 展开介绍
     openDes(title, content) {
       this.$confirm(content, title, {
@@ -122,11 +240,11 @@ export default {
         customClass: 'descBox',
         showConfirmButton: false,
         dangerouslyUseHTMLString: true,
-        // eslint-disable-next-line no-unused-vars
       }).catch(error => {
-        // console.log(error)
+        console.log(error)
       })
     },
+
     // 获取歌单详情
     async getPlayListDetail(id, s) {
       // 获取当前时间的节点值
@@ -198,6 +316,7 @@ export default {
           this.songs = this._normaLizeSongs(res)
         }
         this.loading = false
+        console.log('this.songs', this.songs);
       } catch (error) {
         console.log(error);
       }
@@ -216,6 +335,9 @@ export default {
     _initIaLize(id) {
       // 将获取的歌单id传出，50是详情数量
       this.getPlayListDetail(id, 50)
+      this.getSubscribersList(id)
+      this.getRelatedList(id)
+      this.getCommentList(id)
     }
   }
 }
@@ -357,22 +479,110 @@ export default {
     }
     .content {
       margin-bottom: 10px;
-      .title {
-        width: 100%;
-        .song-list {
-          margin-right: 60px;
-          font-size: 1.4rem;
-        }
-        .song-num {
-          font-size: 1rem;
-        }
-      }
     }
   }
   .right {
     width: 350px;
     flex-shrink: 0;
     background: @color-dark;
+    .module {
+      padding: 16px;
+      width: 100%;
+      border-radius: 8px;
+    }
+    .like-song {
+      align-items: center;
+      cursor: pointer;
+      .header-card {
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid @color-theme;
+        cursor: pointer;
+        span {
+          font-size: 1rem;
+        }
+        .avatar {
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .no-like {
+        margin: 0 auto;
+        font-size: 1rem;
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -46px;
+        list-style: none;
+        li {
+          flex: 0 0 24%;
+          max-width: 30%;
+          padding: 0 5px 10px;
+          .avatar {
+            width: 100%;
+            border-radius: 3px;
+            /deep/.el-image {
+              width: 100%;
+              border-radius: 3px;
+            }
+          }
+        }
+      }
+    }
+    .related {
+      align-items: center;
+      cursor: pointer;
+      .header-card {
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid @color-theme;
+        cursor: pointer;
+        span {
+          font-size: 1rem;
+        }
+      }
+      ul {
+        margin: 0 -40px;
+        li {
+          display: flex;
+          margin-bottom: 15px;
+          cursor: pointer;
+          .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            /deep/.el-image {
+              width: 100%;
+              border-radius: 3px;
+            }
+          }
+          .info {
+            height: 60px;
+            width: calc(100% -100px);
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            h3 {
+              font-weight: 400;
+              margin-bottom: 10px;
+              width: 80%;
+              &:hover {
+                color: @color-theme;
+              }
+            }
+            span {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>
