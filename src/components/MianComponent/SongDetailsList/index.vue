@@ -1,7 +1,23 @@
 <template>
   <div class="detail-box container">
-    <div>
-
+    <div class="detail-header">
+      <div class="detail-songs-list">
+        <span class="song-list">歌曲列表</span>
+        <span>{{ songs.length }}首歌</span>
+      </div>
+      <div class="item play-item" @click="playAllSong">
+        <i class="iconfont icon-bofang3"></i>
+        播放全部
+      </div>
+      <div
+        v-if="!isPerson"
+        class="collect"
+        @click="collect"
+        :class="subscribed ? 'active' : ''"
+      >
+        <i class="iconfont icon-shoucang collect-shoucang"></i>
+        {{ collectText }}
+      </div>
     </div>
     <table class="artist-table">
       <thead>
@@ -14,85 +30,94 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) of songs"
-            :key="item.id"
-            :class="currentSong.id == item.id && playing
-              ? 'playing'
-              : ''
-          ">
+        <tr
+          v-for="(item, index) of songer"
+          :key="item.id"
+          :class="currentSong.id === item.id && playing ? 'playing' : ''"
+        >
           <td>
             <div class="index-container flex-center">
               <span class="num">{{ utils.formatZero(index + 1, 2) }}</span>
               <div class="play-icon">
-                <div class="line"
-                     style="animation-delay: -1.2s;"></div>
+                <div class="line" style="animation-delay: -1.2s"></div>
                 <div class="line"></div>
-                <div class="line"
-                     style="animation-delay: -1.5s;"></div>
-                <div class="line"
-                     style="animation-delay: -0.9s;"></div>
-                <div class="line"
-                     style="animation-delay: -0.6s;"></div>
+                <div class="line" style="animation-delay: -1.5s"></div>
+                <div class="line" style="animation-delay: -0.9s"></div>
+                <div class="line" style="animation-delay: -0.6s"></div>
               </div>
-              <i class="iconfont icon-bofang3 play-btn"
-                 @click="playSong(item, index)"
-                 title="播放"></i>
-              <i class="iconfont icon-zanting2 pause-btn"
-                 @click="pauseSong"
-                 title="暂停"></i>
+              <i
+                class="iconfont icon-bofang3 play-btn"
+                @click="playSong(item, index)"
+                title="播放"
+              ></i>
+              <i
+                class="iconfont icon-zanting2 pause-btn"
+                @click="pauseSong"
+                title="暂停"
+              ></i>
             </div>
           </td>
           <td>
             <div class="name-container">
               <div class="avatar">
-                <el-image :key="item.image + '?param=100y100'"
-                          :src="item.image + '?param=100y100'"
-                          fit="cover"
-                          lazy>
-                  <div slot="placeholder"
-                       class="image-slot flex-center flex-column">
+                <el-image
+                  :key="item.image + '?param=100y100'"
+                  :src="item.image + '?param=100y100'"
+                  fit="cover"
+                  lazy
+                >
+                  <div
+                    slot="placeholder"
+                    class="image-slot flex-center flex-column"
+                  >
                     <i class="iconfont niceicon-3"></i>
                   </div>
-                  <div slot="error"
-                       class="image-slot flex-center">
+                  <div slot="error" class="image-slot flex-center">
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
               </div>
-              <p class="name ellipsis"
-                 :title="item.name">{{ item.name }}</p>
+              <p class="name ellipsis" :title="item.name">{{ item.name }}</p>
             </div>
           </td>
           <td>
             <div class="artist-container">
-              <p class="author ellipsis"
-                 :title="item.singer">
+              <p class="author ellipsis" :title="item.singer">
                 {{ item.singer }}
               </p>
             </div>
           </td>
           <td>
             <div class="album-container">
-              <p :title="item.album"
-                 class="ellipsis">{{ item.album }}</p>
+              <p :title="item.album" class="ellipsis">{{ item.album }}</p>
             </div>
           </td>
           <td>
             <div class="duration-container">
               <p>{{ utils.formatSecondTime(item.duration) }}</p>
               <div class="song-tools">
-                <i class="iconfont niceicon-heart"
-                   title="喜欢"></i>
-                <i class="iconfont nicexiazai"
-                   title="下载"></i>
-                <i class="iconfont nicedot"
-                   title="更多"></i>
+                <i class="iconfont niceicon-heart" title="喜欢"></i>
+                <i class="iconfont nicexiazai" title="下载"></i>
+                <i class="iconfont nicedot" title="更多"></i>
               </div>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="el-pagination" v-if="songs.length > 40">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        background
+        hide-on-single-page
+        :page-size="pageSize"
+        layout="total, prev, pager, next"
+        :total="songs.length"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -102,24 +127,75 @@ export default {
   name: 'SongDetailsList',
   data() {
     return {
-
+      pageSize: 40,
+      currentPage: 1
     }
   },
   props: {
+    // 歌曲列表
     songs: {
       type: Array
+    },
+    // 订阅
+    subscribed: {
+      type: Boolean
+    },
+    // 个人是否订阅
+    isPerson: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    ...mapGetters(['currentIndex', 'playing', 'currentSong'])
+    ...mapGetters(['currentIndex', 'playing', 'currentSong']),
+    // 计算歌曲长度，切割进行分页
+    songer() {
+      return this.songs.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+    },
+    // 计算是否订阅，显示具体文字
+    collectText() {
+      return this.subscribed ? '已收藏' : '收藏'
+    },
+    // 收藏图标的改变
+    // collectIcon() {
+    //   return this.subscribed ? 'icon-shoucang-hover' : 'icon-shoucang'
+    // }
   },
   components: {
+
+  },
+  watch: {
 
   },
   mounted() {
 
   },
   methods: {
+    // 收藏歌单
+    async collect() {
+      this.$emit('playlistSubscribe')
+    },
+
+    // 播放全部
+    playAllSong() {
+      this.playAll({
+        list: this.songs
+      })
+    },
+
+    // 每页显示的数量，这里做的是一个前端的分页，因为接口那块是没有分页的
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.currentPage = 1;
+      this.pageSize = val;
+    },
+
+    // 改变当前页码
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
+
     // 播放
     playSong(item, index) {
       this.selectPlay({
@@ -134,9 +210,7 @@ export default {
     },
 
     ...mapActions([
-      // 点击选择播放
       'selectPlay',
-      // 点击播放全部
       'playAll',
       'pausePlay'
     ])
@@ -147,6 +221,68 @@ export default {
 <style lang='less' scoped>
 .detail-box {
   width: 100%;
+  .detail-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 10px;
+    .detail-songs-list {
+      display: flex;
+      align-items: center;
+      .song-list {
+        margin-right: 40px;
+        font-size: 1.5rem;
+      }
+      span {
+        font-size: 1rem;
+      }
+    }
+    .item {
+      background: @color-theme;
+      color: @color-dark;
+      font-weight: 300;
+      border-radius: 40px;
+      padding: 6px 12px;
+      cursor: pointer;
+      margin-left: 46%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s;
+      .icon-bofang3 {
+        font-size: 1.1rem;
+        padding-right: 6px;
+      }
+    }
+    .collect {
+      background: @lyric-background;
+      color: @color-dark;
+      border-radius: 40px;
+      padding: 6px 12px;
+      display: flex;
+      justify-content: flex-end;
+      margin-left: 20px;
+      font-weight: 400;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      .collect-shoucang {
+        margin-right: 4px;
+      }
+      &.active {
+        background: @color-theme;
+        color: @color-font-size-White;
+        .icon-shoucang {
+          align-items: center;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+  .el-pagination {
+    margin-top: 10px;
+    float: right;
+  }
   .artist-table {
     width: 100%;
     table-layout: fixed;
