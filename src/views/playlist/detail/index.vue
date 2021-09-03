@@ -52,14 +52,51 @@
         </div>
       </div>
       <!-- 中间内容 -->
-      <div class="content" v-loading="loading">
-        <SongDetailsList
-          :songs="songs"
-          :isPerson="ordered ? true : false"
-          :subscribed="songDetail.subscribed"
-          @playlistSubscribe="playlistSubscribe"
-        ></SongDetailsList>
-        <MainComment></MainComment>
+      <div class="content">
+        <div class="content-song-detail" v-loading="loading">
+          <SongDetailsList
+            :songs="songs"
+            :isPerson="ordered ? true : false"
+            :subscribed="songDetail.subscribed"
+            @playlistSubscribe="playlistSubscribe"
+          ></SongDetailsList>
+        </div>
+        <div class="commen-header">
+          <div class="comment-header-title">
+            <span class="comment-text">评论</span>
+            <span>{{ totle }}条评论</span>
+          </div>
+        </div>
+        <CommentBox
+          :currentCommentId="currentCommentId"
+          @commentSubmit="commentSubmit"
+          :clearContent="clearContent"
+        ></CommentBox>
+        <div>
+          <MainComment
+            title="最新评论"
+            :commentList="commentList"
+            :currentCommentId="currentCommentId"
+            @commentHandle="commentHandle"
+            @commentSubmit="commentSubmit"
+            @cancelComment="cancelComment"
+            @commentLike="commentLike"
+          >
+          </MainComment>
+        </div>
+        <!-- 评论分页 -->
+        <div class="el-pagination">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            background
+            :page-size="limit"
+            layout="total, prev, pager, next"
+            :total="totle"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -111,10 +148,10 @@
       <!-- 热门评论 -->
       <div class="comment module shadow">
         <div class="header-card flex-row">
-          <span>精彩评论</span>
+          <span>热门评论</span>
         </div>
-        <ul v-if="commentList.length > 0">
-          <li class="item" v-for="item of commentList" :key="item.time">
+        <ul v-if="commentHotList.length > 0">
+          <li class="item" v-for="item of commentHotList" :key="item.time">
             <div class="avatar">
               <el-image
                 style="width: 50px; height: 50px"
@@ -142,7 +179,12 @@
 <script>
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import MainComment from '@/components/MianComponent/MainComment'
-import { getPlayListDetail, getSongDetail, playlistSubscribe, getSubscribersList, getRelatedList, getCommentList } from '@/api/service/api'
+import CommentBox from '@/components/MianComponent/CommentBox'
+import {
+  getPlayListDetail, getSongDetail, playlistSubscribe,
+  getSubscribersList, getRelatedList, getCommentList, getHotCommentList,
+  sendComment, commentLike
+} from '@/api/service/api'
 import { createSong } from '@/model/song'
 export default {
   name: 'PlayListDetail',
@@ -166,13 +208,26 @@ export default {
       subscribers: [],
       // 相关推荐
       relatedList: [],
-      // 热门评论列表
-      commentList: []
+      // 最新评论列表
+      commentList: [],
+      // 歌单热门评论列表
+      commentHotList: [],
+      // 热门评论类型
+      // 评论的id
+      currentCommentId: '',
+      currentPage: 1,
+      limit: 20,
+      totle: 0,
+      offset: 0,
+      // 是否清空评论框内容
+      clearContent: false
+
     }
   },
   components: {
     SongDetailsList,
-    MainComment
+    MainComment,
+    CommentBox
   },
 
   computed: {
@@ -204,17 +259,132 @@ export default {
     }
   },
   methods: {
+    // 给评论点赞
+    async commentLike(id, liked) {
+      let timestamp = new Date().getTime()
+      let params = {
+        id: this.articleId,
+        cid: id,
+        type: 2,
+        timestamp
+      }
+      // 判断是已经点赞了还是取消点赞
+      if (liked) {
+        params.t = 0
+      } else {
+        params.t = 1
+      }
+      try {
+        let res = await commentLike(params)
+        if (res.code === this.constants.code_status) {
+          // 获取歌单点赞的相关数据
+          this.getCommentList(this.articleId)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // 取消评论
+    cancelComment() {
+      this.currentCommentId = ''
+    },
+
+    // 每页显示的评论数量
+    handleSizeChange(val) {
+      this.limit = val
+      this.offset = this.limit * this.currentPage
+      this.getCommentList(this.articleId)
+    },
+
+    // 改变当前页码
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.offset = val * this.limit
+      this.getCommentList(this.articleId)
+    },
+
+    // 评论最新提交
+    commentSubmit(content) {
+      if (!content) {
+        this.$message.error('没有输入内容啊')
+        return
+      } else {
+        this.loading = true
+        // 获取当前的时间
+        let timestamp = new Date().getTime()
+        let params = {
+          id: this.articleId,
+          type: 2,
+          content: content,
+          timestamp
+        }
+        if (this.currentCommentId === '') {
+          // 发表评论
+          params.t = 1
+        } else {
+          // 回复
+          params.t = 2
+          params.commentId = this.currentCommentId
+        }
+        sendComment(params).then(res => {
+          if (res.code === this.constants.code_status) {
+            this.$message.success('提交成功')
+            this.cancelComment()
+            // 刷新评论列表
+            this.getCommentList(this.articleId)
+            this.clearContent = true
+            this.loading = false
+          }
+        }).catch(error => {
+          this.$message.error({
+            title: error.data.dialog.title,
+            message: error.data.dialog.subtitle
+          })
+          this.loading = false
+        })
+      }
+    },
+
+    // 点击评论,打开评论框
+    commentHandle(id) {
+      // 将父组件id传递到子组件，用于判断是否是同一个账户
+      this.currentCommentId = id
+    },
+
+    // 获取歌单热门评论
+    async getHotCommentList(id) {
+      let params = {
+        id,
+        type: 2,
+        limit: 10,
+        offset: 1,
+      }
+      try {
+        let res = await getHotCommentList(params)
+        if (res.code === this.constants.code_status) {
+          console.log('getHotCommentList', res);
+          this.commentHotList = res.hotComments
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     // 获取歌单评论
     async getCommentList(id) {
       let params = {
         id,
-        limit: 20,
-        offset: 1
+        limit: this.limit,
+        offset: this.offset
       }
       try {
         let res = await getCommentList(params)
         if (res.code === this.constants.code_status) {
           console.log('getCommentList', res);
+          // 获取总数
+          this.totle = res.total
+          this.r
           this.commentList = res.comments
         }
       } catch (error) {
@@ -373,6 +543,7 @@ export default {
       this.getSubscribersList(id)
       this.getRelatedList(id)
       this.getCommentList(id)
+      this.getHotCommentList(id)
     }
   }
 }
@@ -514,6 +685,32 @@ export default {
     }
     .content {
       margin-bottom: 10px;
+      width: 100%;
+      .content-song-detail {
+        margin-bottom: 60px;
+      }
+      .commen-header {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin-bottom: 10px;
+        border-bottom: 3px solid @color-theme;
+        .comment-header-title {
+          display: flex;
+          align-items: center;
+          .comment-text {
+            margin-right: 40px;
+            font-size: 1.2rem;
+          }
+          span {
+            font-size: 1rem;
+          }
+        }
+      }
+      .el-pagination {
+        margin-top: 10px;
+        float: right;
+      }
     }
   }
   .right {
@@ -549,7 +746,8 @@ export default {
       ul {
         display: flex;
         flex-wrap: wrap;
-        margin: 0 -46px;
+        margin: 0;
+        padding: 0;
         list-style: none;
         li {
           flex: 0 0 24%;
@@ -580,7 +778,9 @@ export default {
         }
       }
       ul {
-        margin: 0 -40px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
         li {
           display: flex;
           margin-bottom: 15px;
@@ -632,7 +832,9 @@ export default {
         }
       }
       ul {
-        margin: 0 -40px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
         li {
           padding: 10px 0;
           width: 100%;
