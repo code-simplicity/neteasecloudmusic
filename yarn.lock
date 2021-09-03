@@ -8744,6 +8744,11 @@
   "resolved" "https://registry.nlark.com/vue-cli-plugin-style-resources-loader/download/vue-cli-plugin-style-resources-loader-0.1.5.tgz"
   "version" "0.1.5"
 
+"vue-emoji-picker@^1.0.3":
+  "integrity" "sha1-FoYEFj5Bs6Kg+emiG7WV/YusBeQ="
+  "resolved" "https://registry.nlark.com/vue-emoji-picker/download/vue-emoji-picker-1.0.3.tgz"
+  "version" "1.0.3"
+
 "vue-eslint-parser@^7.0.0":
   "integrity" "sha1-6k5LEP0QqjXIp5rHg0iNirzSm+g="
   "resolved" "https://registry.nlark.com/vue-eslint-parser/download/vue-eslint-parser-7.10.0.tgz?cache=0&sync_timestamp=1627452620913&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.10.0.tgz"
