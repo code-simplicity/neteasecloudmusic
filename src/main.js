@@ -24,6 +24,8 @@ import 'swiper/css/swiper.css'
 
 import './assets/style/common.css'
 
+import './assets/style/iconfont.css'
+
 // 引入animate动画库
 import animate from 'animate.css'
 
@@ -46,10 +48,12 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>',
   // 安装全局事件总线
-  beforeCreate () {
+  beforeCreate() {
     Vue.prototype.$bus = this
   }
 })
