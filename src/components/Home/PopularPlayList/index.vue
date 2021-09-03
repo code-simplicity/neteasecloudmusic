@@ -2,9 +2,10 @@
   <div class="r-playlist">
     <div
       class="r-playlist-item"
-      v-for="item in songMusic"
+      v-for="item of songMusic"
       :key="item.id"
       :class="numClass"
+      :title="item.name"
       @click="toDetail(item)"
     >
       <div class="wrapper">
@@ -15,7 +16,7 @@
                 slot="placeholder"
                 class="image-slot flex-center flex-column"
               >
-                <i class="iconfont niceicon-3"></i>
+                <i class="iconfont"></i>
                 <p>加载中<span class="dot">...</span></p>
               </div>
               <div slot="error" class="image-slot flex-center">
@@ -24,7 +25,7 @@
             </el-image>
           </div>
           <div class="count">
-            <i class="iconfont icon-bofangliang"></i>
+            <i class="iconfont icon-bofangliang" :title="item.playCount"></i>
             <span class="playcount">{{
               utils.tranNumber(item.playCount, 0)
             }}</span>
@@ -44,43 +45,54 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
-    name: 'PopularPlayList',
-    data() {
-      return {
+  name: 'PopularPlayList',
+  data() {
+    return {
 
-      }
-    },
-    props: {
-      songMusic: {
-        type: Array
-      }
-    },
-    components: {
-
-    },
-    // 计算属性获取vuex状态
-    computed: {
-      numClass() {
-          return this.num == 2 ? 'two' : 'eight'
-      }
-    },
-    mounted() {
-     
-    },
-    methods: {
-      // 查看推荐详情
-      toDetail(item) {
-        console.log('toDetail', item);
-        let query = {
-          id: item.id
-        }
-        this.$router.push({
-          name: 'playlistdetail',
-          query
-        })
-      }
     }
+  },
+  props: {
+    songMusic: {
+      type: Array
+    }
+  },
+  components: {
+
+  },
+  // 计算属性获取vuex状态
+  computed: {
+    numClass() {
+      return this.num == 2 ? 'two' : 'eight'
+    },
+    ...mapGetters(['currentIndex', 'playing', 'currentSong']),
+  },
+  mounted() {
+    // console.log('this.songMusic', this.songMusic)
+  },
+  methods: {
+    // // 播放歌单
+    // playAllSong() {
+    //   this.playAll({
+    //     list: this.songMusic
+    //   })
+    // },
+
+    // 查看推荐详情
+    toDetail(item) {
+      console.log('toDetail', item);
+      let query = {
+        id: item.id
+      }
+      this.$router.push({
+        name: 'playlistdetail',
+        query
+      })
+    },
+
+    ...mapActions(['playAll'])
+  }
 }
 </script>
 
@@ -109,7 +121,7 @@ export default {
       position: relative;
       &:before,
       &:after {
-        content: "";
+        content: '';
         width: 100%;
         height: 100%;
         background: rgba(194, 194, 194, 0.2);
@@ -148,7 +160,7 @@ export default {
           height: 100%;
           border-radius: 8px;
           &:after {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -175,7 +187,7 @@ export default {
           bottom: 0;
           height: 28px;
           background-position: 0 -577px;
-          background: url("../../../assets/images/coverall.png") no-repeat;
+          background: url('../../../assets/images/coverall.png') no-repeat;
           background-size: cover;
           color: #ccc;
           font-size: 12px;
@@ -194,7 +206,7 @@ export default {
             margin-right: 5px;
           }
           &:after {
-            content: "";
+            content: '';
             position: absolute;
             right: -14px;
             top: 0;
