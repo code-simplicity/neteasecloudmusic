@@ -102,6 +102,14 @@
   left: 0;
 }
 
+/* button */
+.el-button--primary {
+  color: #FFF;
+  background-color: #2F7FCB;
+  border-color: #2F7FCB;
+  border-radius: 8px;
+}
+
 /* element image */
 .el-image {
   width: 100%;
