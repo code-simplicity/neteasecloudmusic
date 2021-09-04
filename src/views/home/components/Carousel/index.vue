@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import {getCarousel} from '../../../../api/service/api'
+import { getCarousel } from '../../../../api/service/api'
 export default {
   name: 'Carousel',
-  data () {
+  data() {
     return {
       carousel: [],
       swiperOption: {
@@ -47,7 +47,7 @@ export default {
       return this.carousel.length
     }
   },
-  mounted () {
+  mounted() {
     this.getCarousel()
   },
   methods: {
@@ -69,6 +69,7 @@ export default {
 <style lang='less' scoped>
 .carousel {
   top: 10px;
+  width: 100%;
 }
 .carousel /deep/ .swiper-pagination {
   width: 100%;
@@ -90,6 +91,7 @@ export default {
 }
 .carousel {
   position: relative;
+  width: 100%;
   img {
     width: 100%;
     border-radius: 8px;

@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'MainFooter',
-  data () {
+  data() {
     return {
 
     }
@@ -25,7 +25,7 @@ export default {
   components: {
 
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {
@@ -37,6 +37,7 @@ export default {
 <style lang="less" scoped>
 .main-footer {
   width: 100%;
+  min-width: 100%;
   border-top: 1px solid @footer-border-top;
   background-color: @footer-background-color;
   .copyright {

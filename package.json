@@ -16,6 +16,7 @@
     "element-ui": "^2.15.5",
     "good-storage": "^1.1.1",
     "lyric-parser": "^1.0.1",
+    "particles.js": "^2.0.0",
     "qs": "^6.7.0",
     "style-resources-loader": "^1.4.1",
     "swiper": "^5.4.5",
@@ -24,6 +25,7 @@
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-emoji-picker": "^1.0.3",
     "vue-kinesis": "^1.3.3",
+    "vue-particles": "^1.0.9",
     "vue-router": "^3.5.2",
     "vuex": "^3.6.2"
   },

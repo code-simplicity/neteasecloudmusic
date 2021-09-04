@@ -134,3 +134,11 @@ export const sendComment = params => api.get(`/comment`, {
 export const commentLike = params => api.get(`/comment/like`, {
     params
 })
+
+/**
+ * 获取用户详情
+ * @param {*} 说明 : 登录后调用此接口 , 传入用户 id, 可以获取用户详情
+ * @param {*} uid  用户 id
+ * @returns 
+ */
+export const getUserDetail = uid => api.get(`/user/detail?uid=${uid}`, {})

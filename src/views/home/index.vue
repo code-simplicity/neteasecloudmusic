@@ -17,7 +17,7 @@ import PopularRecommend from './components/PopularRecommend'
 import RecommendNewSong from './components/RecommendNewSong'
 export default {
   name: 'Home',
-  data () {
+  data() {
     return {
 
     }
@@ -27,7 +27,7 @@ export default {
     PopularRecommend,
     RecommendNewSong,
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {

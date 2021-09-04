@@ -55,6 +55,7 @@
       <div class="content">
         <div class="content-song-detail" v-loading="loading">
           <SongDetailsList
+            :songListShow="songListShow"
             :songs="songs"
             :isPerson="ordered ? true : false"
             :subscribed="songDetail.subscribed"
@@ -220,7 +221,9 @@ export default {
       totle: 0,
       offset: 0,
       // 是否清空评论框内容
-      clearContent: false
+      clearContent: false,
+      // 关闭组件的底部标题
+      songListShow: true
 
     }
   },

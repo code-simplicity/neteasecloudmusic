@@ -45,7 +45,7 @@
               <el-dropdown-item icon="el-icon-user" command="myHomePage"
                 >我的主页</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-message" command="myMessage">
+              <el-dropdown-item icon="el-icon-message" command="myMessage"
                 >我的消息</el-dropdown-item
               >
               <el-dropdown-item icon="el-icon-setting" command="personalSetting"
@@ -71,11 +71,11 @@
 </template>
 
 <script>
-import {logout} from '../../../api/service/user'
-import {mapGetters, mapActions} from 'vuex'
+import { logout } from '../../../api/service/user'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'MainHeader',
-  data () {
+  data() {
     return {
 
     }
@@ -87,16 +87,16 @@ export default {
   computed: {
     ...mapGetters(['loginStatus', 'userInfo'])
   },
-  
-  mounted () {
+
+  mounted() {
 
   },
   methods: {
-   async handleCommand(command) {
-      switch(command) {
+    async handleCommand(command) {
+      switch (command) {
         case 'myHomePage': {
-            this.$router.push({
-            name: 'home'
+          this.$router.push({
+            name: 'personal'
           })
           break
         }
@@ -114,7 +114,7 @@ export default {
         }
         case 'myRank': {
           this.$router.push({
-              name: 'myRank'
+            name: 'myRank'
           })
           break
         }
@@ -171,7 +171,7 @@ export default {
       background-position: 0px center;
       background-repeat: no-repeat;
       background-size: 100%;
-      background-image: url("../../../assets/images/logo.png");
+      background-image: url('../../../assets/images/logo.png');
     }
 
     img {
@@ -180,7 +180,7 @@ export default {
   }
   .nav {
     flex: 1;
-    list-style:none;
+    list-style: none;
     li {
       font-size: 16px;
       height: 100%;
@@ -192,7 +192,7 @@ export default {
         &.router-link-active {
           color: @color-dark;
           &::after {
-            content: "";
+            content: '';
             position: absolute;
             background: @color-dark;
             left: 0;

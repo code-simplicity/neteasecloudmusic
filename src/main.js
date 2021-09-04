@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 // 引入antd-vue
 import Antd from 'ant-design-vue'
@@ -24,11 +22,16 @@ import 'swiper/css/swiper.css'
 
 import './assets/style/common.css'
 
+// 引入iconfont
 import './assets/style/iconfont.css'
 
 // 引入animate动画库
 import animate from 'animate.css'
 
+// 引入particles.js
+import particlesJs from "particles.js";
+
+import VueParticles from 'vue-particles'
 
 
 Vue.config.productionTip = false
@@ -37,6 +40,10 @@ Vue.use(Antd)
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
 Vue.use(animate)
+Vue.use(particlesJs)
+
+Vue.use(VueParticles)
+
 
 // 配置全局事件总线，这样在任何地方都可以使用了，不需要单独引入
 // Vue.prototype.$api = getApi

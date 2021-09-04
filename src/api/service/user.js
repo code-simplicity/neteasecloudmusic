@@ -22,3 +22,12 @@ export const getUserInfo = (uid) => api.get(`/user/detail?uid=${uid}`, {})
  * @returns 
  */
 export const logout = () => api.get('/logout', {})
+
+/**
+ * 获取用户播放记录
+ * @param {*} 说明 : 登录后调用此接口 , 传入用户 id, 可获取用户播放记录
+ * @param {*} uid 用户 id
+ * @param {*} type 可选参数 : type : type=1 时只返回 weekData, type=0 时返回 allData
+ * @returns 
+ */
+export const getUserRecord = (uid, type) => api.get(`/user/record?uid=${uid}&type=${type}`, {})

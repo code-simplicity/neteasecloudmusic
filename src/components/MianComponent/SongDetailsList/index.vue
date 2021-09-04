@@ -2,8 +2,8 @@
   <div class="detail-box container">
     <div class="detail-header">
       <div class="detail-songs-list">
-        <span class="song-list">歌曲列表</span>
-        <span>{{ songs.length }}首歌</span>
+        <span v-if="songListShow" class="song-list">歌曲列表</span>
+        <span v-if="songListShow">{{ songs.length }}首歌</span>
       </div>
       <div class="item play-item" @click="playAllSong">
         <i class="iconfont icon-bofang3"></i>
@@ -144,6 +144,10 @@ export default {
     isPerson: {
       type: Boolean,
       default: false
+    },
+    // 是否开启显示多少首歌曲
+    songListShow: {
+      type: Boolean
     }
   },
   computed: {
@@ -218,23 +222,27 @@ export default {
 }
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .detail-box {
   width: 100%;
   .detail-header {
+    margin-top: 16px;
     display: flex;
-    justify-content: start;
+    align-items: center;
+    flex-flow: row wrap;
     align-items: center;
     margin-bottom: 10px;
     .detail-songs-list {
       display: flex;
       align-items: center;
+      flex-grow: 1;
       .song-list {
         margin-right: 40px;
         font-size: 1.5rem;
       }
       span {
         font-size: 1rem;
+        flex: 0 0 30%;
       }
     }
     .item {
@@ -244,9 +252,9 @@ export default {
       border-radius: 40px;
       padding: 6px 12px;
       cursor: pointer;
-      margin-left: 46%;
       display: flex;
-      align-items: center;
+
+      align-content: flex-start;
       justify-content: center;
       transition: all 0.4s;
       .icon-bofang3 {
@@ -259,8 +267,7 @@ export default {
       color: @color-dark;
       border-radius: 40px;
       padding: 6px 12px;
-      display: flex;
-      justify-content: flex-end;
+      // display: flex;
       margin-left: 20px;
       font-weight: 400;
       align-items: center;

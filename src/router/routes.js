@@ -143,6 +143,17 @@ export const mainRouter = [{
         require(['@/views/mv/index'], resolve)
       }
     },
+    {
+      path: 'personal',
+      name: 'personal',
+      meta: {
+        title: '个人主页',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/personal/index'], resolve)
+      }
+    },
     
   ]
 }]
