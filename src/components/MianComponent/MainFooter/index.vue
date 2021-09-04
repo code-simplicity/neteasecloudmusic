@@ -37,26 +37,26 @@ export default {
 <style lang="less" scoped>
 .main-footer {
   width: 100%;
-  min-width: 100%;
-  border-top: 1px solid @footer-border-top;
-  background-color: @footer-background-color;
+  // min-width: 100%;
+  // border-top: 2px solid @footer-border-top;
+  // background: @footer-background-color;
   .copyright {
     padding: 1.2rem 0;
     .container {
       padding: 0;
-      color: chocolate;
-      font-size: 1rem;
+      color: rgb(230, 100, 8);
+      font-size: 1.2rem;
       .mian-footer-content {
         display: flex;
         align-items: center;
         a {
-          color: #555657;
+          color: @color-dark;
           margin-left: 5px;
           transition: color 0.15s ease-in-out,
             background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
             box-shadow 0.15s ease-in-out;
           &:hover {
-            color: @color-blank;
+            color: @color-theme;
           }
         }
       }
