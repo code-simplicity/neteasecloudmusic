@@ -20,34 +20,34 @@
 <script>
 import PopularPlayList from '@/components/Home/PopularPlayList'
 import {
-    getPersonalized,
+  getPersonalized,
 } from '@/api/service/api'
 export default {
-    name: 'PopularRecommend',
-    data() {
-        return {
-            limit: 8,
-            PopularList: []
-        }
-    },
-    components: {
-        PopularPlayList,
-    },
-    mounted() {
-        this.getPersonalized()
-    },
-    methods: {
-        //  获取推荐歌单
-        async getPersonalized() {
-            try {
-                let res = await getPersonalized(this.limit)
-                this.PopularList = res.result
-                console.log('this.PopularList', this.PopularList);
-            } catch (error) {
-                console.log(error)
-            }
-        },
+  name: 'PopularRecommend',
+  data() {
+    return {
+      limit: 8,
+      PopularList: []
     }
+  },
+  components: {
+    PopularPlayList,
+  },
+  mounted() {
+    this.getPersonalized()
+  },
+  methods: {
+    //  获取推荐歌单
+    async getPersonalized() {
+      try {
+        let res = await getPersonalized(this.limit)
+        this.PopularList = res.result
+        console.log('this.PopularList', this.PopularList);
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  }
 }
 </script>
 
@@ -56,6 +56,7 @@ export default {
   margin-top: 36px;
   padding: 20px;
   background-color: @color-dark;
+  border-radius: 8px;
   .p-recommend-header {
     display: flex;
     align-items: center;

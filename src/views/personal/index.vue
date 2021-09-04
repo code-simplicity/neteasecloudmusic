@@ -263,7 +263,7 @@ export default {
     .right {
       width: 400px;
       position: relative;
-      margin-top: 40px;
+      margin-top: 20px;
       flex-shrink: 0;
       .user-box {
         background: #fff;
@@ -382,7 +382,7 @@ export default {
       flex: 1;
       background: #fff;
       position: relative;
-      margin-top: 40px;
+      margin-top: 20px;
       margin-right: 20px;
       border-radius: 8px;
       padding: 16px;

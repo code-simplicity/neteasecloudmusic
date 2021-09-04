@@ -18,71 +18,71 @@
 <script>
 import NewSongList from '@/components/Home/NewSongList'
 import {
-    getNewSongs,
-    getSongDetail
+  getNewSongs,
+  getSongDetail
 } from '@/api/service/api'
 import {
-    createSong
+  createSong
 } from '@/model/song'
 export default {
-    name: 'RecommendNewSong',
-    data() {
-        return {
-            limit: 10,
-            PopularList: []
-        }
-    },
-    components: {
-        NewSongList,
-    },
-    mounted() {
-        this.getNewSongs()
-    },
-    methods: {
-        //  获取推荐歌单
-        async getNewSongs() {
-            try {
-                let res = await getNewSongs(this.limit)
-                // 获取推荐歌单id
-                let list = []
-                if (res.code === 200) {
-                    res.result.map(item => {
-                        list.push(item.id)
-                    })
-                }
-                console.log('推荐歌单', res)
-                console.log('推荐歌单list', list)
-                this.getSongDetail(list)
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        // 获取歌曲列表
-        async getSongDetail(idsList) {
-            let time = new Date().valueOf()
-            // id数组变为以逗号隔开的字符串
-            idsList = idsList.join(',')
-            try {
-                let res = await getSongDetail(idsList, time)
-                console.log('获取歌曲列表', res);
-                // 处理歌曲
-                this.PopularList = this.formatSongs(res.songs)
-                console.log('this.PopularList', this.PopularList);
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        // 处理歌曲
-        formatSongs(list) {
-            let arr = []
-            list.map(item => {
-                if (item.id) {
-                    arr.push(createSong(item))
-                }
-            })
-            return arr
-        }
+  name: 'RecommendNewSong',
+  data() {
+    return {
+      limit: 10,
+      PopularList: []
     }
+  },
+  components: {
+    NewSongList,
+  },
+  mounted() {
+    this.getNewSongs()
+  },
+  methods: {
+    //  获取推荐歌单
+    async getNewSongs() {
+      try {
+        let res = await getNewSongs(this.limit)
+        // 获取推荐歌单id
+        let list = []
+        if (res.code === 200) {
+          res.result.map(item => {
+            list.push(item.id)
+          })
+        }
+        console.log('推荐歌单', res)
+        console.log('推荐歌单list', list)
+        this.getSongDetail(list)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    // 获取歌曲列表
+    async getSongDetail(idsList) {
+      let time = new Date().valueOf()
+      // id数组变为以逗号隔开的字符串
+      idsList = idsList.join(',')
+      try {
+        let res = await getSongDetail(idsList, time)
+        console.log('获取歌曲列表', res);
+        // 处理歌曲
+        this.PopularList = this.formatSongs(res.songs)
+        console.log('this.PopularList', this.PopularList);
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    // 处理歌曲
+    formatSongs(list) {
+      let arr = []
+      list.map(item => {
+        if (item.id) {
+          arr.push(createSong(item))
+        }
+      })
+      return arr
+    }
+  }
 }
 </script>
 
@@ -91,7 +91,7 @@ export default {
   margin-top: 20px;
   padding: 20px;
   background-color: #fff;
-
+  border-radius: 8px;
   .p-recommend-header {
     display: flex;
     align-items: center;

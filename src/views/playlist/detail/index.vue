@@ -554,9 +554,11 @@ export default {
 
 <style lang='less' scoped>
 .play-list-detail {
-  background-color: @content-background;
+  // background-color: @content-background;
   display: flex;
   align-items: flex-start;
+  margin-top: 16px;
+  border-radius: 8px;
   .left {
     flex: 1;
     width: 600px;
@@ -720,6 +722,7 @@ export default {
     width: 350px;
     flex-shrink: 0;
     background: @color-dark;
+    border-radius: 8px;
     .module {
       padding: 16px;
       width: 100%;

@@ -2,12 +2,13 @@
   <div class="layout">
     <div class="layoutView">
       <router-view></router-view>
+      <Particles></Particles>
     </div>
   </div>
 </template>
 
 <script>
-
+import Particles from '../../components/Particles'
 export default {
   name: 'Layout',
   data() {
@@ -16,7 +17,7 @@ export default {
     }
   },
   components: {
-
+    Particles
   },
   mounted() {
 
