@@ -8,8 +8,8 @@
         <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
           <el-tab-pane label="基本设置" name="first"
             ><UserSetting
-              :userProfile="userProfile"
               :districts="districts"
+              :userProfile="userProfile"
               @saveSubmit="saveSubmit"
             ></UserSetting
           ></el-tab-pane>
@@ -25,6 +25,7 @@
 import axios from 'axios'
 import UserSetting from './components/UserSetting'
 import { getUserInfo, userInfoUpdate } from '../../api/service/user'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'UserUpdata',
   data() {
@@ -39,8 +40,10 @@ export default {
         birthday: '',
         // 用户签名
         signature: '',
-
-        city: '',
+        // 省份
+        province: '',
+        // 城市
+        city: ''
       },
       // 地区
       districts: {
@@ -55,6 +58,10 @@ export default {
   },
   components: {
     UserSetting
+  },
+
+  computed: {
+    ...mapGetters(['userInfo'])
   },
 
   watch: {
@@ -80,6 +87,7 @@ export default {
       if (!content) {
         this.$message.error('输入点内容吧')
       }
+      console.log('content', content);
       let params = {
         nickname: content.nickname,
         signature: content.signature,
@@ -92,9 +100,10 @@ export default {
       userInfoUpdate(params).then(res => {
         if (res.code === this.constants.code_status) {
           this.$message.success('修改成功')
-          this.getUserInfo(this.userId)
+          // this.getUserInfo(this.userId)
+          this.setUserInfo()
         } else {
-          this.$message.error('修改失败')
+          this.$message.error('修改失败,请检查重试!!!')
         }
       })
     },
@@ -150,7 +159,9 @@ export default {
     _initIaLize(id) {
       this.getUserInfo(id)
       //   this.getArea()
-    }
+    },
+    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
+
   }
 }
 </script>
