@@ -181,12 +181,14 @@ export default {
   .nav {
     flex: 1;
     list-style: none;
+    align-items: center;
     li {
-      font-size: 16px;
+      font-size: 1rem;
       height: 100%;
-      padding: 0 15px;
+      padding: 0 16px;
       a {
         // color: chocolate;
+        font-size: 1rem;
         position: relative;
         transition: all 0.4s;
         &.router-link-active {
@@ -216,7 +218,7 @@ export default {
     display: flex;
     align-items: center;
     i {
-      font-size: 16px;
+      font-size: 1rem;
       color: @color-font-size-White;
       padding: 0 16px;
       cursor: pointer;
@@ -233,7 +235,7 @@ export default {
     padding-left: 20px;
     .mian-no-login {
       color: @color-font-size-White;
-      font-size: 16px;
+      font-size: 16rem;
       &:hover {
         color: @color-theme;
       }
