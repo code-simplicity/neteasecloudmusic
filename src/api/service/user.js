@@ -52,6 +52,11 @@ export const getUserPlaylist = (uid) => api.get(`/user/playlist?uid=${uid}`, {})
  * 调用例子 : /user/update?gender=0&signature=测试签名&city=440300&nickname=binary&birthday=1525918298004&province=440000
  * @returns 
  */
-export const userInfoUpdate = params => api.post(`/user/update`, {
+// export const userInfoUpdate = (nickname, birthday, province, gender, signature, city) =>
+//   api.post(`/user/update?gender=${gender}&signature=${signature}&city=${city}&nickname=${nickname}&birthday=${birthday}&province=${province}`, {
+
+//   })
+
+export const userInfoUpdate = params => api.get(`/user/update`, {
   params
 })
