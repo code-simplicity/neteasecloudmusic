@@ -4,7 +4,7 @@
     <div class="user-left flex-row">
       <el-form
         ref="userform"
-        :model="userProfile"
+        :model="userInfo"
         :rules="userRules"
         label-width="60px"
         label-suffix=":"
@@ -15,7 +15,7 @@
             v-model="userProfile.nickname"
             placeholder="请输入昵称"
           ></el-input> </el-form-item
-        ><el-form-item label="介绍">
+        ><el-form-item label="介绍" prop="signature">
           <el-input
             v-model="userProfile.signature"
             placeholder="请输入个性介绍"
@@ -25,30 +25,33 @@
             :autosize="{ minRows: 4, maxRows: 6 }"
           ></el-input>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="userProfile.gender">
             <el-radio :label="1">男</el-radio>
             <el-radio :label="2">女</el-radio>
             <el-radio :label="0">保密</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="生日">
+        <el-form-item label="生日" prop="birthday">
           <el-date-picker
             v-model="userProfile.birthday"
             type="date"
             placeholder="选择日期"
+            value-format="timestamp"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="地区">
+        <el-form-item label="地区" prop="province">
           <VDistpicker
             :province="districts.province"
             :city="districts.city"
             hide-area
+            @province="getProvince"
+            @city="getCity"
           ></VDistpicker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit('userform')"
+          <el-button type="primary" @click="saveSubmit('userform')"
             >保存</el-button
           >
         </el-form-item>
@@ -69,23 +72,6 @@ export default {
   name: 'UserSetting',
   data() {
     return {
-      //   userProfile: {
-      //     // 用户昵称
-      //     nickname: '',
-      //     // 性别
-      //     gender: '1',
-      //     // 出生日期
-      //     birthday: '',
-      //     // 用户签名
-      //     signature: '',
-      //     // 地区
-      //     province: {
-      //       // 地区
-      //       province: '',
-      //       city: ''
-      //     }
-      //   }
-      //   districts: { province: '广东省', city: '广州市' },
       userRules: {
         nickname: [{
           required: true, message: '请输入活动名称', trigger: 'blur'
@@ -97,6 +83,7 @@ export default {
     userProfile: {
       type: Object
     },
+
     districts: {
       type: Object
     }
@@ -107,21 +94,37 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo', 'loginStatus'])
+    ...mapGetters(['userInfo', 'loginStatus']),
+  },
+
+  watch: {
+
   },
 
   mounted() {
 
   },
   methods: {
-    onSubmit(userform) {
+    // 选择之后返回值
+    getProvince(val) {
+      console.log('val', val)
+      this.userProfile.province = val.code
+      console.log(' this.userProfile.city', this.userProfile.city)
+    },
+
+    getCity(val) {
+      console.log('val1', val)
+      this.userProfile.city = val.code
+      console.log('  this.userProfile.city', this.userProfile.city)
+    },
+
+    saveSubmit(userform) {
       this.$refs[userform].validate((valid) => {
         if (valid) {
-          let userProfile = this.userProfile
-          this.$emit('saveSubmit', userProfile)
-          console.log('userform', userProfile)
+          let userInfo = this.userProfile
+          this.$emit('saveSubmit', userInfo)
         } else {
-          console.log('失败')
+          console.log('失败了哦')
         }
       })
     }
