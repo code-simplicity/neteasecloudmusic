@@ -143,7 +143,7 @@ export default {
       })
     },
     // mapActions,响应状态的改变
-    ...mapActions([])
+    ...mapActions(['userInfo', 'loginStatus'])
   }
 }
 </script>
@@ -235,7 +235,7 @@ export default {
     padding-left: 20px;
     .mian-no-login {
       color: @color-font-size-White;
-      font-size: 16rem;
+      font-size: 1.2rem;
       &:hover {
         color: @color-theme;
       }
