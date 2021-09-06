@@ -1,11 +1,19 @@
 export default {
+  // 时间格式转化为时间戳格式
+  getUnixTime(dateStr) {
+    // let newStr = dateStr.replace(/-/g, '/')
+    let date = new Date(dateStr.replace(/-/g, '/'))
+    let time_str = Date.parse(date);
+    return time_str
+  },
+
   // 补0方法
-  formatZero (num, len) {
+  formatZero(num, len) {
     if (String(num).length > len) return num
     return (Array(len).join(0) + num).slice(-len)
   },
   // localStorage存储
-  setStore (name, content) {
+  setStore(name, content) {
     let contentClone = content
     if (!name) return
     if (typeof content !== 'string') {
@@ -14,17 +22,17 @@ export default {
     window.localStorage.setItem(name, contentClone)
   },
   // localStorage获取
-  getStore (name) {
+  getStore(name) {
     if (!name) return null
     return window.localStorage.getItem(name)
   },
   // localStorage删除
-  removeStore (name) {
+  removeStore(name) {
     if (!name) return
     window.localStorage.removeItem(name)
   },
   // 日期格式化
-  dateFormat (str, type) {
+  dateFormat(str, type) {
     let date = new Date(str)
     let year = date.getFullYear()
     let month = this.formatZero(date.getMonth() + 1, 2)
@@ -41,7 +49,7 @@ export default {
     }
   },
   // 获取当前时间前后N天前后日期
-  getDateBefore (dayCount) {
+  getDateBefore(dayCount) {
     var date = new Date()
     date.setDate(date.getDate() + dayCount)
     let year = date.getFullYear()
@@ -54,20 +62,20 @@ export default {
    * @param {需要转化的数} num
    * @param {需要保留的小数位数} point
    */
-  tranNumber (num, point) {
+  tranNumber(num, point) {
     let numStr = num.toString()
     // 十万以内直接返回
     if (numStr.length < 6) {
       return numStr
     } else if (numStr.length > 8) {
-    // 大于8位数是亿
+      // 大于8位数是亿
       let decimal = numStr.substring(
         numStr.length - 8,
         numStr.length - 8 + point
       )
       return parseFloat(parseInt(num / 100000000) + '.' + decimal) + '亿'
     } else if (numStr.length > 5) {
-    // 大于6位数是十万 (以10W分割 10W以下全部显示)
+      // 大于6位数是十万 (以10W分割 10W以下全部显示)
       let decimal = numStr.substring(
         numStr.length - 4,
         numStr.length - 4 + point
@@ -76,7 +84,7 @@ export default {
     }
   },
   // 格式化时间毫秒转分秒
-  formatTime (time) {
+  formatTime(time) {
     // 取整
     time = ~~time
     var formatTime
@@ -98,7 +106,7 @@ export default {
     return formatTime
   },
   // 转换成秒
-  formatSecond (time) {
+  formatSecond(time) {
     // 取整
     time = ~~time
     var secondTime
@@ -114,14 +122,14 @@ export default {
     return secondTime
   },
   // 秒转00:00
-  formatSecondTime (interval) {
+  formatSecondTime(interval) {
     interval = interval | 0
     const m = (interval / 60) | 0
     const s = interval % 60
     return `${this.formatZero(m, 2)}:${this.formatZero(s, 2)}`
   },
   // 时间戳转换成几分钟前，几小时前，几天前
-  formatMsgTime (dateTimeStamp) {
+  formatMsgTime(dateTimeStamp) {
     var result = ''
     var minute = 1000 * 60
     var hour = minute * 60
@@ -151,7 +159,7 @@ export default {
     return result
   },
   // 获取是几几后
-  getAstro (timestamp) {
+  getAstro(timestamp) {
     let newDate = new Date()
     newDate.setTime(timestamp)
     let birthday = newDate.toLocaleDateString(timestamp)
@@ -170,7 +178,7 @@ export default {
     )
   },
   // 数组随机
-  shuffle (arr) {
+  shuffle(arr) {
     let _arr = arr.slice()
     for (let i = 0; i < _arr.length; i++) {
       let j = this.getRandomInt(0, i)
@@ -180,7 +188,7 @@ export default {
     }
     return _arr
   },
-  getRandomInt (min, max) {
+  getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 }
