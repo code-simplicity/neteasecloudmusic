@@ -16,17 +16,23 @@
             >
           </div>
           <div class="tab flex-row">
-            <span>最近一周</span>
+            <span :class="type === 1 ? 'active' : ''" @click="checkType(1)"
+              >最近一周</span
+            >
             <span class="line"></span>
-            <span>所有时间</span>
+            <span :class="type === 0 ? 'active' : ''" @click="checkType(0)"
+              >所有时间</span
+            >
           </div>
         </div>
         <div>
           <SongDetailsList
+            v-if="songs.length > 0"
             :songListShow="songListShow"
             :songs="songs"
             :isPerson="isPerson"
           ></SongDetailsList>
+          <Empty v-else emptyText="躲起来了，还不想给你看呢！！"></Empty>
         </div>
       </div>
       <div class="right">
@@ -86,7 +92,11 @@
             </li>
           </ul>
           <div class="user-setting flex-center">
-            <router-link class="active" to="/">编辑资料</router-link>
+            <router-link
+              class="active"
+              :to="{ name: 'userupdata', query: { id: userProfile.userId } }"
+              >编辑资料</router-link
+            >
           </div>
         </div>
         <div class="right-list">
@@ -94,11 +104,16 @@
             <div class="card-header flex-row">
               <span>我创建的歌单</span>
             </div>
+            <PopularPlayList :songMusic="myList" :num="num"></PopularPlayList>
           </div>
           <div class="my-songs collect module shadow">
             <div class="card-header flex-row">
               <span>我收藏的歌单</span>
             </div>
+            <PopularPlayList
+              :songMusic="collectList"
+              :num="num"
+            ></PopularPlayList>
           </div>
         </div>
       </div>
@@ -111,8 +126,9 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import { getUserDetail } from '@/api/service/api'
-import { getUserRecord } from '@/api/service/user'
+import { getUserRecord, getUserPlaylist } from '@/api/service/user'
 import { createSong } from '@/model/song'
+import PopularPlayList from '@/components/Home/PopularPlayList'
 export default {
   name: 'Personal',
   data() {
@@ -130,11 +146,18 @@ export default {
       // 类型
       type: 1,
       // 关闭组件的底部标题
-      songListShow: false
+      songListShow: false,
+      // 我收藏的歌单列表
+      myList: [],
+      // 我收藏的歌单
+      collectList: [],
+      // 每行展示多少个
+      num: 2,
     }
   },
   components: {
-    SongDetailsList
+    SongDetailsList,
+    PopularPlayList
   },
   computed: {
     ...mapGetters(['userInfo']),
@@ -167,6 +190,37 @@ export default {
   },
 
   methods: {
+
+    // 获取用户歌单
+    async getUserPlaylist() {
+      try {
+        let res = await getUserPlaylist(this.userProfile.userId)
+        if (res.code === this.constants.code_status) {
+          let list = res.playlist
+          let myList = []
+          let collectList = []
+          list.map(item => {
+            // 判断是个人歌单还是收藏别人的歌单
+            if (item.userId === this.userProfile.userId) {
+              myList.push(item)
+            } else {
+              collectList.push(item)
+            }
+          })
+          this.myList = myList
+          this.collectList = collectList
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    // 切换一周的播放还是全部的播放记录
+    checkType(type) {
+      this.type = type
+      this.getUserRecord()
+    },
+
     // 获取用户播放记录
     async getUserRecord() {
       try {
@@ -216,7 +270,7 @@ export default {
           this.provinceName = districts.name
           console.log('getArea', response.data.districts[0])
           subDistricts.map(item => {
-            if (item.adcode === this.userProfile.city) {
+            if (item.adcode == this.userProfile.city) {
               this.cityName = item.name
             }
           })
@@ -245,6 +299,7 @@ export default {
     _initialize() {
       this.getArea()
       this.getUserRecord()
+      this.getUserPlaylist()
     }
   }
 }
@@ -377,6 +432,32 @@ export default {
           }
         }
       }
+      .right-list {
+        flex-shrink: 0;
+        border-radius: 8px;
+        position: relative;
+        padding-bottom: 30px;
+        margin-top: 10px;
+        .my-songs {
+          padding-bottom: 6px;
+          .card-header {
+            border-bottom: 2px solid @color-theme;
+            // height: 30px;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            font-weight: bold;
+            .icon-like {
+              font-size: 20px;
+            }
+          }
+        }
+        .module {
+          padding: 15px;
+          width: 100%;
+          border-radius: 8px;
+          margin-bottom: 10px;
+        }
+      }
     }
     .center {
       flex: 1;
@@ -402,6 +483,9 @@ export default {
           span {
             font-size: 0.9rem;
             cursor: pointer;
+            &.active {
+              color: @color-theme;
+            }
             &:hover {
               color: @color-theme;
             }
