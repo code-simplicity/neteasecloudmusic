@@ -52,7 +52,7 @@ export const mainRouter = [{
         //     require(['@/views/home/recommend/index'], resolve)
         //   },
         // },
-        
+
         // {
         //   path: 'leaderboard',
         //   name: 'leaderBoard',
@@ -154,7 +154,18 @@ export const mainRouter = [{
         require(['@/views/personal/index'], resolve)
       }
     },
-    
+    {
+      path: 'userupdata',
+      name: 'userupdata',
+      meta: {
+        title: '个人设置',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/userupdata/index'], resolve)
+      }
+    },
+
   ]
 }]
 
