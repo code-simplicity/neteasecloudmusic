@@ -16,11 +16,18 @@ import store from './store'
 // 引入全局空组件
 import Empty from './components/Empty'
 
+
+import VueParticles from 'vue-particles'
+
+
+
+
 // 引入常用的常量工具、
 import constants from './utils/constant'
 import utils from './utils/utils'
 import 'ant-design-vue/dist/antd.css'
 import 'element-ui/lib/theme-chalk/index.css'
+
 // 引入swiper样式
 import 'swiper/css/swiper.css'
 
@@ -32,10 +39,11 @@ import './assets/style/iconfont.css'
 // 引入animate动画库
 import animate from 'animate.css'
 
+
 // 引入particles.js
 import particlesJs from "particles.js";
 
-import VueParticles from 'vue-particles'
+
 
 
 Vue.config.productionTip = false
