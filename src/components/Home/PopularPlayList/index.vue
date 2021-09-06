@@ -11,7 +11,11 @@
       <div class="wrapper">
         <div class="cover">
           <div class="image">
-            <el-image :src="item.picUrl" lazy>
+            <el-image
+              :key="item.picUrl || item.coverImgUrl + '?param=300y300'"
+              :src="item.picUrl || item.coverImgUrl + '?param=300y300'"
+              lazy
+            >
               <div
                 slot="placeholder"
                 class="image-slot flex-center flex-column"
@@ -56,6 +60,10 @@ export default {
   props: {
     songMusic: {
       type: Array
+    },
+    num: {
+      type: Number,
+      default: 8
     }
   },
   components: {
@@ -106,7 +114,7 @@ export default {
     max-width: 25%;
     // margin-bottom: 20px;
     height: 100%;
-    padding: 0 15px 20px 30px;
+    padding: 0 15px 20px 15px;
     cursor: pointer;
     &.two {
       flex: 0 0 50%;
@@ -116,7 +124,7 @@ export default {
       width: 100%;
       height: 100%;
       justify-content: start;
-      padding-right: 2%;
+      // padding-right: 10px;
       border-radius: 5px;
       position: relative;
       &:before,
@@ -186,7 +194,7 @@ export default {
           left: 0;
           bottom: 0;
           height: 28px;
-          background-position: 0 -577px;
+          // background-position: 0 -577px;
           background: url('../../../assets/images/coverall.png') no-repeat;
           background-size: cover;
           color: #ccc;
@@ -212,8 +220,8 @@ export default {
             top: 0;
             width: 14px;
             height: 24px;
-            background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-              no-repeat 100%;
+            // background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
+            //   no-repeat 100%;
             background-size: cover;
           }
           .icon-bofangliang {
