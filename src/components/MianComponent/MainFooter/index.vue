@@ -36,7 +36,8 @@ export default {
 
 <style lang="less" scoped>
 .main-footer {
-  width: 100%;
+  display: flex;
+  justify-content: center;
   // min-width: 100%;
   // border-top: 2px solid @footer-border-top;
   // background: @footer-background-color;
