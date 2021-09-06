@@ -105,7 +105,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="el-pagination" v-if="songs.length > 40">
+    <div class="el-pagination">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -288,7 +288,8 @@ export default {
   }
   .el-pagination {
     margin-top: 10px;
-    float: right;
+    display: flex;
+    justify-content: center;
   }
   .artist-table {
     width: 100%;
