@@ -4,14 +4,20 @@ import {
     PLAYING_STATUS,
     CURRENT_INDEX,
     PLAY_MODE,
-    HISTORY_LIST
+    HISTORY_LIST,
+    USER_INFO,
+    LOGIN_STATUS
 } from './mutation-type'
 import {
     playMode
 } from '@/utils/playConfig'
 import utils from '@/utils/utils'
 
-import {saveHistory, deleteHistory, clearHistory} from '@/utils/cache'
+import {
+    saveHistory,
+    deleteHistory,
+    clearHistory
+} from '@/utils/cache'
 
 function findIndex(list, song) {
     return list.findIndex(item => {
@@ -20,7 +26,13 @@ function findIndex(list, song) {
 }
 
 // 选择播放
-export const selectPlay = function ({ commit, state }, { list, index }) {
+export const selectPlay = function ({
+    commit,
+    state
+}, {
+    list,
+    index
+}) {
     commit(SEQUENCE_LIST, list)
     if (state.mode === playMode.random) {
         let randomList = utils.shuffle(list)
@@ -34,7 +46,11 @@ export const selectPlay = function ({ commit, state }, { list, index }) {
 }
 
 // 播放全部
-export const playAll = function ({ commit }, { list }) {
+export const playAll = function ({
+    commit
+}, {
+    list
+}) {
     commit(PLAY_MODE, playMode.sequence)
     commit(SEQUENCE_LIST, list)
     commit(PLAY_LIST, list)
@@ -43,13 +59,17 @@ export const playAll = function ({ commit }, { list }) {
 }
 
 // 暂停播放
-export const pausePlay = function ({ commit }) {
+export const pausePlay = function ({
+    commit
+}) {
     // 播放状态变为false
     commit(PLAYING_STATUS, false)
 }
 
 // 移除播放
-export const movePlay = function ({ commit }) {
+export const movePlay = function ({
+    commit
+}) {
     // 停止播放
     commit(PLAYING_STATUS, false)
     // 播放列表置空
@@ -61,16 +81,36 @@ export const movePlay = function ({ commit }) {
 }
 
 // 保存最近播放的歌曲列表
-export const saveHistoryList = function ({ commit }, song) {
+export const saveHistoryList = function ({
+    commit
+}, song) {
     commit(HISTORY_LIST, saveHistory(song))
 }
 
 // 删除最近播放的历史记录
-export const deleteHistoryList = function({commit}, song) {
+export const deleteHistoryList = function ({
+    commit
+}, song) {
     commit(HISTORY_LIST, deleteHistory(song))
 }
 
 // 清除所有播放列表
-export const clearHistoryList = function({commit}) {
+export const clearHistoryList = function ({
+    commit
+}) {
     commit(HISTORY_LIST, clearHistory())
+}
+
+// 响应用户信息
+export const userInfo = function ({
+    commit
+}, userInfo) {
+    commit(USER_INFO, userInfo(userInfo))
+}
+
+// 响应登录状态
+export const loginStatus = function ({
+    commit
+}, state) {
+    commit(LOGIN_STATUS, loginStatus(state))
 }
