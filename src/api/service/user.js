@@ -31,3 +31,27 @@ export const logout = () => api.get('/logout', {})
  * @returns 
  */
 export const getUserRecord = (uid, type) => api.get(`/user/record?uid=${uid}&type=${type}`, {})
+
+/**
+ * 获取用户歌单
+ * 说明 : 登录后调用此接口 , 传入用户 id, 可以获取用户歌单
+ * @param {*} uid 用户 id
+ * @returns 
+ */
+export const getUserPlaylist = (uid) => api.get(`/user/playlist?uid=${uid}`, {})
+
+/**
+ * 更新用户信息
+ * 说明 : 登录后调用此接口 , 传入相关信息,可以更新用户信息
+ * @param {*} params gender: 性别 0:保密 1:男性 2:女性
+ * @param {*} params birthday: 出生日期,时间戳 unix timestamp
+ * @param {*} params nickname: 用户昵称
+ * @param {*} params province: 省份id
+ * @param {*} params city: 城市id
+ * @param {*} params signature：用户签名
+ * 调用例子 : /user/update?gender=0&signature=测试签名&city=440300&nickname=binary&birthday=1525918298004&province=440000
+ * @returns 
+ */
+export const userInfoUpdate = params => api.post(`/user/update`, {
+  params
+})
