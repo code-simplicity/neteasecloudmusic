@@ -12,6 +12,10 @@ import store from './store'
 // 引入接口文档
 // import getApi from '@/api/index'
 
+
+// 引入全局空组件
+import Empty from './components/Empty'
+
 // 引入常用的常量工具、
 import constants from './utils/constant'
 import utils from './utils/utils'
@@ -49,6 +53,9 @@ Vue.use(VueParticles)
 // Vue.prototype.$api = getApi
 Vue.prototype.utils = utils
 Vue.prototype.constants = constants
+
+// 全局注册组件
+Vue.component('Empty', Empty)
 
 /* eslint-disable no-new */
 new Vue({
