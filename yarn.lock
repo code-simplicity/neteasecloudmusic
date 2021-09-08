@@ -2097,7 +2097,7 @@
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.2.2"
 
-"babel-runtime@^6.23.0", "babel-runtime@^6.26.0", "babel-runtime@6.x":
+"babel-runtime@^6.11.6", "babel-runtime@^6.23.0", "babel-runtime@^6.26.0", "babel-runtime@6.x":
   "integrity" "sha1-llxwWGaOgrVde/4E/yM3vItWR/4="
   "resolved" "https://registry.nlark.com/babel-runtime/download/babel-runtime-6.26.0.tgz"
   "version" "6.26.0"
@@ -8778,6 +8778,13 @@
   "integrity" "sha1-UylVzB6yCKPZkLOp+acFdGV+CPI="
   "resolved" "https://registry.nlark.com/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz"
   "version" "2.3.4"
+
+"vue-image-crop-upload@^3.0.3":
+  "integrity" "sha1-AYPPjr7jDAivugmm/LCo/NOV4jY="
+  "resolved" "https://registry.npm.taobao.org/vue-image-crop-upload/download/vue-image-crop-upload-3.0.3.tgz?cache=0&sync_timestamp=1617948269445&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-image-crop-upload%2Fdownload%2Fvue-image-crop-upload-3.0.3.tgz"
+  "version" "3.0.3"
+  dependencies:
+    "babel-runtime" "^6.11.6"
 
 "vue-kinesis@^1.3.3":
   "integrity" "sha1-OcYePFsvD+94lP7E7si2Jm6ZhYw="
