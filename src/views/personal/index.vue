@@ -49,14 +49,23 @@
             </div>
             <div class="info flex-between">
               <p class="name">{{ userProfile.nickname }}</p>
-              <div v-if="userInfo.userId === userProfile.userId">
-                <el-button type="primary">签到</el-button>
-                <el-button type="primary">已签到</el-button>
+              <div
+                v-if="userInfo.userId === userProfile.userId"
+                @click="dailySignin"
+              >
+                <el-button class="sign-btn sign-btn-active" v-if="userSignin"
+                  >签到</el-button
+                >
+                <el-button tclass="sign-btn" v-else>已签到</el-button>
               </div>
             </div>
           </div>
-          <p class="desc">{{ userProfile.signature }}</p>
+          <!-- <p class="desc">{{ userProfile.signature }}</p> -->
           <div class="profile">
+            <div class="tag">
+              <el-tag type="warning" effect="dark">介绍：</el-tag>
+              <span>{{ userProfile.signature }}</span>
+            </div>
             <div class="tag">
               <el-tag type="warning" effect="dark">等级：</el-tag>
               <i class="iconfont icon-dengji1">{{ userDetail.level }}</i>
@@ -126,7 +135,7 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import { getUserDetail } from '@/api/service/api'
-import { getUserRecord, getUserPlaylist } from '@/api/service/user'
+import { getUserRecord, getUserPlaylist, dailySignin } from '@/api/service/user'
 import { createSong } from '@/model/song'
 import PopularPlayList from '@/components/Home/PopularPlayList'
 export default {
@@ -153,6 +162,8 @@ export default {
       collectList: [],
       // 每行展示多少个
       num: 2,
+      // 签到标识
+      userSignin: false
     }
   },
   components: {
@@ -190,6 +201,21 @@ export default {
   },
 
   methods: {
+
+    // 签到
+    async dailySignin() {
+      try {
+        let res = await dailySignin()
+        if (res.code === this.constants.code_status) {
+          this.userSignin = true
+          this.$message.success('签到成功')
+        } if (res.code === -2) {
+          this.$message.warning('重复签到！！！')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
 
     // 获取用户歌单
     async getUserPlaylist() {
@@ -357,6 +383,16 @@ export default {
             .name {
               font-weight: 600;
               font-size: 1rem;
+            }
+            .sign-btn {
+              padding: 3px 14px;
+              font-size: 0.9rem;
+              border-radius: 8px;
+              &.sign-btn-active {
+                background: #fa2800;
+                cursor: pointer;
+                border: 1px solid #fa2800;
+              }
             }
           }
         }
