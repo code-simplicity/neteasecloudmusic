@@ -156,3 +156,11 @@ export const getUserDetail = uid => api.get(`/user/detail?uid=${uid}`, {})
 export const getMvAll = params => api.get(`/mv/all`, {
     params
 })
+
+/**
+ * 获取mv 地址
+ * 说明 : 调用此接口 , 传入 mv id,可获取 mv 播放地址
+ * @param {*} id 必选参数 : id: mv id
+ * @returns 
+ */
+export const getMvUrl = id => api.get(`/mv/url?id=${id}`, {})
