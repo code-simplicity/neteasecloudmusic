@@ -24,10 +24,16 @@
               v-if="!item.isLive"
               class="play flex-center"
               title="播放"
+              @click="toMVDetail(item.id, item.type)"
             >
               <i class="iconfont icon-bofang1"></i>
             </el-button>
-            <el-button v-else class="play flex-center" title="播放">
+            <el-button
+              v-else
+              class="play flex-center"
+              title="播放"
+              @click="toMVLive(item.id)"
+            >
               <i class="iconfont icon-bofang1"></i
             ></el-button>
           </div>
@@ -46,6 +52,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'MVList',
   data() {
@@ -68,7 +75,33 @@ export default {
 
   },
   methods: {
+    // 视频详情
+    toMVDetail(id) {
+      this.movePlay()
+      if (typeof id === 'number' || id.length < 10) {
+        this.$router.push({
+          name: 'MVDetail',
+          query: {
+            id
+          }
+        })
+      } else {
+        this.$router.push({
+          name: 'videoDetail',
+          query: {
+            id
+          }
+        })
+      }
+    },
 
+    // 直播跳转
+    toMvLive() {
+      let url = `https://iplay.163.com/live?id=${id}`
+      window.open(url, '_blank')
+    },
+
+    ...mapActions(['movePlay'])
   }
 }
 </script>
