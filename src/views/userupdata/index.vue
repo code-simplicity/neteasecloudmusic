@@ -13,7 +13,9 @@
               @saveSubmit="saveSubmit"
             ></UserSetting
           ></el-tab-pane>
-          <el-tab-pane label="绑定设置" name="second">配置管理</el-tab-pane>
+          <el-tab-pane label="绑定设置" name="second"
+            ><BindingSetting></BindingSetting
+          ></el-tab-pane>
           <el-tab-pane label="隐私设置" name="third">角色管理</el-tab-pane>
         </el-tabs>
       </div>
@@ -24,8 +26,9 @@
 <script>
 import axios from 'axios'
 import UserSetting from './components/UserSetting'
+import BindingSetting from './components/BindingSetting'
 import { getUserInfo, userInfoUpdate } from '../../api/service/user'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'UserUpdata',
   data() {
@@ -57,7 +60,8 @@ export default {
     }
   },
   components: {
-    UserSetting
+    UserSetting,
+    BindingSetting
   },
 
   computed: {
@@ -101,7 +105,7 @@ export default {
         if (res.code === this.constants.code_status) {
           this.$message.success('修改成功')
           // this.getUserInfo(this.userId)
-          this.setUserInfo()
+          this.setUserInfo(res.profile)
         } else {
           this.$message.error('修改失败,请检查重试!!!')
         }
