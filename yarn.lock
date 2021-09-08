@@ -1728,6 +1728,13 @@
   "resolved" "https://registry.nlark.com/address/download/address-1.1.2.tgz"
   "version" "1.1.2"
 
+"aes-decrypter@1.0.3":
+  "integrity" "sha1-nAa4pUNaWtCduTP4oBSvzxhMw04="
+  "resolved" "https://registry.nlark.com/aes-decrypter/download/aes-decrypter-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "pkcs7" "^0.2.3"
+
 "ajv-errors@^1.0.0":
   "integrity" "sha1-81mGrOuRr63sQQL72FAUlQzvpk0="
   "resolved" "https://registry.nlark.com/ajv-errors/download/ajv-errors-1.0.1.tgz"
@@ -2097,7 +2104,7 @@
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.2.2"
 
-"babel-runtime@^6.11.6", "babel-runtime@^6.23.0", "babel-runtime@^6.26.0", "babel-runtime@6.x":
+"babel-runtime@^6.11.6", "babel-runtime@^6.23.0", "babel-runtime@^6.26.0", "babel-runtime@^6.9.2", "babel-runtime@6.x":
   "integrity" "sha1-llxwWGaOgrVde/4E/yM3vItWR/4="
   "resolved" "https://registry.nlark.com/babel-runtime/download/babel-runtime-6.26.0.tgz"
   "version" "6.26.0"
@@ -3506,6 +3513,11 @@
     "domelementtype" "^2.0.1"
     "entities" "^2.0.0"
 
+"dom-walk@^0.1.0":
+  "integrity" "sha1-DFSL7wSPTR8qlySQAiNgYNqj/YQ="
+  "resolved" "https://registry.nlark.com/dom-walk/download/dom-walk-0.1.2.tgz"
+  "version" "0.1.2"
+
 "dom7@^2.1.5":
   "integrity" "sha1-p5QRAXgAsx2EAAcM2uu/ySwfY3c="
   "resolved" "https://registry.nlark.com/dom7/download/dom7-2.1.5.tgz"
@@ -3740,6 +3752,11 @@
     "is-callable" "^1.1.4"
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
+
+"es5-shim@^4.5.1":
+  "integrity" "sha1-gnzdDG+1vrJv02jWVDDoterrqUI="
+  "resolved" "https://registry.nlark.com/es5-shim/download/es5-shim-4.6.2.tgz?cache=0&sync_timestamp=1630475900946&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fes5-shim%2Fdownload%2Fes5-shim-4.6.2.tgz"
+  "version" "4.6.2"
 
 "escalade@^3.1.1":
   "integrity" "sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA="
@@ -4431,6 +4448,22 @@
     "once" "^1.3.0"
     "path-is-absolute" "^1.0.0"
 
+"global@^4.3.0", "global@^4.3.1", "global@~4.3.0", "global@4.3.2":
+  "integrity" "sha1-52mJJopsdMOJCLEwWxD8DjlOnQ8="
+  "resolved" "https://registry.nlark.com/global/download/global-4.3.2.tgz"
+  "version" "4.3.2"
+  dependencies:
+    "min-document" "^2.19.0"
+    "process" "~0.5.1"
+
+"global@^4.4.0":
+  "integrity" "sha1-PnsQUXkAajI+1xqvyj6cV6XMZAY="
+  "resolved" "https://registry.nlark.com/global/download/global-4.4.0.tgz"
+  "version" "4.4.0"
+  dependencies:
+    "min-document" "^2.19.0"
+    "process" "^0.11.10"
+
 "globals@^11.1.0":
   "integrity" "sha1-q4eVM4hooLq9hSV1gBjCp+uVxC4="
   "resolved" "https://registry.nlark.com/globals/download/globals-11.12.0.tgz"
@@ -4891,6 +4924,11 @@
   "resolved" "https://registry.nlark.com/indexes-of/download/indexes-of-1.0.1.tgz"
   "version" "1.0.1"
 
+"individual@^2.0.0":
+  "integrity" "sha1-gzsJfa0jKU52EXqY+zjg2a1hu5c="
+  "resolved" "https://registry.npm.taobao.org/individual/download/individual-2.0.0.tgz"
+  "version" "2.0.0"
+
 "infer-owner@^1.0.3":
   "integrity" "sha1-xM78qo5RBRwqQLos6KPScpWvlGc="
   "resolved" "https://registry.nlark.com/infer-owner/download/infer-owner-1.0.4.tgz"
@@ -5157,6 +5195,11 @@
   "integrity" "sha1-8Rb4Bk/pCz94RKOJl8C3UFEmnx0="
   "resolved" "https://registry.nlark.com/is-fullwidth-code-point/download/is-fullwidth-code-point-3.0.0.tgz"
   "version" "3.0.0"
+
+"is-function@^1.0.1":
+  "integrity" "sha1-Twl/MKv2762smDOxfKXcA/gUTgg="
+  "resolved" "https://registry.nlark.com/is-function/download/is-function-1.0.2.tgz"
+  "version" "1.0.2"
 
 "is-glob@^3.1.0":
   "integrity" "sha1-e6WuJCF4BKxwcHuWkiVnSGzD6Eo="
@@ -5688,6 +5731,11 @@
   "resolved" "https://registry.nlark.com/lyric-parser/download/lyric-parser-1.0.1.tgz"
   "version" "1.0.1"
 
+"m3u8-parser@2.1.0":
+  "integrity" "sha1-yBcDKewc1RXQ1Yu4t2LamJbLA2g="
+  "resolved" "https://registry.nlark.com/m3u8-parser/download/m3u8-parser-2.1.0.tgz"
+  "version" "2.1.0"
+
 "make-dir@^2.0.0":
   "integrity" "sha1-XwMQ4YuL6JjMBwCSlaMK5B6R5vU="
   "resolved" "https://registry.nlark.com/make-dir/download/make-dir-2.1.0.tgz"
@@ -5862,6 +5910,13 @@
   "resolved" "https://registry.nlark.com/mimic-fn/download/mimic-fn-2.1.0.tgz"
   "version" "2.1.0"
 
+"min-document@^2.19.0":
+  "integrity" "sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU="
+  "resolved" "https://registry.nlark.com/min-document/download/min-document-2.19.0.tgz"
+  "version" "2.19.0"
+  dependencies:
+    "dom-walk" "^0.1.0"
+
 "mini-css-extract-plugin@^0.9.0":
   "integrity" "sha1-R/LPB6oWWrNXM7H8l9TEbAVkM54="
   "resolved" "https://registry.nlark.com/mini-css-extract-plugin/download/mini-css-extract-plugin-0.9.0.tgz"
@@ -5991,6 +6046,11 @@
   "integrity" "sha1-FjDEKyJR/4HiooPelqVJfqkuXg0="
   "resolved" "https://registry.nlark.com/mute-stream/download/mute-stream-0.0.8.tgz"
   "version" "0.0.8"
+
+"mux.js@4.3.2":
+  "integrity" "sha1-V21TffA33F7DXsExa5SNgV01whA="
+  "resolved" "https://registry.nlark.com/mux.js/download/mux.js-4.3.2.tgz"
+  "version" "4.3.2"
 
 "mz@^2.4.0":
   "integrity" "sha1-lQCAV6Vsr63CvGPd5/n/aVWUjjI="
@@ -6471,6 +6531,11 @@
     "pbkdf2" "^3.0.3"
     "safe-buffer" "^5.1.1"
 
+"parse-headers@^2.0.0":
+  "integrity" "sha1-nq8tAr7S0e/0lDMc498215JHYL8="
+  "resolved" "https://registry.nlark.com/parse-headers/download/parse-headers-2.0.4.tgz"
+  "version" "2.0.4"
+
 "parse-json@^4.0.0":
   "integrity" "sha1-vjX1Qlvh9/bHRxhPmKeIy5lHfuA="
   "resolved" "https://registry.nlark.com/parse-json/download/parse-json-4.0.0.tgz"
@@ -6632,6 +6697,11 @@
   "integrity" "sha1-clVrgM+g1IqXToDnckjoDtT3+HA="
   "resolved" "https://registry.nlark.com/pinkie/download/pinkie-2.0.4.tgz"
   "version" "2.0.4"
+
+"pkcs7@^0.2.3":
+  "integrity" "sha1-ItYGZtAQZcXyRDkJjkpIMEUic74="
+  "resolved" "https://registry.nlark.com/pkcs7/download/pkcs7-0.2.3.tgz"
+  "version" "0.2.3"
 
 "pkg-dir@^1.0.0":
   "integrity" "sha1-ektQio1bstYp1EcFb/TpyTFM89Q="
@@ -7045,6 +7115,11 @@
   "integrity" "sha1-czIwDoQBYb2j5podHZGn1LwW8YI="
   "resolved" "https://registry.nlark.com/process/download/process-0.11.10.tgz"
   "version" "0.11.10"
+
+"process@~0.5.1":
+  "integrity" "sha1-FjjYqONML0QKkduVq5rrZ3/Bhc8="
+  "resolved" "https://registry.nlark.com/process/download/process-0.5.2.tgz"
+  "version" "0.5.2"
 
 "progress@^2.0.0":
   "integrity" "sha1-foz42PW48jnBvGi+tOt4Vn1XLvg="
@@ -7514,6 +7589,13 @@
   dependencies:
     "aproba" "^1.1.1"
 
+"rust-result@^1.0.0":
+  "integrity" "sha1-NMdbLm3Dn+WHXlveyFteD5FTb3I="
+  "resolved" "https://registry.nlark.com/rust-result/download/rust-result-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "individual" "^2.0.0"
+
 "rxjs@^6.6.0":
   "integrity" "sha1-kKwBisq/SRv2UEQjXVhjxNq4BMk="
   "resolved" "https://registry.nlark.com/rxjs/download/rxjs-6.6.7.tgz?cache=0&sync_timestamp=1627507026323&other_urls=https%3A%2F%2Fregistry.nlark.com%2Frxjs%2Fdownload%2Frxjs-6.6.7.tgz"
@@ -7535,6 +7617,13 @@
   "integrity" "sha1-mR7GnSluAxN0fVm9/St0XDX4go0="
   "resolved" "https://registry.nlark.com/safe-buffer/download/safe-buffer-5.1.2.tgz"
   "version" "5.1.2"
+
+"safe-json-parse@4.0.0":
+  "integrity" "sha1-fA9XjPzNEtM6ccDgVBPi7KFx6qw="
+  "resolved" "https://registry.nlark.com/safe-json-parse/download/safe-json-parse-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "rust-result" "^1.0.0"
 
 "safe-regex@^1.1.0":
   "integrity" "sha1-QKNmnzsHfR6UPURinhV91IAjvy4="
@@ -8448,6 +8537,11 @@
   "resolved" "https://registry.nlark.com/tslib/download/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
+"tsml@1.0.1":
+  "integrity" "sha1-ifghi52eJX9H1/a1bQHFpNLGj8M="
+  "resolved" "https://registry.nlark.com/tsml/download/tsml-1.0.1.tgz"
+  "version" "1.0.1"
+
 "tty-browserify@0.0.0":
   "integrity" "sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY="
   "resolved" "https://registry.nlark.com/tty-browserify/download/tty-browserify-0.0.0.tgz"
@@ -8637,6 +8731,11 @@
     "querystringify" "^2.1.1"
     "requires-port" "^1.0.0"
 
+"url-toolkit@^2.1.3":
+  "integrity" "sha1-ePqQEhWrusNBggZpMiICebgEUis="
+  "resolved" "https://registry.nlark.com/url-toolkit/download/url-toolkit-2.2.3.tgz?cache=0&sync_timestamp=1625913594450&other_urls=https%3A%2F%2Fregistry.nlark.com%2Furl-toolkit%2Fdownload%2Furl-toolkit-2.2.3.tgz"
+  "version" "2.2.3"
+
 "url@^0.11.0":
   "integrity" "sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE="
   "resolved" "https://registry.nlark.com/url/download/url-0.11.0.tgz"
@@ -8740,6 +8839,82 @@
     "assert-plus" "^1.0.0"
     "core-util-is" "1.0.2"
     "extsprintf" "^1.2.0"
+
+"video.js@^5.17.0 || ^6.2.0", "video.js@^5.19.1 || ^6.2.0", "video.js@^6 || ^7", "video.js@^6.6.0":
+  "integrity" "sha1-+Uh9RjJzQPpI7NUTcqKYHbts3kw="
+  "resolved" "https://registry.nlark.com/video.js/download/video.js-6.13.0.tgz"
+  "version" "6.13.0"
+  dependencies:
+    "babel-runtime" "^6.9.2"
+    "global" "4.3.2"
+    "safe-json-parse" "4.0.0"
+    "tsml" "1.0.1"
+    "videojs-font" "2.1.0"
+    "videojs-ie8" "1.1.2"
+    "videojs-vtt.js" "0.12.6"
+    "xhr" "2.4.0"
+
+"videojs-contrib-hls@^5.12.2":
+  "integrity" "sha1-/klXNn5daLfSP3jtMuN6ndiSoKg="
+  "resolved" "https://registry.npm.taobao.org/videojs-contrib-hls/download/videojs-contrib-hls-5.15.0.tgz"
+  "version" "5.15.0"
+  dependencies:
+    "aes-decrypter" "1.0.3"
+    "global" "^4.3.0"
+    "m3u8-parser" "2.1.0"
+    "mux.js" "4.3.2"
+    "url-toolkit" "^2.1.3"
+    "video.js" "^5.19.1 || ^6.2.0"
+    "videojs-contrib-media-sources" "4.7.2"
+    "webwackify" "0.1.6"
+
+"videojs-contrib-media-sources@4.7.2":
+  "integrity" "sha1-Ct+SkQfVt0zyyKuygkyCF35DhY4="
+  "resolved" "https://registry.nlark.com/videojs-contrib-media-sources/download/videojs-contrib-media-sources-4.7.2.tgz"
+  "version" "4.7.2"
+  dependencies:
+    "global" "^4.3.0"
+    "mux.js" "4.3.2"
+    "video.js" "^5.17.0 || ^6.2.0"
+    "webwackify" "0.1.6"
+
+"videojs-flash@^2.1.0":
+  "integrity" "sha1-GiJduxztIArpu/FeAf5KYQhtkPE="
+  "resolved" "https://registry.nlark.com/videojs-flash/download/videojs-flash-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "global" "^4.4.0"
+    "video.js" "^6 || ^7"
+    "videojs-swf" "5.4.2"
+
+"videojs-font@2.1.0":
+  "integrity" "sha1-olkwpn9snPvyu4jay4xrRR8JM3k="
+  "resolved" "https://registry.nlark.com/videojs-font/download/videojs-font-2.1.0.tgz"
+  "version" "2.1.0"
+
+"videojs-hotkeys@^0.2.20":
+  "integrity" "sha1-Dfl5Urnf8ObMHPikOf7X6snHPwE="
+  "resolved" "https://registry.nlark.com/videojs-hotkeys/download/videojs-hotkeys-0.2.27.tgz"
+  "version" "0.2.27"
+
+"videojs-ie8@1.1.2":
+  "integrity" "sha1-oj09hgitcZK2nGB3/E64SJmNNdk="
+  "resolved" "https://registry.npm.taobao.org/videojs-ie8/download/videojs-ie8-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "es5-shim" "^4.5.1"
+
+"videojs-swf@5.4.2":
+  "integrity" "sha1-aWSpv/kDtzLz5GUxSuR4oCoX6Ks="
+  "resolved" "https://registry.nlark.com/videojs-swf/download/videojs-swf-5.4.2.tgz"
+  "version" "5.4.2"
+
+"videojs-vtt.js@0.12.6":
+  "integrity" "sha1-4HhgC9qJnqpvnDMHE0zQyBGUe44="
+  "resolved" "https://registry.nlark.com/videojs-vtt.js/download/videojs-vtt.js-0.12.6.tgz"
+  "version" "0.12.6"
+  dependencies:
+    "global" "^4.3.1"
 
 "vm-browserify@^1.0.1":
   "integrity" "sha1-eGQcSIuObKkadfUR56OzKobl3aA="
@@ -8849,6 +9024,17 @@
   "integrity" "sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU="
   "resolved" "https://registry.nlark.com/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
+
+"vue-video-player@^5.0.2":
+  "integrity" "sha1-NKQiOf8wTvx2mNogpBZQUddmweY="
+  "resolved" "https://registry.nlark.com/vue-video-player/download/vue-video-player-5.0.2.tgz"
+  "version" "5.0.2"
+  dependencies:
+    "object-assign" "^4.1.1"
+    "video.js" "^6.6.0"
+    "videojs-contrib-hls" "^5.12.2"
+    "videojs-flash" "^2.1.0"
+    "videojs-hotkeys" "^0.2.20"
 
 "vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.2.6", "vue@^2.5.17", "vue@^2.6.0", "vue@^2.6.10", "vue@^2.6.11", "vue@>=2.5.0", "vue@2.x":
   "integrity" "sha1-5RqlJQJQ1Wmj+606ilpofWA24jU="
@@ -9042,6 +9228,11 @@
   "resolved" "https://registry.nlark.com/websocket-extensions/download/websocket-extensions-0.1.4.tgz"
   "version" "0.1.4"
 
+"webwackify@0.1.6":
+  "integrity" "sha1-HUKhKsYYI9fjRaveCE6qpipKles="
+  "resolved" "https://registry.nlark.com/webwackify/download/webwackify-0.1.6.tgz"
+  "version" "0.1.6"
+
 "which-boxed-primitive@^1.0.2":
   "integrity" "sha1-E3V7yJsgmwSf5dhkMOIc9AqJqOY="
   "resolved" "https://registry.nlark.com/which-boxed-primitive/download/which-boxed-primitive-1.0.2.tgz"
@@ -9129,6 +9320,16 @@
   "version" "6.2.2"
   dependencies:
     "async-limiter" "~1.0.0"
+
+"xhr@2.4.0":
+  "integrity" "sha1-4W5mpF+GmGHu76tBbV7/ci3ECZM="
+  "resolved" "https://registry.npm.taobao.org/xhr/download/xhr-2.4.0.tgz"
+  "version" "2.4.0"
+  dependencies:
+    "global" "~4.3.0"
+    "is-function" "^1.0.1"
+    "parse-headers" "^2.0.0"
+    "xtend" "^4.0.0"
 
 "xtend@^4.0.0", "xtend@~4.0.1":
   "integrity" "sha1-u3J3n1+kZRhrH0OPZ0+jR/2121Q="
