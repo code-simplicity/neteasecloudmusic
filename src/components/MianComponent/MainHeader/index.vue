@@ -72,7 +72,7 @@
 
 <script>
 import { logout } from '../../../api/service/user'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'MainHeader',
   data() {
@@ -143,7 +143,7 @@ export default {
       })
     },
     // mapActions,响应状态的改变
-    ...mapActions(['userInfo', 'loginStatus'])
+    // ...mapActions(['userInfo', 'loginStatus'])
   }
 }
 </script>
