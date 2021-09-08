@@ -387,7 +387,6 @@ export default {
           console.log('getCommentList', res);
           // 获取总数
           this.totle = res.total
-          this.r
           this.commentList = res.comments
         }
       } catch (error) {
