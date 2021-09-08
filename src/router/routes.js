@@ -165,6 +165,17 @@ export const mainRouter = [{
         require(['@/views/userupdata/index'], resolve)
       }
     },
+    {
+      path: 'mv-detail',
+      name: 'MVDetail',
+      meta: {
+        title: 'MV列表',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/mv/detail/index'], resolve)
+      }
+    },
 
   ]
 }]
