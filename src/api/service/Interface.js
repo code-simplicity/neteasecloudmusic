@@ -2,7 +2,9 @@
 import axios from 'axios'
 import config from '../config'
 import qs from 'qs'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 import router from '@/router'
 const {
   // eslint-disable-next-line camelcase
@@ -25,6 +27,7 @@ instance.defaults.transformRequest = [
     return qs.stringify(data)
   }
 ]
+// instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // `validateStatus` 定义对于给定的HTTP
 // 响应状态码是 resolve 或 reject  promise 。
 // 如果 `validateStatus` 返回 `true` (或者设置为 `null` 或 `undefined`)，
@@ -39,7 +42,9 @@ instance.interceptors.request.use(
     return config
   },
   error => {
-    Message.error({ message: '请求超时了!' })
+    Message.error({
+      message: '请求超时了!'
+    })
     return Promise.reject(error)
   }
 )
