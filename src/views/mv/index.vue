@@ -32,7 +32,7 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div v-loading="loading">
       <MVList :mvs="mvs" type="mv"></MVList>
     </div>
     <div class="el-pagination">
@@ -146,6 +146,7 @@ export default {
       totle: 0,
       currentPage: 1,
       limit: 20,
+      loading: false
     }
   },
   components: {
@@ -178,12 +179,14 @@ export default {
 
     // 获取mv
     async getMvAll() {
+      this.loading = true
       try {
         let res = await getMvAll(this.params)
         if (res.code === this.constants.code_status) {
           console.log(res)
           this.mvs = this._normalizeVideos(res.data)
           console.log('this.mvs', this.mvs)
+          this.loading = false
         }
       } catch (error) {
         console.log(error)
@@ -230,6 +233,7 @@ export default {
 .mv-box {
   margin-top: 10px;
   background: #fff;
+  border-radius: 8px;
   li {
     list-style: none;
     &:hover {
@@ -240,8 +244,7 @@ export default {
   .filter-tag {
     .tag-lang {
       display: flex;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 16px;
       li {
         width: 62px;
         height: 30px;
@@ -264,7 +267,7 @@ export default {
     .tag-type {
       li {
         width: auto;
-        padding: 0 15px;
+        padding: 0 16px;
       }
     }
   }
