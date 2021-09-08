@@ -4,5 +4,5 @@
 const code_status = 200
 
 export default {
-    code_status
+    code_status,
 }
