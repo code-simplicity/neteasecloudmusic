@@ -1,4 +1,37 @@
 export default {
+
+  // base64格式，可以通过下面方法转成blob格式
+
+  dataURLtoBlob(dataurl) {
+    let arr = dataurl.split(',');
+    //注意base64的最后面中括号和引号是不转译的   
+    let _arr = arr[1].substring(0, arr[1].length - 2);
+    let mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(_arr),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {
+      type: mime
+    });
+  },
+
+  // base64转file文件流
+  base64ToFile(urlData, fileName) {
+    let arr = urlData.split(',');
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let bytes = atob(arr[1]); // 解码base64
+    let n = bytes.length
+    let ia = new Uint8Array(n);
+    while (n--) {
+      ia[n] = bytes.charCodeAt(n);
+    }
+    return new File([ia], fileName, {
+      type: mime
+    });
+  },
   // 时间格式转化为时间戳格式
   getUnixTime(dateStr) {
     // let newStr = dateStr.replace(/-/g, '/')
