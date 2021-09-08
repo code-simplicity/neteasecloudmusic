@@ -2,27 +2,42 @@
   <div class="mv-detail container">
     <div class="left shadow">
       <div class="video-content">
-        <video
-          :src="videoUrl"
-          controls="controls"
-          controlslist="nodownload"
-          autoplay
-        ></video>
+        <video-player
+          class="video-player vjs-custom-skin"
+          ref="videoPlayer"
+          :options="playerOptions"
+          :playsinline="true"
+        >
+        </video-player>
       </div>
       <div class="video-footer">
-        <h3 class="title flex-row"><i class="iconfont"></i></h3>
+        <h3 class="title flex-row">
+          <i class="iconfont"></i>{{ mvDetail.name }}
+        </h3>
         <div class="tag">
-          <a>#12</a>
+          <a v-for="item of mvDetail.videoGroup" :key="item.id"
+            >#{{ item.name }}</a
+          >
         </div>
         <p class="flex-row">
-          <span>发布时间：</span>
-          <span>播放次数：</span>
+          <span
+            >发布时间：：{{
+              utils.dateFormat(mvDetail.publishTime, 'YYYY-MM-DD')
+            }}</span
+          >
+          <span v-if="mvDetail.playCount"
+            >播放次数：{{ utils.tranNumber(mvDetail.playCount, 1) }}</span
+          >
         </p>
         <div class="follow">
           <div class="box">
-            <i></i>
-            <i></i>
-            <i></i>
+            <i class="iconfont icon-xihuan icon-like"></i>
+          </div>
+          <div class="box">
+            <i class="iconfont icon-shoucang1 icon-collection"></i>
+          </div>
+          <div class="box">
+            <i class="iconfont icon-fenxiang icon-share"></i>
           </div>
         </div>
       </div>
@@ -43,23 +58,51 @@
 
 <script>
 import CommentBox from '@/components/MianComponent/CommentBox'
-import { getMvUrl } from '@/api/service/api'
+import { getMvUrl, getMvDetail } from '@/api/service/api'
 export default {
   name: 'MVDetail',
   data() {
     return {
-      // 视频地址
-      videoUrl: '',
       // 视频id
       videoId: '',
       // 评论传递的id
       currentCommentId: '',
       // 是否清空评论框内容
       clearContent: false,
+      playerOptions: {
+        autoplay: true,
+        muted: false,
+        language: 'en',
+        playbackRates: [0.5, 1.0, 1.5, 2.0],
+        // 是否视频一结束就重新开始。
+        loop: false,
+        preload: 'auto',
+        aspectRatio: '16:9',
+        sources: [{
+          type: "video/mp4",
+          src: ""
+        }],
+        notSupportedMessage: '此视频暂无法播放，请稍后再试',
+        controlBar: {
+          timeDivider: true,           // 当前时间和持续时间的分隔符
+          durationDisplay: true,       // 显示持续时间
+          remainingTimeDisplay: false, // 是否显示剩余时间功能
+          fullscreenToggle: true       // 是否显示全屏按钮
+        },
+        poster: "../../../assets/images/mv-bg.png",
+      },
+      // mv详情
+      mvDetail: {},
     }
   },
   components: {
     CommentBox
+  },
+
+  computed: {
+    player() {
+      return this.$refs.videoPlayer.player
+    }
   },
 
   watch: {
@@ -83,12 +126,30 @@ export default {
 
     },
 
+    // 获取mv数据
+    async getMvDetail(id) {
+      try {
+        let res = await getMvDetail(id)
+        if (res.code === this.constants.code_status) {
+          res.data.videoGroup.map(item => {
+            if (item.name.indexOf('#') !== -1) {
+              item.name = item.name.replace(/#/g, '')
+            }
+          })
+          this.mvDetail = res.data
+          console.log('this.mvDetail', this.mvDetail)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     // 获取mv地址
     async getMvUrl(id) {
       try {
         let res = await getMvUrl(id)
         if (res.code === this.constants.code_status) {
-          this.videoUrl = res.data.url
+          this.playerOptions.sources[0].src = res.data.url
           console.log(this.videoUrl)
         }
       } catch (error) {
@@ -99,6 +160,7 @@ export default {
     // 初始化函数
     _initialize(id) {
       this.getMvUrl(id)
+      this.getMvDetail(id)
     }
   }
 }
@@ -116,14 +178,13 @@ export default {
     margin-right: 20px;
     .video-content {
       position: relative;
-      padding-top: 52%;
-      video {
+      padding-top: 56%;
+      .video-player {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #000;
       }
     }
     .video-footer {
@@ -162,8 +223,9 @@ export default {
         width: auto;
         border-radius: 16px;
         padding: 0 16px;
-        background: #000;
+        background: rgb(214, 214, 214);
         margin-left: 16px;
+        width: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -171,7 +233,7 @@ export default {
         cursor: pointer;
         i {
           font-size: 1.5rem;
-          color: darkcyan;
+          color: rgb(40, 112, 112);
         }
         &.active {
           color: #fff;
