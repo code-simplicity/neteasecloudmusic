@@ -174,3 +174,50 @@ export const getMvUrl = id => api.get(`/mv/url?id=${id}`, {})
  * @returns 
  */
 export const getMvDetail = mvid => api.get(`/mv/detail?mvid=${mvid}`, {})
+
+/**
+ * 获取 mv 点赞转发评论数数据
+ * 说明 : 调用此接口 , 传入 mvid ( 在搜索音乐的时候传 type=1004 获得 ) , 可获取对应 MV 点赞转发评论数数据
+ * @param {*} mvid mvid: mv 的 id
+ * @returns 
+ */
+export const getMvDetailInfo = mvid => api.get(`/mv/detail/info?mvid=${mvid}`, {})
+
+/**
+ * 资源点赞( MV,电台,视频)
+ * 说明 : 调用此接口 , 可对 MV,电台,视频点赞
+ * @param {*} type type:资源类型,对应以下类型 1: mv 4: 电台 5: 视频 6: 动态
+ * @param {*} t t: 操作,1 为点赞,其他未取消点赞
+ * @param {*} id id: 资源 id
+ * @returns 
+ */
+export const resourceLike = (type, t, id) => api.get(`/resource/like?type=${type}&t=${t}&id=${id}`, {})
+
+/**
+ * 收藏/取消收藏 MV
+ * 说明 : 调用此接口,可收藏/取消收藏 MV
+ * @param {*} mvid : MV id
+ * @param {*} t t : 1 为收藏,其他为取消收藏
+ * @returns 
+ */
+export const mvSub = (mvid, t) => api.get(`/resource/like?mvid=${mvid}&t=${t}`, {})
+
+/**
+ * mv 评论
+ * 说明 : 调用此接口 , 传入音乐 id 和 limit 参数 , 可获得该 mv 的所有评论 ( 不需要 登录 )
+ * @param {*} params id: mv id
+ * @param {*} params limit: 取出评论数量 , 默认为 20
+ * @param {*} params offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
+ * @param {*} params before: 分页参数,取上一页最后一项的 time 获取下一页数据(获取超过5000条评论的时候需要用到)
+ * @returns 
+ */
+export const getMvComment = params => api.get(`/comment/mv`, {
+    params
+})
+
+/**
+ * 
+ * @param {*} mvid mv id
+ * @returns 
+ */
+export const simiNv = mvid => api.get(`/simi/mv?mvid=${mvid}`, {})
