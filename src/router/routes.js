@@ -176,6 +176,17 @@ export const mainRouter = [{
         require(['@/views/mv/detail/index'], resolve)
       }
     },
+    {
+      path: 'search',
+      name: 'search',
+      meta: {
+        title: '搜索',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/search/index'], resolve)
+      }
+    },
 
   ]
 }]
