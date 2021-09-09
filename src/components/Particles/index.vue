@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     init() {
+      // eslint-disable-next-line no-undef
       particlesJS("particles-js", particlesConfig)
     }
   }
