@@ -216,8 +216,15 @@ export const getMvComment = params => api.get(`/comment/mv`, {
 })
 
 /**
- * 
+ * 相似mv
  * @param {*} mvid mv id
  * @returns 
  */
 export const simiNv = mvid => api.get(`/simi/mv?mvid=${mvid}`, {})
+
+/**
+ * 热搜列表(简略)
+ * 说明 : 调用此接口,可获取热门搜索列表
+ * @returns 
+ */
+export const getSearchHot = () => api.get(`/search/hot`, {})
