@@ -29,7 +29,7 @@
           <router-link :to="{ name: 'mv' }" tag="a">MV</router-link>
         </li>
       </ul>
-      <div class="mian-search">
+      <div class="mian-search" @click="openSearchDialog">
         <i class="el-icon-search">点我搜索</i>
       </div>
       <div class="mian-user">
@@ -66,18 +66,79 @@
         <div class="mian-no-login flex-row" @click="login" v-else>登录</div>
       </div>
     </div>
-    <div class="main-menu-item"></div>
+    <!-- 搜索 -->
+    <div class="main-menu-item" :class="[searchOpen, searchClose]">
+      <div class="overlay" @click="closeSearchDialog"></div>
+      <div class="search-body">
+        <div class="search-content">
+          <div class="search-dialog-cover">
+            <div class="bg-effect">
+              <span class="layer"></span>
+            </div>
+            <div class="search-form">
+              <el-input
+                class="text"
+                type="text"
+                v-model="keywords"
+                placeholder="音乐/视频/电台/mv"
+                v-on:keyup.enter="search"
+              ></el-input>
+            </div>
+          </div>
+          <div class="search-hot">
+            <div class="title flex-row">
+              <i class="iconfont"></i>
+              <span>历史搜索</span>
+              <p @click="clearSearch">清空</p>
+            </div>
+            <ul class="tags">
+              <li>
+                <a class="btn flex-row">
+                  <span class="close-dark"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="search-hot">
+            <div class="title flex-row">
+              <i class="iconfont"></i>
+              <span>热门搜索</span>
+            </div>
+            <ul class="tags" v-if="hots.length > 0">
+              <li v-for="item of hots" :key="item.first">
+                <a class="btn" @click="tagSearch(item.first)">{{
+                  item.first
+                }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="close-btn flex-center">
+          <span class="close-light"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { logout } from '../../../api/service/user'
+import { getSearchHot } from '../../../api/service/api'
 import { mapGetters } from 'vuex'
 export default {
   name: 'MainHeader',
   data() {
     return {
-
+      // 关键字 
+      keywords: '',
+      // 热门搜索内容
+      hots: [],
+      // 搜索历史
+      historys: [],
+      // 打开搜索框
+      searchOpen: '',
+      // 关闭搜索框
+      searchClose: ''
     }
   },
   components: {
@@ -89,9 +150,51 @@ export default {
   },
 
   mounted() {
-
+    this.getSearchHot()
   },
   methods: {
+
+    // 搜索
+    search() {
+      
+    },
+
+    // 点击标签搜索
+    tagSearch() {
+
+    },
+
+    // 获取热搜列表
+    async getSearchHot() {
+      try {
+        let res = await getSearchHot()
+        if (res.code === this.constants.code_status) {
+          this.hots = res.result.hots
+          console.log('this.hots', this.hots)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    // 清空
+    clearSearch() {
+
+    },
+
+    // 展示搜索框
+    openSearchDialog() {
+      this.searchOpen = 'open'
+      this.searchClose = ''
+    },
+
+    // 关闭搜索框
+    closeSearchDialog() {
+      this.searchOpen = ''
+      this.searchClose = 'close'
+    },
+
+    // 跳转路由
     async handleCommand(command) {
       switch (command) {
         case 'myHomePage': {
@@ -248,6 +351,253 @@ export default {
       color: @color-font-size-White;
       &:hover {
         color: @color-theme;
+      }
+    }
+  }
+  .main-menu-item {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    .overlay {
+      width: 100%;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      position: absolute;
+      background: rgba(120, 129, 147, 0.22);
+      opacity: 0;
+      -webkit-transition: opacity 0.3s;
+      transition: opacity 0.3s;
+      -webkit-backface-visibility: hidden;
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+    }
+    .search-body {
+      position: relative;
+      opacity: 0;
+      max-width: 790px;
+      width: 100%;
+      animation-duration: 0.3s;
+      animation-fill-mode: forwards;
+      .search-content {
+        position: relative;
+        border-radius: 4px;
+        box-shadow: 0 10px 50px -5px rgba(6, 39, 67, 0.12);
+        padding: 0;
+        border: 0;
+        width: 100%;
+        background: #fff;
+        height: auto;
+        overflow: hidden;
+        .search-dialog-cover {
+          position: relative;
+          overflow: hidden;
+          padding: 3rem;
+          .bg-effect {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            filter: blur(8px);
+            transform: scale(1.05);
+            background-position: center;
+            position: absolute;
+            // background-image: ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            .layer {
+              width: 100%;
+              height: 100%;
+              background-color: rgb(63, 62, 62);
+              position: absolute;
+              opacity: 1;
+              top: 0;
+              left: 0;
+              transition: opacity 0.3s ease-in-out;
+            }
+          }
+          .search-form {
+            position: relative;
+            padding: 3rem 0;
+            .text {
+              display: block;
+              width: 100%;
+              background-clip: padding-box;
+              transition: border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
+              font-size: 0.9375rem;
+              line-height: 1.5;
+              padding: 0.625rem 0.75rem;
+              height: calc(1.5em + 1.71875rem + 2px);
+              text-align: center;
+              font-weight: normal;
+              color: #fff;
+              border-color: transparent;
+              background-color: rgba(255, 255, 255, 0.03);
+              transition: all 0.3s ease;
+              border-radius: 5px;
+
+              &:hover {
+                background-color: rgba(255, 255, 255, 0.04);
+                border-color: transparent;
+              }
+
+              &:focus {
+                background-color: rgba(255, 255, 255, 0.04);
+                border-color: transparent;
+                color: #fff;
+              }
+
+              &::placeholder {
+                color: #fff;
+                opacity: 1;
+              }
+            }
+          }
+        }
+        .search-hot {
+          padding: 1.5rem 3rem;
+          .title {
+            margin-bottom: 16px;
+            i {
+              color: @color-theme;
+              font-size: 1.6rem;
+              margin-right: 8px;
+            }
+            span {
+              font-size: 15px;
+              flex: 1;
+            }
+
+            p {
+              color: @color-theme;
+              cursor: pointer;
+            }
+          }
+          .tags {
+            width: 100%;
+            margin: 0 -0.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            li {
+              padding: 0.25rem;
+              cursor: pointer;
+              .btn {
+                display: flex;
+                font-weight: 400;
+                color: #6d7685;
+                background-color: #f4f4f5;
+                text-align: center;
+                vertical-align: middle;
+                user-select: none;
+                border: 1px solid transparent;
+                font-size: 0.75rem;
+                padding: 0.3125rem 0.75rem;
+                line-height: 1.5;
+                border-radius: 0.25rem;
+                transition: color 0.15s ease-in-out,
+                  background-color 0.15s ease-in-out,
+                  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                border-radius: 4px;
+                .close-dark {
+                  display: inline-block;
+                  // background-image: url('../../../assets/images/close-dark.svg');
+                  background-size: contain;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  vertical-align: middle;
+                  width: 14px;
+                  height: 14px;
+                  margin-left: 8px;
+                  opacity: 0.7;
+                }
+                &:hover {
+                  color: #161e27;
+
+                  .close-dark {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .close-btn {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        cursor: pointer;
+        text-align: center;
+        .close-light {
+          display: inline-block;
+          // background-image: url('../../../assets/images/close.svg');
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          vertical-align: middle;
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+    &.open {
+      z-index: 9999;
+      .overlay {
+        opacity: 1;
+        pointer-events: auto;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+
+      .search-body {
+        pointer-events: auto;
+        -webkit-animation-name: tips-open;
+        animation-name: tips-open;
+      }
+    }
+    &.close {
+      .search-body {
+        -webkit-animation-name: tips-close;
+        animation-name: tips-close;
+      }
+    }
+    @keyframes tips-open {
+      0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 50px, 0);
+        transform: translate3d(0, 50px, 0);
+      }
+
+      100% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes tips-close {
+      0% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 50px, 0);
+        transform: translate3d(0, 50px, 0);
       }
     }
   }
