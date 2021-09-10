@@ -255,7 +255,7 @@ export default {
         cursor: pointer;
         margin-right: 6px;
         list-style: none;
-        background: rgb(216, 213, 248);
+        background: rgb(172, 172, 172);
         font-weight: 400;
         &.active {
           background: @color-theme;
