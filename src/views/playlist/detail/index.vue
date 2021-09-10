@@ -15,12 +15,16 @@
             <span>{{ songDetail.name }}</span>
           </div>
           <div class="user flex-row">
-            <div class="avatar">
+            <div class="avatar" @click="findUser(creator.userId)">
               <el-image :src="creator.avatarUrl" fit="cover"></el-image>
             </div>
-            <span class="username">{{ creator.nickname }}</span>
-            <span class="createTime" v-if="creator.createTime">
-              {{ utils.dateFormat(detail.createTime, 'YYYY-MM-DD') }}</span
+            <span class="username" @click="findUser(creator.userId)">{{
+              creator.nickname
+            }}</span>
+            <span class="createTime" v-if="songDetail.createTime">
+              {{
+                utils.dateFormat(songDetail.createTime, 'YYYY-MM-DD')
+              }}创建</span
             >
           </div>
           <!-- <div class="user-button">
@@ -33,9 +37,13 @@
             class="tag flex-row"
             v-if="songDetail.tags && songDetail.tags.length > 0"
           >
-            标签：<a class="" v-for="item of songDetail.tags" :key="item">{{
-              item
-            }}</a>
+            标签：<a
+              class=""
+              v-for="item of songDetail.tags"
+              :key="item"
+              @click="tagLink(item)"
+              >{{ item }}</a
+            >
           </div>
           <div class="description">
             <b>介绍:</b>
@@ -108,7 +116,7 @@
         </div>
         <ul v-if="subscribers.length > 0">
           <li v-for="item of subscribers" :key="item.id">
-            <div class="avatar">
+            <div class="avatar" @click="findUser(item.userId)">
               <el-image
                 style="width: 50px; height: 50px"
                 :src="item.avatarUrl"
@@ -127,7 +135,11 @@
           <span>相关歌单推荐</span>
         </div>
         <ul v-if="relatedList.length > 0">
-          <li v-for="item of relatedList" :key="item.id">
+          <li
+            v-for="item of relatedList"
+            :key="item.id"
+            @click="toSongDetail(item.id)"
+          >
             <div class="avatar">
               <el-image
                 style="width: 50px; height: 50px"
@@ -153,7 +165,7 @@
         </div>
         <ul v-if="commentHotList.length > 0">
           <li class="item" v-for="item of commentHotList" :key="item.time">
-            <div class="avatar">
+            <div class="avatar" @click="findUser(item.user.userId)">
               <el-image
                 style="width: 50px; height: 50px"
                 :src="item.user.avatarUrl"
@@ -163,7 +175,11 @@
               ></el-image>
             </div>
             <div class="info">
-              <h3 class="ellipsis" :title="item.user.nickname">
+              <h3
+                class="ellipsis"
+                :title="item.user.nickname"
+                @click="findUser(item.user.userId)"
+              >
                 {{ item.user.nickname }}
                 <small> · {{ utils.formatMsgTime(item.time) }}</small>
               </h3>
@@ -262,6 +278,37 @@ export default {
     }
   },
   methods: {
+
+    // 标签跳转
+    tagLink(cat) {
+      this.$router.push({
+        name: 'playlist',
+        query: {
+          cat
+        }
+      })
+    },
+
+    // 相关歌单推荐
+    toSongDetail(id) {
+      this.$router.push({
+        name: 'playlistdetail',
+        query: {
+          id
+        }
+      })
+    },
+
+    // 去用户主页
+    findUser(id) {
+      this.$router.push({
+        name: 'personal',
+        query: {
+          id
+        }
+      })
+    },
+
     // 给评论点赞
     async commentLike(id, liked) {
       let timestamp = new Date().getTime()
@@ -626,7 +673,7 @@ export default {
             }
           }
           .createTime {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: @color-blank;
           }
         }
