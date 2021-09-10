@@ -228,3 +228,50 @@ export const simiNv = mvid => api.get(`/simi/mv?mvid=${mvid}`, {})
  * @returns 
  */
 export const getSearchHot = () => api.get(`/search/hot`, {})
+
+/**
+ * 搜索
+ * 说明 : 调用此接口 , 传入搜索关键词可以搜索该音乐 
+ * / 专辑 / 歌手 / 歌单 / 用户 , 关键词可以多个 , 
+ * 以空格隔开 , 如 " 周杰伦 搁浅 "( 不需要登录 ), 
+ * 搜索获取的 mp3url 不能直接用 , 可通过 /song/url 接口传入歌曲 id 获取具体的播放链接
+ * @param {*} params keywords : 关键词
+ * @param {*} params limit : 返回数量 , 默认为 30 offset : 偏移数量，
+ * 用于分页 , 如 : 如 :( 页数 -1)*30, 其中 30 为 limit 的值 , 默认为 0
+ * @param {*} params type: 搜索类型；默认为 1 即单曲 , 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 
+ * 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频, 1018:综合
+ * 调用例子 : /search?keywords= 海阔天空 /cloudsearch?keywords= 海阔天空
+ * @returns 
+ */
+export const search = params => api.get(`/cloudsearch`, {
+    params
+})
+
+/**
+ * 搜索建议
+ * 说明 : 调用此接口 , 传入搜索关键词可获得搜索建议 , 搜索结果同时包含单曲 , 歌手 , 歌单 ,mv 信息
+ * @param {*} keywords 关键词
+ * @returns 
+ */
+export const searchSuggest = keywords => api.get(`/search/suggest?keywords=${keywords}`, {})
+
+/**
+ * 所有榜单内容摘要
+ * 说明 : 调用此接口,可获取所有榜单内容摘要
+ * @returns 
+ */
+export const getToplistDetail = () => api.get(`/toplist/detail`, {})
+
+/**
+ * 歌手分类列表
+ * 说明 : 调用此接口,可获取歌手分类列表
+ * @param {*} params limit : 返回数量 , 默认为 30
+ * @param {*} params offset : 偏移数量，用于分页 , 如 : 如 :( 页数 -1)*30, 其中 30 为 limit 的值 , 
+ * @param {*} params initial: 按首字母索引查找参数,如 /artist/list?type=1&area=96&initial=b 返回内容将以 name 字段开头为 b 或者拼音开头为 b 为顺序排列, 热门传-1,#传0
+ * @param {*} params type 取值:-1:全部 1:男歌手 2:女歌手 3:乐队
+ * @param {*} params area 取值:-1:全部 7华语 96欧美 8:日本 16韩国 0:其他
+ * @returns 
+ */
+export const getArtistList = params => api.get(`/artist/list`, {
+    params
+})
