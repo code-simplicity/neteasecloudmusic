@@ -81,14 +81,16 @@
                 type="text"
                 v-model="keywords"
                 placeholder="音乐/视频/电台/mv"
-                v-on:keyup.enter="search"
+                @change="search"
+                clearable
+                maxlength="40"
               ></el-input>
             </div>
           </div>
           <div class="search-hot">
             <div class="title flex-row">
-              <i class="iconfont"></i>
-              <span>历史搜索</span>
+              <i class="iconfont icon-zuji1"></i>
+              <span>历史记录</span>
               <p @click="clearSearch">清空</p>
             </div>
             <ul class="tags">
@@ -101,7 +103,7 @@
           </div>
           <div class="search-hot">
             <div class="title flex-row">
-              <i class="iconfont"></i>
+              <i class="iconfont icon-rementuijian-copy"></i>
               <span>热门搜索</span>
             </div>
             <ul class="tags" v-if="hots.length > 0">
@@ -113,7 +115,7 @@
             </ul>
           </div>
         </div>
-        <div class="close-btn flex-center">
+        <div class="close-btn flex-center" @click="closeSearchDialog">
           <span class="close-light"></span>
         </div>
       </div>
@@ -156,12 +158,30 @@ export default {
 
     // 搜索
     search() {
-      
+      if (this.keywords.split(' ').join(' ').length !== 0) {
+        // 关闭搜索框
+        this.closeSearchDialog()
+        // 跳转到搜索页面
+        this.$router.push({
+          name: 'search',
+          query: {
+            keywords: this.keywords
+          }
+        })
+      }
     },
 
     // 点击标签搜索
-    tagSearch() {
-
+    tagSearch(keywords) {
+      // 关闭搜索框
+      this.closeSearchDialog()
+      // 跳转到搜索页面
+      this.$router.push({
+        name: 'search',
+        query: {
+          keywords
+        }
+      })
     },
 
     // 获取热搜列表
@@ -388,7 +408,7 @@ export default {
       .search-content {
         position: relative;
         border-radius: 4px;
-        box-shadow: 0 10px 50px -5px rgba(6, 39, 67, 0.12);
+        box-shadow: 0 10px 50px -5px rgba(8, 109, 197, 0.12);
         padding: 0;
         border: 0;
         width: 100%;
@@ -415,7 +435,7 @@ export default {
             .layer {
               width: 100%;
               height: 100%;
-              background-color: rgb(63, 62, 62);
+              background-color: rgb(85, 85, 85);
               position: absolute;
               opacity: 1;
               top: 0;
@@ -440,7 +460,7 @@ export default {
               font-weight: normal;
               color: #fff;
               border-color: transparent;
-              background-color: rgba(255, 255, 255, 0.03);
+              background-color: rgba(0, 0, 0, 0.03);
               transition: all 0.3s ease;
               border-radius: 5px;
 
@@ -465,14 +485,15 @@ export default {
         .search-hot {
           padding: 1.5rem 3rem;
           .title {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid @color-theme;
             i {
               color: @color-theme;
               font-size: 1.6rem;
-              margin-right: 8px;
+              margin-right: 12px;
             }
             span {
-              font-size: 15px;
+              font-size: 1rem;
               flex: 1;
             }
 
@@ -494,14 +515,14 @@ export default {
               .btn {
                 display: flex;
                 font-weight: 400;
-                color: #6d7685;
-                background-color: #f4f4f5;
+                color: #ffffff;
+                background-color: #596460;
                 text-align: center;
                 vertical-align: middle;
                 user-select: none;
                 border: 1px solid transparent;
-                font-size: 0.75rem;
-                padding: 0.3125rem 0.75rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.75rem;
                 line-height: 1.5;
                 border-radius: 0.25rem;
                 transition: color 0.15s ease-in-out,
@@ -510,7 +531,7 @@ export default {
                 border-radius: 4px;
                 .close-dark {
                   display: inline-block;
-                  // background-image: url('../../../assets/images/close-dark.svg');
+                  background-image: url('../../../assets/images/close.png');
                   background-size: contain;
                   background-position: center;
                   background-repeat: no-repeat;
@@ -521,7 +542,7 @@ export default {
                   opacity: 0.7;
                 }
                 &:hover {
-                  color: #161e27;
+                  color: @color-theme;
 
                   .close-dark {
                     opacity: 1;
@@ -542,7 +563,7 @@ export default {
         text-align: center;
         .close-light {
           display: inline-block;
-          // background-image: url('../../../assets/images/close.svg');
+          background-image: url('../../../assets/images/close.png');
           background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
