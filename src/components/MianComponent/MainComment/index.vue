@@ -16,6 +16,7 @@
               fit="cover"
               :alt="item.user.nickname"
               :title="item.user.nickname"
+              @click="findUser(item.user.userId)"
             ></el-image>
           </div>
           <div class="info">
@@ -99,6 +100,16 @@ export default {
 
   },
   methods: {
+    // 进入用户中心
+    findUser(id) {
+      this.$router.push({
+        name: 'personal',
+        query: {
+          id
+        }
+      })
+    },
+
     // 评论点赞
     commentLike(id, liked) {
       this.$emit('commentLike', id, liked)
@@ -163,6 +174,7 @@ export default {
           border-radius: 50%;
           margin-right: 12px;
           flex-shrink: 0;
+          cursor: pointer;
           .el-image {
             width: 100%;
             border-radius: 50%;
