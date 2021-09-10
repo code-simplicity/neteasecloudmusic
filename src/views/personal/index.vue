@@ -1,11 +1,6 @@
 <template>
   <div class="personal-wrap">
-    <div
-      class="banner layer"
-      :style="{
-        backgroundImage: 'url(' + userProfile.backgroundUrl + ')',
-      }"
-    ></div>
+    <div class="banner layer"></div>
     <div class="personal-main container">
       <div class="center shadow">
         <div class="card-header flex-between">
@@ -154,7 +149,7 @@ export default {
       userDetail: {},
       // 类型
       type: 1,
-      // 关闭组件的底部标题
+      // 关闭组件的顶部标题
       songListShow: false,
       // 我收藏的歌单列表
       myList: [],
