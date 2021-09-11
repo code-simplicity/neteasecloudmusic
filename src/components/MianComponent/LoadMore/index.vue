@@ -17,10 +17,11 @@ export default {
   },
   mounted() {
     // 滚动事件的触发
+    let self = this
     window.onscroll = function () {
       // 判断当前滚动底部的位置加上可视范围的高度是否大于浏览器本是的高度
-      if (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight()) {
-        this.$emit('scroll-state', true)
+      if (self.getScrollTop() + self.getClientHeight() >= self.getScrollHeight()) {
+        self.$emit('scroll-state', true)
       }
     }
   },
