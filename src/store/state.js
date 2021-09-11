@@ -1,4 +1,6 @@
-import { playMode } from "../utils/playConfig"
+import {
+    playMode
+} from "../utils/playConfig"
 
 // 数据源
 const state = {
@@ -9,11 +11,11 @@ const state = {
     userInfo: null,
 
     // 歌手信息
-    singerInfo: {},
+    singer: {},
 
     //播放状态
     playing: false,
-    
+
     // 播放列表的索引
     currentIndex: -1,
 
