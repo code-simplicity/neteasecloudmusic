@@ -75,3 +75,12 @@ export const avatarUpload = (params, config) => api.post(`/avatar/upload`, {
  * @returns 
  */
 export const dailySignin = () => api.get(`/daily_signin`, {})
+
+/**
+ * 关注/取消关注用户
+ * 说明 : 登录后调用此接口 , 传入用户 id, 和操作 t,可关注/取消关注用户
+ * @param {*} id  用户 id
+ * @param {*} t 1为关注,其他为取消关注
+ * @returns 
+ */
+export const follow = (id, t) => api.get(`/follow?id=${id}&t=${t}`, {})
