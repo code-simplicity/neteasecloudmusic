@@ -21,7 +21,7 @@ export const PLAY_LIST = 'PLAY_LIST'
 export const PLAY_MODE = 'PLAY_MODE'
 
 // 获取歌手信息
-export const SINGER_INFO = 'SINGER_INFO'
+export const SINGER = 'SINGER'
 
 // 播放历史记录
 export const HISTORY_LIST = 'HISTORY_LIST'
