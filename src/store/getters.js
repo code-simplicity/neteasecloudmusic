@@ -17,7 +17,7 @@ export const playing = state => state.playing
 export const currentIndex = state => state.currentIndex
 
 // 歌手信息
-export const singerInfo = state => state.singerInfo
+export const singer = state => state.singer
 
 // 播放列表
 export const playList = state => state.playList
