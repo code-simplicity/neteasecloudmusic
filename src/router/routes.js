@@ -130,6 +130,17 @@ export const mainRouter = [{
       },
       component: resolve => {
         require(['@/views/singer/index'], resolve)
+      },
+    },
+    {
+      path: 'singerdetail',
+      name: 'singerdetail',
+      meta: {
+        title: '歌手详情',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/singer/detail/index'], resolve)
       }
     },
     {
