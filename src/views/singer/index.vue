@@ -23,7 +23,7 @@
       </ul>
       <ul class="tag-round">
         <li
-          v-for="item of initials"
+          v-for="item of initialArr"
           :key="item.value"
           :class="initial === item.value ? 'active' : ''"
           @click="chooseType('initial', item.value)"
@@ -33,13 +33,20 @@
       </ul>
     </div>
     <LoadMore @scroll-state="load">
-      <ul class="singer-list"></ul>
+      <ul class="singer-list">
+        <SongerItem :songItem="singers"></SongerItem>
+      </ul>
     </LoadMore>
+    <div v-if="loading" class="load-bottom">
+      <Loading></Loading>
+    </div>
   </div>
 </template>
 
 <script>
 import LoadMore from '@/components/MianComponent/LoadMore'
+import SongerItem from '@/components/MianComponent/SongerItem'
+import Loading from '@/components/Loading'
 import { getArtistList } from '@/api/service/api'
 export default {
   name: 'Singer',
@@ -98,11 +105,11 @@ export default {
       // 热门
       initial: -1,
       // 字母表
-      initials: [],
+      initialArr: [],
       // 请求参数
       params: {
         // 返回数量
-        limit: 40,
+        limit: 32,
         // 偏移量，用于分页
         offset: 0,
         // 分类
@@ -121,15 +128,47 @@ export default {
     }
   },
   components: {
-    LoadMore
+    LoadMore,
+    SongerItem,
+    Loading
   },
   mounted() {
     this.getArtistList()
+    this.getInitial()
   },
   methods: {
     // 记载更多
     load() {
+      if (this.loadStatus) {
+        setTimeout(() => {
+          this.getArtistList()
+        }, 1000)
+      }
+    },
 
+    // 生成大写字母
+    getInitial() {
+      let initial = []
+      // 生成26个大写字母
+      for (let i = 97; i < 123; i++) {
+        initial.push({
+          // 字母a的Unicode值为97，大写的与小写的相差32，所以A就是i-32
+          value: String.fromCharCode(i),
+          label: String.fromCharCode(i - 32)
+        })
+      }
+      // 向数组头部添加一个元素
+      initial.unshift({
+        value: -1,
+        label: '热门'
+      })
+      // 往后添加一个数组元素
+      initial.push({
+        value: 0,
+        label: '其他'
+      })
+      this.initialArr = initial
+      console.log('getInitial', initial)
     },
 
     // 选择类型
@@ -153,9 +192,9 @@ export default {
     // 获取歌手列表
     async getArtistList() {
       try {
-        this.loadStatus = true
+        this.loadStatus = false
         let res = await getArtistList(this.params)
-        if (res.code === this.constants.code_statu) {
+        if (res.code === this.constants.code_status) {
           // 歌手连接起来
           this.singers = this.singers.concat(res.artists)
           if (res.more) {
@@ -163,7 +202,7 @@ export default {
             this.loadStatus = true
             // 页数添加
             // 页数添加
-            this.params.offset += 30
+            this.params.offset += 32
           } else {
             this.loading = false
           }
@@ -195,7 +234,7 @@ export default {
       padding-top: 16px;
       li {
         width: 62px;
-        height: 30px;
+        height: 28px;
         line-height: 30px;
         font-size: 0.9rem;
         text-align: center;
@@ -215,13 +254,13 @@ export default {
     .tag-type {
       li {
         width: auto;
-        padding: 0 15px;
+        padding: 0 16px;
       }
     }
     .tag-round {
       display: flex;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 20px;
       li {
         width: 28px;
         height: 28px;
@@ -229,8 +268,8 @@ export default {
         text-align: center;
         line-height: 29px;
         border-radius: 50%;
-        font-size: 13px;
-        color: #333333;
+        font-size: 0.85rem;
+        color: #000000;
         cursor: pointer;
         &:first-child,
         &.last-child {
@@ -248,13 +287,6 @@ export default {
         }
       }
     }
-  }
-  .singer-list {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    margin: 30px -15px 0;
-    list-style: none;
   }
 }
 </style>
