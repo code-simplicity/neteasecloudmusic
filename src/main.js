@@ -35,6 +35,8 @@ import 'swiper/css/swiper.css'
 
 import './assets/style/common.css'
 
+import './assets/style/reset.less'
+
 // 引入iconfont
 import './assets/style/iconfont.css'
 
