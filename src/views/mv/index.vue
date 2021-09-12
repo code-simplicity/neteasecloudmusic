@@ -136,7 +136,7 @@ export default {
         // 排序
         order: '上升最快',
         // 返回数量
-        limit: 20,
+        limit: 24,
         // 偏移数量
         offset: 0,
       },
