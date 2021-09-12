@@ -92,6 +92,7 @@ export default {
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
+  opacity: 0.9;
   .p-recommend-header {
     display: flex;
     align-items: center;

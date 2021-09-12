@@ -3,6 +3,9 @@
   <transition name="player">
     <div class="music-player flex-row" v-show="playList.length > 0">
       <!-- <div class="music-player flex-row"> -->
+      <!-- <div class="music-show" @click="closePlayer">
+        <i class="iconfont icon-shuxian"></i>
+      </div> -->
       <div class="container" style="z-index: 30">
         <div class="wrapper flex-row">
           <!-- 左边内容 -->
@@ -34,7 +37,7 @@
                 style="width: 60px"
                 :src="currentSong.image ? currentSong.image : defaultCover"
                 fit="cover"
-                @click="toPlayer(currentSong)"
+                @click="toUser(currentSong)"
               ></el-image>
             </div>
             <div class="info">
@@ -164,6 +167,16 @@
                   alt=""
                 />
               </div>
+              <div class="play-icon">
+                <div class="line" style="animation-delay: -1.2s"></div>
+                <div class="line" style="animation-delay: -1.2s"></div>
+                <div class="line" style="animation-delay: -1.5s"></div>
+                <div class="line" style="animation-delay: -0.9s"></div>
+                <div class="line" style="animation-delay: -0.6s"></div>
+                <div class="line" style="animation-delay: -1.5s"></div>
+                <div class="line" style="animation-delay: -0.9s"></div>
+                <div class="line" style="animation-delay: -0.6s"></div>
+              </div>
               <!-- <div class="ripple p1"></div>
               <div class="ripple p2"></div> -->
             </div>
@@ -229,7 +242,9 @@ export default {
       playingLyric: '',
       // 准备的歌曲id
       id: '',
-      canLyricPlay: false
+      canLyricPlay: false,
+      // 音乐播放器的隐藏于显示
+      // musicShow: false
     }
   },
   components: {
@@ -315,9 +330,18 @@ export default {
 
   mounted() {
     console.log('this.$refs.audio', this.$refs);
-    console.log('this.currentLyric===>', this.currentLyric)
   },
   methods: {
+    // 关闭底部播放器
+    closePlayer() {
+      this.playList.length = !this.playList.length
+    },
+
+    // 到歌曲详情
+    toUser() {
+
+    },
+
     // 删除历史播放记录
     deleteSong(item) {
       this.deleteHistoryList(item)
@@ -639,7 +663,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 2001;
   padding: 0 10px 0 20px;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
@@ -647,11 +671,23 @@ export default {
   justify-content: space-between;
   padding-left: calc(100vw - 100%);
   background-color: @play-background-color;
+  .music-show {
+    position: absolute;
+    top: -50px;
+    right: 10px;
+    cursor: pointer;
+    i {
+      color: #fff;
+      font-size: 2rem;
+      &:hover {
+        color: @color-theme;
+      }
+    }
+  }
   // 播放详情
   .player-page {
     width: 100%;
     height: 100vh;
-    // background-color: @lyric-background;
     background-color: @lyric-background;
     background-image: radial-gradient(
         at 47% 33%,
@@ -700,6 +736,20 @@ export default {
             100% {
               transform: rotate(360deg);
             }
+          }
+        }
+        .play-icon {
+          position: absolute;
+          height: 100px;
+          min-width: 18px;
+          overflow: hidden;
+          bottom: 80px;
+          .line {
+            width: 4px;
+            height: 100%;
+            margin-left: 2px;
+            background-color: #ff410f;
+            animation: play 1.3s linear infinite alternate;
           }
         }
       }

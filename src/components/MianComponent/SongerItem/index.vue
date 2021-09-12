@@ -68,14 +68,12 @@ export default {
 <style lang='less' scoped>
 .songer-box {
   // display: flex;
+  margin: 0 -8px;
   .singer-list {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 30px;
-    margin: 30px -15px 0;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    // margin-top: 30px;
+    // margin: 30px -15px 0;
     li {
       padding: 0 16px 30px;
       flex: 0 0 12.5%;

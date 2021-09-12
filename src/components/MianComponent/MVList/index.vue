@@ -113,13 +113,10 @@ export default {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
     li {
       padding: 0 16px 30px 16px;
-      flex: 0 0 20%;
-      max-width: 20%;
+      flex: 0 0 16.66666666666667%;
+      max-width: 16.66666666666667%;
       .cover {
         position: relative;
         z-index: 2;

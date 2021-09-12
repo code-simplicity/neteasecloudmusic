@@ -161,8 +161,6 @@ export default {
       border-bottom: 3px solid @color-theme;
     }
     ul {
-      margin: 0;
-      padding: 0;
       list-style: none;
       li {
         padding: 10px 0;

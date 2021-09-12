@@ -5,7 +5,7 @@
         <i class="iconfont icon-rementuijian-copy"></i>
         <span>热门推荐</span>
       </span>
-      <span class="p-recommend-more">
+      <span class="p-recommend-more" @click="toPlayList">
         <span>更多</span>
         <i class="iconfont icon-gengduo"></i>
       </span>
@@ -26,7 +26,7 @@ export default {
   name: 'PopularRecommend',
   data() {
     return {
-      limit: 32,
+      limit: 30,
       PopularList: []
     }
   },
@@ -47,6 +47,12 @@ export default {
         console.log(error)
       }
     },
+    // 跳转到更多
+    toPlayList() {
+      this.$router.push({
+        name: 'playlist',
+      })
+    }
   }
 }
 </script>
@@ -57,6 +63,7 @@ export default {
   padding: 20px;
   background-color: @color-dark;
   border-radius: 8px;
+  opacity: 0.9;
   .p-recommend-header {
     display: flex;
     align-items: center;

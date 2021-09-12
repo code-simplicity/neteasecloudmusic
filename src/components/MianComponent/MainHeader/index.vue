@@ -11,9 +11,9 @@
         <li>
           <router-link :to="{ name: 'mymusic' }" tag="a">我的音乐</router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link :to="{ name: 'recommend' }" tag="a">推荐</router-link>
-        </li>
+        </li> -->
         <li>
           <router-link :to="{ name: 'leaderboard' }" tag="a"
             >排行榜</router-link
@@ -314,7 +314,6 @@ export default {
     flex: 1;
     list-style: none;
     align-items: center;
-    margin: 0;
     li {
       font-size: 1rem;
       height: 100%;
