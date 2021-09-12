@@ -2,7 +2,7 @@
   <div class="play-list-wrap container">
     <div class="filter shadow">
       <div class="title flex-center" @click="openFilter">
-        热门标签
+        {{ currentName }}
         <i class="iconfont icon-zhankai"></i>
         <transition name="playlist">
           <div class="filter-box shadow" v-if="showFilter">
@@ -96,7 +96,7 @@ export default {
       // 最热
       sortType: 'hot',
       // 返回的数据
-      limit: 40,
+      limit: 42,
       // 偏移
       offset: 0,
       totle: 0,
@@ -340,7 +340,6 @@ export default {
             }
           }
           ul {
-            padding: 0;
             list-style: none;
             display: flex;
             flex-wrap: wrap;
