@@ -4,7 +4,7 @@
       <div class="singer-top">
         <div class="singer-top-mask">
           <div class="singer-box flex-column flex-center">
-            <div class="singer-avatar transition">
+            <div class="singer-avatar transition" @click="toUser">
               <el-image :src="userOfSonger.img1v1Url" fit="cover"></el-image>
               <div
                 class="singer-level flex-center transition"
@@ -73,6 +73,27 @@
             v-if="active === 1"
           ></SongDetailsList>
           <MVList :mvs="mvs" type="mv" v-if="active === 3"></MVList>
+          <div class="singer-info" v-if="active === 4">
+            <h2 class="title">
+              <i class="iconfont icon-shuxian"></i>{{ userOfSonger.name }}简介
+            </h2>
+            <p class="profile" v-html="singerDesc.briefDesc"></p>
+            <div class="introduction">
+              <div
+                class="item"
+                v-for="item of singerDesc.introduction"
+                :key="item.ti"
+              >
+                <h2 class="sub-title">
+                  <i class="iconfont icon-shuxian"></i>{{ item.ti }}
+                </h2>
+                <p v-html="item.txt"></p>
+              </div>
+            </div>
+          </div>
+          <div class="simi-box">
+            <SongerItem v-if="active === 5" :songItem="singers"></SongerItem>
+          </div>
         </div>
       </div>
     </div>
@@ -85,8 +106,9 @@ import { mapGetters } from 'vuex'
 import { createSong } from '@/model/song'
 import { createVideo } from '@/model/video'
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
+import SongerItem from '@/components/MianComponent/SongerItem'
 import MVList from '@/components/MianComponent/MVList'
-import { getArtists, getArtisMv, getArtistDesc, getArtistDetail } from '@/api/service/songer'
+import { getArtists, getArtisMv, getArtistDesc, getArtistDetail, getSimiArtist } from '@/api/service/songer'
 import { getUserInfo, follow } from '@/api/service/user'
 export default {
   name: 'SingerDetail',
@@ -102,6 +124,8 @@ export default {
       songs: [],
       // mv列表
       mvs: [],
+      // 相似歌手
+      singers: [],
       // 功能模块
       navList: [
         {
@@ -142,7 +166,8 @@ export default {
   },
   components: {
     SongDetailsList,
-    MVList
+    MVList,
+    SongerItem
   },
 
   computed: {
@@ -200,6 +225,27 @@ export default {
   },
 
   methods: {
+    // 去个人主页
+    toUser() {
+      this.$router.push({
+        name: 'personal',
+        query: {
+          id: this.userOfSonger.accountId || this.artistId
+        }
+      })
+    },
+
+    // 获取相似歌手
+    async getSimiArtist(id) {
+      try {
+        let res = await getSimiArtist(id)
+        if (res.code === this.constants.code_status) {
+          this.singers = res.artists
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 关注用户
     async followBtn() {
       // 默认是没有关注的
@@ -266,7 +312,6 @@ export default {
           this.getUserInfo(res.artist.accountId)
         }
         this.songs = this._normalizeSongs(res.hotSongs)
-
         this.getArtisMv(id)
       } catch (error) {
         console.log(error)
@@ -357,6 +402,7 @@ export default {
       this.getArtists(id)
       this.getArtistDesc(id)
       this.getArtistDetail(id)
+      this.getSimiArtist(id)
     }
   }
 }
@@ -533,6 +579,50 @@ export default {
         border-radius: 8px;
         padding-top: 1px;
         padding-bottom: 10px;
+        .singer-info {
+          padding: 16px;
+          .title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            i {
+              font-size: 1.3rem;
+              margin-right: 6px;
+              color: @color-theme;
+            }
+          }
+          .profile {
+            line-height: 2;
+            margin-bottom: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000;
+          }
+          .introduction {
+            .item {
+              margin-bottom: 16px;
+              .sub-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #000;
+                i {
+                  font-size: 1.3rem;
+                  margin-right: 6px;
+                  color: @color-theme;
+                }
+              }
+              p {
+                color: #000;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 2;
+              }
+            }
+          }
+        }
+        .simi-box {
+          padding: 16px 0;
+        }
       }
     }
   }
