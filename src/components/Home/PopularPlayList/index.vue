@@ -108,10 +108,10 @@ export default {
 .r-playlist {
   display: flex;
   flex-wrap: wrap;
-  bottom: 10px;
+  margin: 0 -12px;
   .r-playlist-item {
-    flex: 0 0 25%;
-    max-width: 25%;
+    flex: 0 0 16.66666666666667%;
+    max-width: 16.66666666666667%;
     // margin-bottom: 20px;
     height: 100%;
     padding: 0 15px 20px 15px;
