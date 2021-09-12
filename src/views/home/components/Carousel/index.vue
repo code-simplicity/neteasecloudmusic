@@ -70,6 +70,7 @@ export default {
 .carousel {
   top: 10px;
   width: 100%;
+  opacity: 0.9;
 }
 .carousel /deep/ .swiper-pagination {
   width: 100%;
