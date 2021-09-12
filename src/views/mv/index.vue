@@ -234,6 +234,7 @@ export default {
   margin-top: 10px;
   background: #fff;
   border-radius: 8px;
+  opacity: 0.9;
   li {
     list-style: none;
     &:hover {
@@ -244,7 +245,7 @@ export default {
   .filter-tag {
     .tag-lang {
       display: flex;
-      padding-top: 16px;
+      padding: 16px 0 0 10px;
       li {
         width: 62px;
         height: 30px;
@@ -259,7 +260,7 @@ export default {
         font-weight: 400;
         &.active {
           background: @color-theme;
-          font-weight: 700;
+          font-weight: 600;
           color: #ffffff;
         }
       }

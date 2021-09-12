@@ -601,8 +601,6 @@ export default {
     .related {
       padding-bottom: 6px;
       ul {
-        list-style: none;
-        padding: 0;
         li {
           margin: 0 auto;
           display: flex;
