@@ -36,3 +36,5 @@ export const getArtisMv = params => api.get(`/artist/mv`, {
  * @returns 
  */
 export const getArtistDesc = id => api.get(`/artist/desc?id=${id}`, {})
+
+export const getSimiArtist = id => api.get(`/simi/artist?id=${id}`, {})
