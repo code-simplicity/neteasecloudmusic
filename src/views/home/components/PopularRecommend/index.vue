@@ -26,7 +26,7 @@ export default {
   name: 'PopularRecommend',
   data() {
     return {
-      limit: 8,
+      limit: 32,
       PopularList: []
     }
   },
