@@ -88,17 +88,17 @@ export const mainRouter = [{
         require(['@/views/mymusic/index'], resolve)
       }
     },
-    {
-      path: 'recommend',
-      name: 'recommend',
-      meta: {
-        title: '推荐',
-        keepAlive: true
-      },
-      component: resolve => {
-        require(['@/views/recommend/index'], resolve)
-      }
-    },
+    // {
+    //   path: 'recommend',
+    //   name: 'recommend',
+    //   meta: {
+    //     title: '推荐',
+    //     keepAlive: true
+    //   },
+    //   component: resolve => {
+    //     require(['@/views/recommend/index'], resolve)
+    //   }
+    // },
     {
       path: 'leaderboard',
       name: 'leaderboard',
