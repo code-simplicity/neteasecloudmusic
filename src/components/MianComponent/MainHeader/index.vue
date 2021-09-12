@@ -314,6 +314,7 @@ export default {
     flex: 1;
     list-style: none;
     align-items: center;
+    margin: 0;
     li {
       font-size: 1rem;
       height: 100%;
