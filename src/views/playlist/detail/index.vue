@@ -760,7 +760,8 @@ export default {
       }
       .el-pagination {
         margin-top: 10px;
-        float: right;
+        display: flex;
+        justify-content: center;
       }
     }
   }
