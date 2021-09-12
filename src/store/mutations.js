@@ -1,53 +1,48 @@
 // 引入字符串变量
-import {
-    LOGIN_STATUS,
-    USER_INFO,
-    PLAYING_STATUS,
-    CURRENT_INDEX,
-    PLAY_MODE,
-    SEQUENCE_LIST,
-    PLAY_LIST,
-    SINGER,
-    HISTORY_LIST
-} from './mutation-type'
+import * as types from './mutation-type'
 
 const mutations = {
     // 是否登录
-    [LOGIN_STATUS](state, loginStatus) {
+    [types.LOGIN_STATUS](state, loginStatus) {
         state.loginStatus = loginStatus
     },
     // 用户信息
-    [USER_INFO](state, userInfo) {
+    [types.USER_INFO](state, userInfo) {
         state.userInfo = userInfo
     },
     // 播放状态
-    [PLAYING_STATUS](state, flag) {
+    [types.PLAYING_STATUS](state, flag) {
         state.playing = flag
     },
     // 播放索引
-    [CURRENT_INDEX](state, index) {
+    [types.CURRENT_INDEX](state, index) {
         state.currentIndex = index
     },
     // 设置播放模式
-    [PLAY_MODE](state, mode) {
+    [types.PLAY_MODE](state, mode) {
         state.mode = mode
     },
     // 顺序播放
-    [SEQUENCE_LIST](state, list) {
+    [types.SEQUENCE_LIST](state, list) {
         state.sequenceList = list
     },
     // 播放列表
-    [PLAY_LIST](state, list) {
+    [types.PLAY_LIST](state, list) {
         state.playList = list
     },
     // 获取歌手信息
-    [SINGER](state, singer) {
+    [types.SINGER](state, singer) {
         state.singer = singer
     },
 
     // 播放历史记录
-    [HISTORY_LIST](state, list) {
+    [types.HISTORY_LIST](state, list) {
         state.historyList = list
+    },
+
+    // 搜索历史记录
+    [types.SEARCH_HISTORY](state, history) {
+        state.searchHistory = history
     }
 }
 

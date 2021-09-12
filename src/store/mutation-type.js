@@ -25,3 +25,6 @@ export const SINGER = 'SINGER'
 
 // 播放历史记录
 export const HISTORY_LIST = 'HISTORY_LIST'
+
+// 设置搜索历史记录
+export const SEARCH_HISTORY = 'SEARCH_HISTORY'

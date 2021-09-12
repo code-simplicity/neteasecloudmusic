@@ -2,6 +2,10 @@ import {
     playMode
 } from "../utils/playConfig"
 
+import {
+    getSearch
+} from '@/utils/cache'
+
 // 数据源
 const state = {
     //登录状态
@@ -29,7 +33,10 @@ const state = {
     mode: playMode.sequence,
 
     // 播放历史记录列表
-    historyList: []
+    historyList: [],
+
+    // 搜索历史记录
+    searchHistory: getSearch(),
 }
 
 // 统一暴露

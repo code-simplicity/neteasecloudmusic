@@ -7,7 +7,7 @@ export const loginStatus = state => {
 
 // 用户信息
 export const userInfo = state => {
-    return (state.userInfo || JSON.parse(window.localStorage.getItem('userInfo')))
+    return state.userInfo || JSON.parse(window.localStorage.getItem('userInfo'))
 }
 
 // 当前播放状态
@@ -36,4 +36,9 @@ export const currentSong = state => {
 // 播放历史记录
 export const historyList = (state) => {
     return state.historyList
+}
+
+// 搜索历史记录
+export const searchHistory = (state) => {
+    return state.searchHistory
 }
