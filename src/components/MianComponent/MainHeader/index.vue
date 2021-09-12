@@ -80,23 +80,27 @@
                 class="text"
                 type="text"
                 v-model="keywords"
-                placeholder="音乐/视频/电台/mv"
+                placeholder="输入音乐/视频/电台/mv等并按下回车键"
                 @change="search"
                 clearable
                 maxlength="40"
               ></el-input>
             </div>
           </div>
-          <div class="search-hot">
+          <div class="search-hot" v-show="searchHistory.length">
             <div class="title flex-row">
               <i class="iconfont icon-zuji1"></i>
               <span>历史记录</span>
               <p @click="clearSearch">清空</p>
             </div>
             <ul class="tags">
-              <li>
-                <a class="btn flex-row">
-                  <span class="close-dark"></span>
+              <li v-for="item of searchHistory" :key="item">
+                <a class="btn flex-row" @click="tagSearch(item)"
+                  >{{ item }}
+                  <span
+                    class="close-dark"
+                    @click.stop="deleteItem(item)"
+                  ></span>
                 </a>
               </li>
             </ul>
@@ -126,7 +130,7 @@
 <script>
 import { logout } from '../../../api/service/user'
 import { getSearchHot } from '../../../api/service/api'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'MainHeader',
   data() {
@@ -148,7 +152,7 @@ export default {
   },
   // 计算属性
   computed: {
-    ...mapGetters(['loginStatus', 'userInfo'])
+    ...mapGetters(['loginStatus', 'userInfo', 'searchHistory'])
   },
 
   mounted() {
@@ -168,6 +172,7 @@ export default {
             keywords: this.keywords
           }
         })
+        this.saveSearchHistory(this.keywords)
       }
     },
 
@@ -190,16 +195,20 @@ export default {
         let res = await getSearchHot()
         if (res.code === this.constants.code_status) {
           this.hots = res.result.hots
-          console.log('this.hots', this.hots)
         }
       } catch (error) {
         console.log(error)
       }
     },
 
-    // 清空
-    clearSearch() {
+    // 删除单个历史搜索记录
+    deleteItem(item) {
+      this.deleteSearchHistory(item)
+    },
 
+    // 清空搜索历史记录
+    clearSearch() {
+      this.clearSearchHistory()
     },
 
     // 展示搜索框
@@ -266,7 +275,7 @@ export default {
       })
     },
     // mapActions,响应状态的改变
-    // ...mapActions(['userInfo', 'loginStatus'])
+    ...mapActions(['saveSearchHistory', 'deleteSearchHistory', 'clearSearchHistory'])
   }
 }
 </script>
