@@ -1,11 +1,15 @@
 <template>
-  <div>歌单</div>
+  <div class="play=list-wrap container">
+    <div class="filter shadow">
+      <div class="title flex-center"></div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'PlayList',
-  data () {
+  data() {
     return {
 
     }
@@ -13,7 +17,7 @@ export default {
   components: {
 
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {
