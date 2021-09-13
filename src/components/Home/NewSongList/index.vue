@@ -73,7 +73,7 @@ export default {
     ...mapGetters(['currentIndex', 'currentSong', 'playing'])
   },
   mounted() {
-    console.log('this===>', this);
+
   },
   methods: {
     // 播放
@@ -82,10 +82,6 @@ export default {
         list: this.songMusic,
         index
       })
-      // console.log('点击了播放器');
-      // console.log('点击了播放器', item);
-      // console.log('点击了播放器', this.songMusic);
-      // console.log(this);
     },
     // 暂停
     pauseSong() {

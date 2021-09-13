@@ -72,7 +72,11 @@
                 >
               </el-col>
               <el-col :span="1">
-                <el-button size="small" autofocus @click="cancelComment"
+                <el-button
+                  size="small"
+                  type="info"
+                  autofocus
+                  @click="cancelComment"
                   >取消</el-button
                 >
               </el-col>

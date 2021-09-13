@@ -50,8 +50,6 @@ export default {
             list.push(item.id)
           })
         }
-        console.log('推荐歌单', res)
-        console.log('推荐歌单list', list)
         this.getSongDetail(list)
       } catch (error) {
         console.log(error)
@@ -64,10 +62,8 @@ export default {
       idsList = idsList.join(',')
       try {
         let res = await getSongDetail(idsList, time)
-        console.log('获取歌曲列表', res);
         // 处理歌曲
         this.PopularList = this.formatSongs(res.songs)
-        console.log('this.PopularList', this.PopularList);
       } catch (error) {
         console.log(error)
       }
@@ -90,15 +86,12 @@ export default {
 .p-recommend {
   margin-top: 20px;
   padding: 20px;
-  // background-color: #fff;
   border-radius: 8px;
   opacity: 0.9;
   .p-recommend-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border-bottom: 1px solid red;
-
     .p-recommend-text {
       font-size: 1.4rem;
       float: left;

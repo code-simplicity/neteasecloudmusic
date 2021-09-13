@@ -232,7 +232,6 @@ export default {
 <style lang='less' scoped>
 .mv-box {
   margin-top: 10px;
-  background: #fff;
   border-radius: 8px;
   opacity: 0.9;
   li {
@@ -257,7 +256,7 @@ export default {
         margin-right: 6px;
         list-style: none;
         font-weight: 500;
-        color: @color-blank;
+        color: @color-dark;
         &.active {
           background: @color-theme;
           font-weight: 600;

@@ -158,7 +158,6 @@ export default {
     h3 {
       margin-bottom: 12px;
       font-size: 1.2rem;
-      border-bottom: 3px solid @color-theme;
     }
     ul {
       list-style: none;
@@ -229,18 +228,17 @@ export default {
           .content {
             width: 100%;
             font-size: 0.9rem;
-            color: #4a4a4a;
+            color: @color-dark;
             line-height: 1.6;
             padding: 8px 10px;
-            background: #f5f5f5;
             margin-top: 5px;
             border-radius: 2px;
             .beReqlied {
               margin-top: 10px;
-              background: #ffffff;
+              background: #666666;
               padding: 8px 10px;
               border-radius: 3px;
-              color: #666666;
+              color: @color-dark;
               small {
                 color: @color-theme;
               }

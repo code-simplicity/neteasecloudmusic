@@ -189,14 +189,12 @@ export default {
 
     // 每页显示的数量，这里做的是一个前端的分页，因为接口那块是没有分页的
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
       this.currentPage = 1;
       this.pageSize = val;
     },
 
     // 改变当前页码
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.currentPage = val;
     },
 
@@ -298,19 +296,17 @@ export default {
       width: 100%;
       height: 50px;
       line-height: 50px;
-      background: #f7f7f7;
-      border: 1px solid #d4d4d4;
-      border-top: 2px solid #c20c0c;
-      color: #666666;
+      border: none;
+      color: @color-dark;
       th {
         padding: 0 10px;
         text-align: left;
         font-weight: 600;
         white-space: nowrap;
+        font-size: 1.2rem;
         overflow: hidden;
         -o-text-overflow: ellipsis;
         text-overflow: ellipsis;
-        border-left: 1px solid #dadada;
 
         &.th-index {
           width: 15%;
@@ -335,8 +331,8 @@ export default {
     tbody {
       width: 100%;
       tr {
-        height: 50px;
-        line-height: 50px;
+        height: 60px;
+        line-height: 60px;
         transition: background-color 0.2s linear;
         td {
           padding: 0 10px;
@@ -344,10 +340,11 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           -o-text-overflow: ellipsis;
+          color: @color-dark;
         }
         .index-container {
           .num {
-            color: @color-blank;
+            color: @color-dark;
             font-weight: 500;
           }
           .play-icon {
@@ -420,7 +417,7 @@ export default {
           }
         }
         &:nth-child(2n) {
-          background: #f7f7f7;
+          background: #1b1b1b;
         }
         &.playing {
           p {
@@ -442,7 +439,7 @@ export default {
           }
         }
         &:hover {
-          background: #e6e7e9;
+          background: #323232;
           .index-container {
             .num {
               display: block;

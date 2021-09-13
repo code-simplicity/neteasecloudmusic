@@ -1,6 +1,6 @@
 <template>
   <div class="mv-detail container">
-    <div class="left shadow">
+    <div class="left">
       <div class="video-content">
         <video-player
           class="video-player vjs-custom-skin"
@@ -93,7 +93,7 @@
       </div>
     </div>
     <div class="right">
-      <div class="profile module shadow">
+      <div class="profile module">
         <div class="card-header flex-row">
           <span>MV介绍</span>
         </div>
@@ -102,7 +102,7 @@
           <p v-else>暂无介绍</p>
         </div>
       </div>
-      <div class="related module shadow">
+      <div class="related module">
         <div class="card-header flex-row">
           <span>相关推荐</span>
         </div>
@@ -681,7 +681,6 @@ export default {
       height: 20px;
       margin-bottom: 16px;
       font-weight: 600;
-      border-bottom: 2px solid @color-theme;
     }
   }
 }

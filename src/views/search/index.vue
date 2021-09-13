@@ -461,7 +461,6 @@ export default {
     }
   }
   .search-main {
-    background: rgb(255, 255, 255);
     opacity: 0.9;
     border-radius: 8px;
     .tab {
@@ -478,7 +477,7 @@ export default {
         line-height: 20px;
         margin-right: 34px;
         font-weight: 500;
-        color: rgb(0, 0, 0);
+        color: @color-dark;
         z-index: 1;
         cursor: pointer;
         font-size: 1.2rem;

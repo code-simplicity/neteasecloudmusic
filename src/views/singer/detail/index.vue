@@ -574,7 +574,6 @@ export default {
         }
       }
       .content {
-        background: #fff;
         opacity: 0.85;
         border-radius: 8px;
         padding-top: 1px;
@@ -594,8 +593,8 @@ export default {
             line-height: 2;
             margin-bottom: 16px;
             font-size: 1rem;
-            font-weight: 500;
-            color: #000;
+            font-weight: 600;
+            color: @color-dark;
           }
           .introduction {
             .item {
@@ -604,7 +603,7 @@ export default {
                 font-size: 1.2rem;
                 font-weight: 600;
                 margin-bottom: 10px;
-                color: #000;
+                color: @color-dark;
                 i {
                   font-size: 1.3rem;
                   margin-right: 6px;
@@ -612,9 +611,9 @@ export default {
                 }
               }
               p {
-                color: #000;
+                color: @color-dark;
                 font-size: 1rem;
-                font-weight: 500;
+                font-weight: 600;
                 line-height: 2;
               }
             }

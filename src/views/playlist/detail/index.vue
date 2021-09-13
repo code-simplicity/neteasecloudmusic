@@ -1,7 +1,7 @@
 <template>
   <div class="play-list-detail container">
     <!-- 顶部-->
-    <div class="left shadow">
+    <div class="left">
       <div class="top">
         <div class="avatar">
           <el-image
@@ -110,7 +110,7 @@
     </div>
     <div class="right">
       <!-- 喜欢该歌单的人 -->
-      <div class="like-song module shadow">
+      <div class="like-song module">
         <div class="header-card flex-row">
           <span>喜欢这个歌单的人</span>
         </div>
@@ -130,7 +130,7 @@
         <p v-else class="no-like">还没有喜欢该歌单的人</p>
       </div>
       <!-- 相关歌单推荐 -->
-      <div class="related module shadow">
+      <div class="related module">
         <div class="header-card flex-row">
           <span>相关歌单推荐</span>
         </div>
@@ -159,7 +159,7 @@
         </ul>
       </div>
       <!-- 热门评论 -->
-      <div class="comment module shadow">
+      <div class="comment module">
         <div class="header-card flex-row">
           <span>热门评论</span>
         </div>
@@ -600,7 +600,6 @@ export default {
 
 <style lang='less' scoped>
 .play-list-detail {
-  // background-color: @content-background;
   display: flex;
   align-items: flex-start;
   margin-top: 16px;
@@ -611,7 +610,6 @@ export default {
     padding: 20px;
     border-radius: 8px;
     margin-right: 10px;
-    background: @color-dark;
     .top {
       display: flex;
       .avatar {
@@ -689,7 +687,7 @@ export default {
         .tag {
           margin-top: 6px;
           // padding: 0 10px 0 0;
-          // text-shadow: 0 1px #fdfdfd;
+          // text-: 0 1px #fdfdfd;
           // background-position: right -27px;
           a {
             color: @color-blank;
@@ -768,7 +766,6 @@ export default {
   .right {
     width: 350px;
     flex-shrink: 0;
-    background: @color-dark;
     border-radius: 8px;
     .module {
       padding: 16px;

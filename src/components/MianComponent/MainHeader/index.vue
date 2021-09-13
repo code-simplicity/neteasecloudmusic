@@ -283,7 +283,7 @@ export default {
 <style lang="less" scoped>
 .mian-header {
   width: 100%;
-  height: 70px;
+  height: 64px;
   transition: all 400ms ease-in-out;
   position: fixed;
   top: 0;
@@ -298,7 +298,7 @@ export default {
     a {
       width: 100%;
       display: block;
-      height: 70px;
+      height: 64px;
       background-position: center;
       background-repeat: no-repeat;
       background-size: 100% 100%;

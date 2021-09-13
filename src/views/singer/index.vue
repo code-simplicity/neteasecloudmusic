@@ -218,9 +218,8 @@ export default {
 <style lang='less' scoped>
 .singer-box {
   margin-top: 10px;
-  background: #fff;
   border-radius: 8px;
-  opacity: 0.8;
+  opacity: 0.9;
   li {
     list-style: none;
     &:hover {
@@ -232,7 +231,6 @@ export default {
     margin-bottom: 20px;
     .tag-lang {
       display: flex;
-      // padding-top: 16px;
       padding: 16px 0 0 10px;
       li {
         width: 62px;
@@ -244,8 +242,7 @@ export default {
         cursor: pointer;
         margin-right: 6px;
         list-style: none;
-        color: @color-blank;
-        // background: rgb(168, 168, 168);
+        color: @color-dark;
         font-weight: 500;
         &.active {
           background: @color-theme;
@@ -266,14 +263,14 @@ export default {
       margin-top: 20px;
       padding: 0 12px;
       li {
-        width: 28px;
+        width: 34px;
         height: 28px;
         margin-right: 12px;
         text-align: center;
         line-height: 29px;
         border-radius: 50%;
-        font-size: 0.85rem;
-        color: #000000;
+        font-size: 1rem;
+        color: @color-dark;
         cursor: pointer;
         &:first-child,
         &.last-child {

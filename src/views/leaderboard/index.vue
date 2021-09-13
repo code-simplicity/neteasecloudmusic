@@ -65,8 +65,7 @@ export default {
 
 <style lang="less" scoped>
 .leader-board {
-  background: rgb(255, 255, 255);
-  opacity: 0.8;
+  opacity: 0.9;
   margin-top: 10px;
   border-radius: 8px;
   padding: 10px;
@@ -77,7 +76,6 @@ export default {
       margin-left: 16px;
       margin-bottom: 20px;
       padding-bottom: 10px;
-      border-bottom: 2px solid @color-theme;
       cursor: pointer;
       i {
         font-size: 1.6rem;
