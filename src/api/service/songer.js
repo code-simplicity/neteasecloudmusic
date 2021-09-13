@@ -69,3 +69,9 @@ export const playListCatlist = () => api.get(`/playlist/catlist`, {})
 export const getPlayList = params => api.get(`/top/playlist`, {
     params
 })
+
+/**
+ * 获取每日推荐的歌曲
+ * @returns 
+ */
+export const getRecommendSongs = () => api.get(`recommend/songs`, {})
