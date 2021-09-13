@@ -109,7 +109,7 @@ export default {
       // 请求参数
       params: {
         // 返回数量
-        limit: 32,
+        limit: 35,
         // 偏移量，用于分页
         offset: 0,
         // 分类
@@ -229,12 +229,14 @@ export default {
     }
   }
   .filter-tag {
+    margin-bottom: 20px;
     .tag-lang {
       display: flex;
-      padding-top: 16px;
+      // padding-top: 16px;
+      padding: 16px 0 0 10px;
       li {
         width: 62px;
-        height: 28px;
+        height: 30px;
         line-height: 30px;
         font-size: 0.9rem;
         text-align: center;
@@ -242,8 +244,9 @@ export default {
         cursor: pointer;
         margin-right: 6px;
         list-style: none;
-        background: rgb(168, 168, 168);
-        font-weight: 400;
+        color: @color-blank;
+        // background: rgb(168, 168, 168);
+        font-weight: 500;
         &.active {
           background: @color-theme;
           font-weight: 700;
@@ -261,6 +264,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       margin-top: 20px;
+      padding: 0 12px;
       li {
         width: 28px;
         height: 28px;

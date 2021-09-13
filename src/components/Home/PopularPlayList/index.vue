@@ -110,8 +110,8 @@ export default {
   flex-wrap: wrap;
   margin: 0 -12px;
   .r-playlist-item {
-    flex: 0 0 16.66666666666667%;
-    max-width: 16.66666666666667%;
+    flex: 0 0 20%;
+    max-width: 20%;
     // margin-bottom: 20px;
     height: 100%;
     padding: 0 15px 20px 15px;
@@ -227,12 +227,12 @@ export default {
           .icon-bofangliang {
             float: left;
             margin: 0 10px;
-            color: @color-blank;
+            color: @color-dark;
             font-size: 0.9rem;
           }
           .playcount {
             float: left;
-            color: @color-blank;
+            color: @color-dark;
             font-size: 0.9rem;
           }
           .play-music-status {
@@ -241,7 +241,8 @@ export default {
             padding-right: 8px;
             .icon-bofang {
               font-size: 1rem;
-              color: @color-blank;
+              color: @color-dark;
+
               &:hover {
                 color: @color-theme;
               }
@@ -253,7 +254,8 @@ export default {
     .info {
       margin-top: 15px;
       .name {
-        font-size: 14px;
+        font-size: 1em;
+        color: @color-dark;
       }
     }
   }

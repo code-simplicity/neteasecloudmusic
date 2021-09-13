@@ -283,7 +283,7 @@ export default {
 <style lang="less" scoped>
 .mian-header {
   width: 100%;
-  height: 64px;
+  height: 70px;
   transition: all 400ms ease-in-out;
   position: fixed;
   top: 0;
@@ -292,17 +292,16 @@ export default {
   z-index: 2000;
   background: @header-background-color;
   .mian-logo {
-    width: 146px;
-    display: flex;
+    width: 60px;
     align-items: center;
     margin-right: 30px;
     a {
       width: 100%;
       display: block;
-      height: 64px;
-      background-position: 0px center;
+      height: 70px;
+      background-position: center;
       background-repeat: no-repeat;
-      background-size: 100%;
+      background-size: 100% 100%;
       background-image: url('../../../assets/images/logo.png');
     }
 
@@ -319,7 +318,6 @@ export default {
       height: 100%;
       padding: 0 16px;
       a {
-        // color: chocolate;
         font-size: 1rem;
         position: relative;
         transition: all 0.4s;

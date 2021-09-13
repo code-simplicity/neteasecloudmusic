@@ -38,7 +38,7 @@ export default {
   left: 0;
   z-index: -1; //这里建议层级设为-1，但-1可能会导致被其他元素遮挡
   #particles-js {
-    background-color: @particles-background;
+    background-color: @header-background-color;
     width: 100%;
     height: 100%;
   }

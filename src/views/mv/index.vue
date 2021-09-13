@@ -136,7 +136,7 @@ export default {
         // 排序
         order: '上升最快',
         // 返回数量
-        limit: 24,
+        limit: 25,
         // 偏移数量
         offset: 0,
       },
@@ -256,12 +256,15 @@ export default {
         cursor: pointer;
         margin-right: 6px;
         list-style: none;
-        background: rgb(172, 172, 172);
-        font-weight: 400;
+        font-weight: 500;
+        color: @color-blank;
         &.active {
           background: @color-theme;
           font-weight: 600;
           color: #ffffff;
+        }
+        &:hover {
+          font-size: 1.1rem;
         }
       }
     }

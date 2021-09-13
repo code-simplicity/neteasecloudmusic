@@ -36,11 +36,7 @@ export default {
 
 <style lang="less" scoped>
 .main-footer {
-  display: flex;
-  justify-content: center;
-  // min-width: 100%;
-  // border-top: 2px solid @footer-border-top;
-  // background: @footer-background-color;
+  align-items: center;
   .copyright {
     padding: 1.2rem 0;
     .container {
@@ -48,7 +44,6 @@ export default {
       color: rgb(230, 100, 8);
       font-size: 1.2rem;
       .mian-footer-content {
-        display: flex;
         align-items: center;
         a {
           color: @color-dark;

@@ -30,10 +30,7 @@
             class="iconfont icon-bofang1 play-btn"
             @click="playSong(item, index)"
           ></i>
-          <i
-            class="iconfont icon-zanting2 pause-btn"
-            @click="pauseSong"
-          ></i>
+          <i class="iconfont icon-zanting2 pause-btn" @click="pauseSong"></i>
         </div>
         <div class="r-info">
           <div class="r-name">
@@ -53,55 +50,55 @@
 
 <script>
 import {
-    mapGetters,
-    mapActions
+  mapGetters,
+  mapActions
 } from 'vuex'
 export default {
-    name: 'NewSongList',
-    data() {
-        return {
+  name: 'NewSongList',
+  data() {
+    return {
 
-        }
-    },
-    props: {
-        songMusic: {
-            type: Array
-        }
-    },
-    components: {
-
-    },
-    // 计算属性获取vuex状态
-    computed: {
-        ...mapGetters(['currentIndex', 'currentSong', 'playing'])
-    },
-    mounted() {
-      console.log('this===>', this);
-    },
-    methods: {
-      // 播放
-      playSong(item, index) {
-        this.selectPlay({
-          list: this.songMusic, 
-          index
-        })
-        // console.log('点击了播放器');
-        // console.log('点击了播放器', item);
-        // console.log('点击了播放器', this.songMusic);
-        // console.log(this);
-      },
-      // 暂停
-      pauseSong() {
-        this.pausePlay()
-        console.log('暂停了');
-      },
-      /**
-       * 'selectPlay', ==>选择播放
-       *  'pausePlay', ==>暂停
-       *  'playAll'==>播放全部
-       */
-      ...mapActions(['selectPlay', 'pausePlay', 'playAll'])
     }
+  },
+  props: {
+    songMusic: {
+      type: Array
+    }
+  },
+  components: {
+
+  },
+  // 计算属性获取vuex状态
+  computed: {
+    ...mapGetters(['currentIndex', 'currentSong', 'playing'])
+  },
+  mounted() {
+    console.log('this===>', this);
+  },
+  methods: {
+    // 播放
+    playSong(item, index) {
+      this.selectPlay({
+        list: this.songMusic,
+        index
+      })
+      // console.log('点击了播放器');
+      // console.log('点击了播放器', item);
+      // console.log('点击了播放器', this.songMusic);
+      // console.log(this);
+    },
+    // 暂停
+    pauseSong() {
+      this.pausePlay()
+      console.log('暂停了');
+    },
+    /**
+     * 'selectPlay', ==>选择播放
+     *  'pausePlay', ==>暂停
+     *  'playAll'==>播放全部
+     */
+    ...mapActions(['selectPlay', 'pausePlay', 'playAll'])
+  }
 }
 </script>
 
@@ -110,7 +107,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
-  background: #f5f5f5;
+  // background: #f5f5f5;
   .r-playlist-item {
     flex: 0 0 50%;
     max-width: 50%;
@@ -177,23 +174,27 @@ export default {
         .r-name {
           font-size: 1rem;
           font-weight: 600;
+          color: @color-dark;
         }
         .r-singer {
           font-size: 0.8rem;
           font-weight: 600;
+          color: @color-dark;
+
           &:after {
-            content: "/";
+            content: '/';
             margin: 0 3px;
           }
           &:last-child {
             &:after {
-              content: "";
+              content: '';
             }
           }
         }
         .r-duration {
           font-size: 1rem;
           text-align: end;
+          color: @color-dark;
         }
       }
     }

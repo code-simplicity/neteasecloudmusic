@@ -379,9 +379,9 @@ export default {
           margin: 0 6px;
           cursor: pointer;
           padding-right: 10px;
-          background: #808080;
+          // background: #808080;
+          color: @color-blank;
           border-radius: 20px;
-          color: #fff;
           padding: 0 10px;
           font-size: 1rem;
           &:hover {
@@ -399,10 +399,10 @@ export default {
       display: flex;
       .item {
         margin-left: 20px;
-        background: #686868;
-        color: #ffffff;
+        // background: #686868;
+        color: @color-blank;
         padding: 5px 10px;
-        font-size: 0.9rem;
+        font-size: 1rem;
         border-radius: 3px;
         transition: all 0.4s;
         cursor: pointer;

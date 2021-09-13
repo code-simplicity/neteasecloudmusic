@@ -76,8 +76,8 @@ export default {
     // margin: 30px -15px 0;
     li {
       padding: 0 16px 30px;
-      flex: 0 0 12.5%;
-      max-width: 12.5%;
+      flex: 0 0 20%;
+      max-width: 20%;
       .cover {
         position: relative;
         z-index: 2;

@@ -627,18 +627,18 @@ export default {
           border-radius: 8px;
           position: relative;
         }
-        &::hover {
-          content: '';
-          width: 95%;
-          height: 95%;
-          background: rgba(0, 0, 0, 0.2);
-          display: block;
-          position: absolute;
-          top: 15px;
-          right: -5px;
-          z-index: 0;
-          border-radius: 8px;
-        }
+        // &:hover {
+        //   content: '';
+        //   width: 400px;
+        //   height: 400px;
+        //   background: rgba(255, 255, 255, 0.2);
+        //   display: block;
+        //   position: absolute;
+        //   top: 15px;
+        //   right: -5px;
+        //   z-index: 1;
+        //   border-radius: 8px;
+        // }
       }
       .info {
         display: flex;
