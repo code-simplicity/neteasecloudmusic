@@ -198,6 +198,17 @@ export const mainRouter = [{
         require(['@/views/search/index'], resolve)
       }
     },
+    {
+      path: 'daysongdetail',
+      name: 'daysongdetail',
+      meta: {
+        title: '每日歌曲详情',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/home/components/DaySong/detail/index'], resolve)
+      }
+    },
 
   ]
 }]
