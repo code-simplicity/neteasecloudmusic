@@ -4,10 +4,8 @@
     <div class="container">
       <PopularRecommend></PopularRecommend>
       <RecommendNewSong></RecommendNewSong>
+      <DaySong></DaySong>
     </div>
-    <!-- <div>
-      <router-view></router-view>
-    </div> -->
   </div>
 </template>
 
@@ -15,6 +13,7 @@
 import Carousel from './components/Carousel'
 import PopularRecommend from './components/PopularRecommend'
 import RecommendNewSong from './components/RecommendNewSong'
+import DaySong from './components/DaySong'
 export default {
   name: 'Home',
   data() {
@@ -26,6 +25,7 @@ export default {
     Carousel,
     PopularRecommend,
     RecommendNewSong,
+    DaySong
   },
   mounted() {
 
