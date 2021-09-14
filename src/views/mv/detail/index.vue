@@ -567,7 +567,6 @@ export default {
       justify-content: start;
       align-items: center;
       margin-bottom: 10px;
-      border-bottom: 3px solid @color-theme;
       margin-top: 10px;
       .comment-header-title {
         display: flex;
