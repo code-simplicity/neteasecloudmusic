@@ -124,8 +124,10 @@ export default {
         if (res.code === this.constants.code_status) {
           this.getUserInfo(res.account.id)
           window.localStorage.setItem('cookie', result.cookie)
+          window.localStorage.setItem('token', res.token)
           window.localStorage.setItem('loginStatus', true)
           this.setLoginStatus(true)
+          this.setUserInfo(res.account)
         }
       }).catch(error => {
         console.log(error)
