@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Particles from '../../components/Particles'
+import Particles from '@/components/Particles'
 export default {
   name: 'Layout',
   data() {
