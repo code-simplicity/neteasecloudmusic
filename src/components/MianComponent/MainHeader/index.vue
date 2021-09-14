@@ -130,7 +130,7 @@
 <script>
 import { logout } from '../../../api/service/user'
 import { getSearchHot } from '../../../api/service/api'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'MainHeader',
   data() {
@@ -254,13 +254,15 @@ export default {
           const res = await logout()
           console.log(res);
           if (res.code === 200) {
-            this.$message.success('成功退出登录!')
+            this.$message.success('退出登录成功!')
             this.$router.push({
               name: 'login'
             })
             localStorage.setItem('loginStatus', false)
             localStorage.setItem('token', '')
             localStorage.setItem('userInfo', '')
+            this.setLoginStatus(false)
+            this.setUserInfo()
           }
           break
         }
@@ -275,7 +277,9 @@ export default {
       })
     },
     // mapActions,响应状态的改变
-    ...mapActions(['saveSearchHistory', 'deleteSearchHistory', 'clearSearchHistory'])
+    ...mapActions(['saveSearchHistory', 'deleteSearchHistory', 'clearSearchHistory']),
+    // 提交状态，
+    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
   }
 }
 </script>
@@ -502,6 +506,7 @@ export default {
             span {
               font-size: 1rem;
               flex: 1;
+              color: @color-blank;
             }
 
             p {
