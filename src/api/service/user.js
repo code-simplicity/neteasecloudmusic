@@ -2,14 +2,28 @@
 import api from './Interface'
 
 /**
- * 用户登录接口
- * @param {*} phone 手机号码
- * @param {*} password 密码
+ * 手机登录接口
+ * @param {*} params phone 手机号码
+ * @param {*} params md5_password md5加密密码
  * @returns
  */
-export const login = (phone, password) => api.get(`/login/cellphone?phone=${phone}&password=${password}`, {
+export const loginWithPhone = params => api.get(`/login/cellphone`, {
+  params,
   withCredentials: true
 })
+
+/**
+ * 邮箱登录
+ * @param {*} params email 163 网易邮箱
+ * @param {*} params md5_password md5加密密码
+ * @returns 
+ */
+export const loginWithEmail = params => api.get(`/login`, {
+  params
+})
+
+//刷新登录
+export const loginRefresh = () => api.get(`/login/refresh`, {})
 
 /**
  * 获取用户信息
@@ -84,3 +98,40 @@ export const dailySignin = () => api.get(`/daily_signin`, {})
  * @returns 
  */
 export const follow = (id, t) => api.get(`/follow?id=${id}&t=${t}`, {})
+
+/**
+ * 二维码key生成接口
+ * 说明: 调用此接口可生成一个key
+ * @returns 给个时间戳
+ */
+export const getLoginQrKey = params => api.get(`/login/qr/key`, {
+  params,
+  withCredentials: true,
+})
+
+/**
+ * 二维码生成接口
+ * 说明: 调用此接口传入上一个接口生成的key可生成二维码图片的base64和二维码信息,
+ * 可使用base64展示图片,或者使用二维码信息内容自行使用第三方二维码生成库渲染二维码
+ * @param {*} params key 由第一个接口生成
+ * @param {*} params qrimg 传入后会额外返回二维码图片base64编码
+ * @returns 
+ */
+export const getLoginQrImage = params => api.get(`/login/qr/create`, {
+  params,
+  withCredentials: true,
+})
+
+/**
+ * 二维码检测扫码状态接口
+ * 说明: 轮询此接口可获取二维码扫码状态,800为二维码过期,801为等待扫码,802为待确认,803为授权登录成功(803状态码下会返回cookies)
+ * @param {*} params key 由第一个接口生成
+ * @returns 
+ */
+export const loginQrCheck = params => api.get(`/login/qr/check`, {
+  params,
+  withCredentials: true,
+})
+
+// 获取用户信息（登录之后）
+export const getUserAccount = () => api.get(`/user/account`, {})
