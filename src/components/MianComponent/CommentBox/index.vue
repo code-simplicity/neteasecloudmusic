@@ -57,12 +57,12 @@
                   </emoji-picker>
                 </div>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="19">
                 <div class="comment-at">
                   <i class="iconfont icon-aite"></i>
                 </div>
               </el-col>
-              <el-col :span="3">
+              <el-col :span="2">
                 <el-button
                   type="primary"
                   size="small"
@@ -130,7 +130,7 @@ export default {
     }
   },
   mounted() {
-    // console.log('mapGetters', this.currentCommentId)
+
   },
   methods: {
     insert(emoji) {
@@ -186,7 +186,7 @@ export default {
           box-shadow: 1px 1px 8px #c7dbe6;
           h5 {
             margin-bottom: 0;
-            color: @color-blank;
+            color: @color-dark;
             text-transform: uppercase;
             font-size: 0.8rem;
             cursor: default;
