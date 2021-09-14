@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2761300 */
-  src: url('iconfont.woff2?t=1630675528800') format('woff2'),
-       url('iconfont.woff?t=1630675528800') format('woff'),
-       url('iconfont.ttf?t=1630675528800') format('truetype');
+  src: url('iconfont.woff2?t=1631627368732') format('woff2'),
+       url('iconfont.woff?t=1631627368732') format('woff'),
+       url('iconfont.ttf?t=1631627368732') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,138 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-youxiang:before {
+  content: "\e624";
+}
+
+.icon-shouji1:before {
+  content: "\e747";
+}
+
+.icon-mima:before {
+  content: "\e61f";
+}
+
+.icon-fengge:before {
+  content: "\e802";
+}
+
+.icon-qinggan:before {
+  content: "\e630";
+}
+
+.icon-xiaoyuzhong:before {
+  content: "\e61e";
+}
+
+.icon-yuzhong:before {
+  content: "\e7a8";
+}
+
+.icon-ziyuan5:before {
+  content: "\e6dd";
+}
+
+.icon-changjing:before {
+  content: "\f444";
+}
+
+.icon-shuxian:before {
+  content: "\e684";
+}
+
+.icon-guanzhu:before {
+  content: "\e673";
+}
+
+.icon-shipin:before {
+  content: "\e695";
+}
+
+.icon-geshou:before {
+  content: "\e61a";
+}
+
+.icon-zhuanji-copy:before {
+  content: "\e61c";
+}
+
+.icon-gedanshenhe:before {
+  content: "\e61d";
+}
+
+.icon-danqu:before {
+  content: "\e628";
+}
+
+.icon-sousuo:before {
+  content: "\e635";
+}
+
+.icon-sousuo1:before {
+  content: "\e618";
+}
+
+.icon-soushuo:before {
+  content: "\e619";
+}
+
+.icon-zuji:before {
+  content: "\e616";
+}
+
+.icon-zuji1:before {
+  content: "\e617";
+}
+
+.icon-MV:before {
+  content: "\e62c";
+}
+
+.icon-fenxiang:before {
+  content: "\e665";
+}
+
+.icon-fenxiang1:before {
+  content: "\e816";
+}
+
+.icon-xihuan:before {
+  content: "\effb";
+}
+
+.icon-shoucang1:before {
+  content: "\f231";
+}
+
+.icon-fenxiang2:before {
+  content: "\fb7d";
+}
+
+.icon-shouji:before {
+  content: "\e6e1";
+}
+
+.icon-dengji:before {
+  content: "\e6e2";
+}
+
+.icon-diqu:before {
+  content: "\e613";
+}
+
+.icon-dengji1:before {
+  content: "\e615";
+}
+
+.icon-man:before {
+  content: "\e64c";
+}
+
+.icon-woman:before {
+  content: "\e614";
 }
 
 .icon-huifu:before {
