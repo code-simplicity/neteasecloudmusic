@@ -46,7 +46,7 @@
             >
           </div>
           <div class="description">
-            <b>介绍:</b>
+            <p>介绍:</p>
             <p class="ellipsis-two" v-html="songDetail.description"></p>
             <span
               class="flex-row"
@@ -672,7 +672,7 @@ export default {
           }
           .createTime {
             font-size: 1rem;
-            color: @color-blank;
+            color: @color-dark;
           }
         }
         .user-button {
@@ -743,7 +743,7 @@ export default {
         justify-content: start;
         align-items: center;
         margin-bottom: 10px;
-        border-bottom: 3px solid @color-theme;
+        // border-bottom: 3px solid @color-theme;
         .comment-header-title {
           display: flex;
           align-items: center;
@@ -779,7 +779,7 @@ export default {
         text-align: center;
         margin-bottom: 10px;
         padding-bottom: 4px;
-        border-bottom: 1px solid @color-theme;
+        // border-bottom: 1px solid @color-theme;
         cursor: pointer;
         span {
           font-size: 1rem;
@@ -821,7 +821,7 @@ export default {
         text-align: center;
         margin-bottom: 10px;
         padding-bottom: 4px;
-        border-bottom: 1px solid @color-theme;
+        // border-bottom: 1px solid @color-theme;
         cursor: pointer;
         span {
           font-size: 1rem;
@@ -873,7 +873,7 @@ export default {
         text-align: center;
         margin-bottom: 10px;
         padding-bottom: 4px;
-        border-bottom: 1px solid @color-theme;
+        // border-bottom: 1px solid @color-theme;
         cursor: pointer;
         span {
           font-size: 1rem;
