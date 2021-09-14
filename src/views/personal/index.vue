@@ -2,9 +2,9 @@
   <div class="personal-wrap">
     <div class="banner layer"></div>
     <div class="personal-main container">
-      <div class="center shadow">
+      <div class="center">
         <div class="card-header flex-between">
-          <div class="flex-row">
+          <div class="card-title flex-row">
             听歌排行
             <span class="songs-num"
               >累积听歌{{ userDetail.listenSongs }}首</span
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="right">
-        <div class="user-box shadow">
+        <div class="user-box">
           <div
             class="background layer"
             :style="{
@@ -104,13 +104,13 @@
           </div>
         </div>
         <div class="right-list">
-          <div class="my-songs module shadow">
+          <div class="my-songs module">
             <div class="card-header flex-row">
               <span>我创建的歌单</span>
             </div>
             <PopularPlayList :songMusic="myList" :num="num"></PopularPlayList>
           </div>
-          <div class="my-songs collect module shadow">
+          <div class="my-songs collect module">
             <div class="card-header flex-row">
               <span>我收藏的歌单</span>
             </div>
@@ -342,7 +342,6 @@ export default {
       margin-top: 20px;
       flex-shrink: 0;
       .user-box {
-        background: #fff;
         border-radius: 8px;
         padding-bottom: 30px;
         .background {
@@ -434,12 +433,11 @@ export default {
           display: flex;
           margin: 0 40px;
           padding-top: 16px;
-          border-top: 1px solid #272766;
           li {
             width: 33%;
             text-align: center;
             font-size: 0.9rem;
-            color: @color-blank;
+            color: @color-dark;
             span {
               display: block;
             }
@@ -472,7 +470,6 @@ export default {
         .my-songs {
           padding-bottom: 6px;
           .card-header {
-            border-bottom: 2px solid @color-theme;
             // height: 30px;
             margin-bottom: 16px;
             padding-bottom: 6px;
@@ -492,19 +489,20 @@ export default {
     }
     .center {
       flex: 1;
-      background: #fff;
       position: relative;
       margin-top: 20px;
       margin-right: 20px;
       border-radius: 8px;
       padding: 16px;
       .card-header {
-        // border-left: 2px solid @color-theme;
         height: 20px;
         padding-left: 1rem;
         margin-bottom: 0px;
         font-weight: 500;
         font-size: 1.1rem;
+        .card-title {
+          color: @color-dark;
+        }
         .songs-num {
           font-weight: 400;
           font-size: 0.9rem;
