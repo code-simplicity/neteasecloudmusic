@@ -26,30 +26,30 @@
 <script>
 import Scroll from '../Scroll/'
 export default {
-    name: 'Lyric',
-    data() {
-        return {
-
-        }
-    },
-    props: {
-        currentLyricNum: {
-            type: Number
-        },
-        currentLyric: {
-            type: Object
-        }
-    },
-    components: {
-        Scroll
-    },
-    mounted() {
-      console.log('this====>', this.currentLyric);
-      console.log('currentLyricNum', this.currentLyricNum);
-    },
-    methods: {
+  name: 'Lyric',
+  data() {
+    return {
 
     }
+  },
+  props: {
+    currentLyricNum: {
+      type: Number
+    },
+    currentLyric: {
+      type: Object
+    }
+  },
+  components: {
+    Scroll
+  },
+  mounted() {
+    console.log('this====>', this.currentLyric);
+    console.log('currentLyricNum', this.currentLyricNum);
+  },
+  methods: {
+
+  }
 }
 </script>
 
@@ -70,6 +70,7 @@ export default {
         line-height: 24px;
         font-size: 1rem;
         font-weight: 400;
+        color: @color-blank;
         &.active {
           color: @color-theme;
         }
