@@ -45,20 +45,18 @@
             <div class="info flex-between">
               <p class="name">{{ userProfile.nickname }}</p>
               <div
+                class="signin"
                 v-if="userInfo.userId === userProfile.userId"
                 @click="dailySignin"
+                :class="userDetail.pcSign ? 'active' : ''"
               >
-                <el-button class="sign-btn sign-btn-active" v-if="userSignin"
-                  >签到</el-button
-                >
-                <el-button tclass="sign-btn" v-else>已签到</el-button>
+                <span class="signin-btn">{{ dailySigninText }}</span>
               </div>
             </div>
           </div>
-          <!-- <p class="desc">{{ userProfile.signature }}</p> -->
           <div class="profile">
             <div class="tag">
-              <el-tag type="warning" effect="dark">介绍：</el-tag>
+              <el-tag effect="dark">介绍：</el-tag>
               <span>{{ userProfile.signature }}</span>
             </div>
             <div class="tag">
@@ -97,6 +95,7 @@
           </ul>
           <div class="user-setting flex-center">
             <router-link
+              v-if="userInfo.userId === userProfile.userId"
               class="active"
               :to="{ name: 'userupdata', query: { id: userProfile.userId } }"
               >编辑资料</router-link
@@ -158,7 +157,7 @@ export default {
       // 每行展示多少个
       num: 2,
       // 签到标识
-      userSignin: false
+      dailySigninTxt: '签到'
     }
   },
   components: {
@@ -169,6 +168,9 @@ export default {
     ...mapGetters(['userInfo']),
     age() {
       return this.utils.getAstro(this.userProfile.birthday)
+    },
+    dailySigninText() {
+      return this.userDetail.pcSign ? '已签到' : '签到'
     }
   },
 
@@ -198,18 +200,18 @@ export default {
   methods: {
 
     // 签到
-    async dailySignin() {
-      try {
-        let res = await dailySignin()
+    dailySignin() {
+      // 签到类型
+      let type = 1
+      dailySignin(type).then(res => {
         if (res.code === this.constants.code_status) {
-          this.userSignin = true
           this.$message.success('签到成功')
-        } if (res.code === -2) {
-          this.$message.warning('重复签到！！！')
+        } else if (res.code === -2) {
+          this.$message.warning('重复签到')
         }
-      } catch (error) {
+      }).catch(error => {
         console.log(error)
-      }
+      })
     },
 
     // 获取用户歌单
@@ -308,6 +310,7 @@ export default {
         if (res.code === this.constants.code_status) {
           this.userProfile = res.profile
           this.userDetail = res
+          console.log('this.userDetail', this.userDetail)
           // 初始化加载初始化函数
           this._initialize()
         }
@@ -378,14 +381,20 @@ export default {
               font-weight: 600;
               font-size: 1rem;
             }
-            .sign-btn {
-              padding: 3px 14px;
-              font-size: 0.9rem;
+            .signin {
+              font-size: 1rem;
+              color: @color-blank;
+              padding: 3px;
+              text-align: center;
               border-radius: 8px;
-              &.sign-btn-active {
-                background: #fa2800;
-                cursor: pointer;
-                border: 1px solid #fa2800;
+              background: @color-dark;
+              cursor: pointer;
+              &:hover {
+                color: @color-theme;
+              }
+              &.active {
+                background: @color-theme;
+                color: @color-dark;
               }
             }
           }
