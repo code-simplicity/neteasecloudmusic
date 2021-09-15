@@ -117,6 +117,7 @@ export default {
       padding: 0 16px 30px 16px;
       flex: 0 0 20%;
       max-width: 20%;
+      cursor: pointer;
       .cover {
         position: relative;
         z-index: 2;
@@ -179,16 +180,17 @@ export default {
           -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
           .play {
-            width: 32px;
-            height: 32px;
+            width: 60px;
+            height: 60px;
             padding: 0;
             border: none;
             border-radius: 50%;
-            color: #fff;
+            color: @color-dark;
             cursor: pointer;
-            background-color: @color-theme;
+            background-color: @color-dark;
             i {
-              font-size: 1rem;
+              font-size: 3.4rem;
+              color: @color-theme;
             }
           }
         }
