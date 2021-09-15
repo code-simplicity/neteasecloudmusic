@@ -86,9 +86,11 @@ export const avatarUpload = (params, config) => api.post(`/avatar/upload`, {
 
 /**
  * 签到
+ * 说明 : 调用此接口 , 传入签到类型 ( 可不传 , 默认安卓端签到 ), 可签到 ( 需要登录 ), 其中安卓端签到可获得 3 点经验 , web/PC 端签到可获得 2 点经验
+ * @param {*} type: 签到类型 , 默认 0, 其中 0 为安卓端签到 ,1 为 web/PC 签到
  * @returns 
  */
-export const dailySignin = () => api.get(`/daily_signin`, {})
+export const dailySignin = (type) => api.get(`/daily_signin?type=${type}`, {})
 
 /**
  * 关注/取消关注用户
