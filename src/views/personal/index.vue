@@ -223,7 +223,7 @@ export default {
           let myList = []
           let collectList = []
           list.map(item => {
-            // 判断是个人歌单还是收藏别人的歌单
+            // 判断是我创建的还是收藏别人的歌单
             if (item.userId === this.userProfile.userId) {
               myList.push(item)
             } else {
