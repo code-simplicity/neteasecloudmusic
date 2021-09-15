@@ -294,6 +294,7 @@ export default {
   left: 0;
   right: 0;
   z-index: 2000;
+  font-size: 1rem;
   background: @header-background-color;
   .mian-logo {
     width: 60px;
@@ -317,6 +318,7 @@ export default {
     flex: 1;
     list-style: none;
     align-items: center;
+    font-size: 1rem;
     li {
       font-size: 1rem;
       height: 100%;
