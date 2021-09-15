@@ -82,7 +82,7 @@
 import myUpload from 'vue-image-crop-upload/upload-2.vue';
 import VDistpicker from 'v-distpicker'
 import { mapGetters } from 'vuex'
-import { avatarUpload } from '../../../../api/service/user'
+import { avatarUpload } from '@/api/service/user'
 export default {
   name: 'UserSetting',
   data() {
@@ -94,6 +94,9 @@ export default {
       },
       // 是否展示头衔上传
       showImage: false,
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // },
     }
   },
   props: {
@@ -122,47 +125,74 @@ export default {
   mounted() {
   },
   methods: {
-    // 图像上传到服务器的接口
-    cropSuccess(imageDataUrl) {
-      // let imgFile = this.utils.base64ToFile(imgDataUrl, '.png')
-      // console.log('imgFile', imgFile)
-      // eslint-disable-next-line no-debugger
-      debugger
-
-
-      let formData = new FormData();
-      // 使用FormData.append来添加键 / 值对到表单里面;
-      formData.append('imgFile', imageDataUrl);
-      // formData.append('imgSize', 300);
+    // 图像上传到本地展示
+    cropSuccess(imgDataUrl, field) {
+      // // eslint-disable-next-line no-debugger
+      // debugger
+      // let formData = new FormData()
+      // formData.append('imgFile', imageDataUrl)
       // let params = {
-      //   imgFile: imgFile,
-      //   // imgSize: 300
+      //   imgFile: formData
       // }
-      // let config = {
-      //   headers: { 'Content-Type': 'multipart/form-data' }
-      // }
-      avatarUpload(imageDataUrl).then(res => {
+      // console.log('imageDataUrl', imageDataUrl)
+      // avatarUpload(params).then(res => {
+      //   if (res.code === this.constants.code_status) {
+      //     this.userProfile.avatarUrl = res.data.url
+      //     this.$message.success('头像上传成功')
+      //     console.log('resthis.userProfile.avatarUrlponse', this.userProfile.avatarUrl)
+      //   }
+      // }).catch(error => {
+      //   console.log(error)
+
+      // })
+    },
+
+    // 图像上传到接口服务器，并且返回到本地显示
+    // async avatarUpload(imageDataUrl) {
+    //   let formData = new FormData()
+    //   formData.append('imgFile', imageDataUrl)
+    //   try {
+    //     let res = await avatarUpload(formData)
+    //     if (res.code === this.constants.code_status) {
+    //       this.userProfile.avatarUrl = res.data.url
+    //       this.$message.success('头像上传成功')
+    //       console.log('resthis.userProfile.avatarUrlponse', this.userProfile.avatarUrl)
+    //     }
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // },
+
+    // 上传成功的回调
+    cropUploadSuccess(jsonData, field) {
+      let formData = new FormData()
+      formData.append('imgFile', jsonData)
+      let params = {
+        imgFile: formData
+      }
+      console.log('jsonData', jsonData)
+      avatarUpload(params).then(res => {
         if (res.code === this.constants.code_status) {
           this.userProfile.avatarUrl = res.data.url
           this.$message.success('头像上传成功')
-          console.log('imageDataUrl', imageDataUrl)
           console.log('resthis.userProfile.avatarUrlponse', this.userProfile.avatarUrl)
         }
-      })
-    },
+      }).catch(error => {
+        console.log(error)
 
-    // 上传成功的回调
-    cropUploadSuccess(response) {
-      if (response.code === this.constants.code_status) {
-        console.log('response', response)
-        this.$message.success('头像上传成功')
-        this.userProfile.avatarUrl = response.data.url
-      }
+      })
+      // if (response.code === this.constants.code_status) {
+      //   console.log('response', response)
+      //   this.$message.success('头像上传成功')
+      //   this.userProfile.avatarUrl = response.data.url
+      // }
     },
 
     // 上传失败的回调
-    cropUploadFail() {
-      this.$message.error('头像上传失败!')
+    cropUploadFail(status) {
+      if (status === 0) {
+        this.$message.error('头像上传失败!')
+      }
     },
 
     // 修改头像
