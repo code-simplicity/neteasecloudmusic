@@ -47,7 +47,7 @@
               <li v-show="userOfSonger.followeds">
                 <p class="text">粉丝</p>
                 <p class="num">
-                  {{ this.utils.tranNumber(userOfSonger.followeds) }}
+                  {{ userOfSonger.followeds }}
                 </p>
               </li>
             </ul>
@@ -584,6 +584,7 @@ export default {
             font-size: 1.3rem;
             font-weight: 600;
             color: @color-dark;
+
             i {
               font-size: 1.3rem;
               margin-right: 6px;
