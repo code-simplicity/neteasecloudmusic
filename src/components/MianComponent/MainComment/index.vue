@@ -158,6 +158,7 @@ export default {
     h3 {
       margin-bottom: 12px;
       font-size: 1.2rem;
+      color: @color-dark;
     }
     ul {
       list-style: none;
@@ -183,6 +184,7 @@ export default {
             font-size: 1rem;
             margin-right: 6px;
             margin-bottom: 10px;
+            color: @color-dark;
             small {
               color: #a5a5c1;
               font-weight: 200;
@@ -209,7 +211,7 @@ export default {
               span {
                 font-size: 0.8rem;
                 margin-top: 2px;
-                color: #666;
+                color: @color-dark;
                 font-weight: 200;
                 position: relative;
                 &::after {

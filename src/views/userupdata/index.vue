@@ -71,14 +71,14 @@ export default {
   watch: {
     $route(newVal) {
       console.log(newVal)
-      let id = this.$route.query.uid
+      let id = this.$route.query.uid || this.userInfo.userId
       if (id) {
         this._initIaLize(id)
       }
     }
   },
   mounted() {
-    let id = this.$route.query.id
+    let id = this.$route.query.uid || this.userInfo.userId
     this.userId = id
     if (id) {
       this._initIaLize(id)
@@ -100,12 +100,11 @@ export default {
         province: content.province,
         city: content.city
       }
-      console.log('params', params);
       userInfoUpdate(params).then(res => {
         if (res.code === this.constants.code_status) {
           this.$message.success('修改成功')
-          // this.getUserInfo(this.userId)
-          this.setUserInfo(res.profile)
+          this.getUserInfo(this.userId)
+          this.setLoginStatus(true)
         } else {
           this.$message.error('修改失败,请检查重试!!!')
         }
@@ -140,13 +139,18 @@ export default {
     },
 
     // 获取个人用户信息
-    async getUserInfo(id) {
+    async getUserInfo(uid) {
       try {
-        let res = await getUserInfo(id)
+        let res = await getUserInfo(uid)
         if (res.code === this.constants.code_status) {
           this.userProfile = res.profile
-          console.log('getUserInfo', res)
-          this._initIaLize()
+          let userInfo = res.profile
+          userInfo.level = res.level
+          userInfo.listenSongs = res.listenSongs
+          userInfo.createTime = res.createTime
+          userInfo.createDays = res.createDays
+          this.setUserInfo(res.profile)
+          window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
           this.getArea()
         }
       } catch (error) {
@@ -162,7 +166,6 @@ export default {
     // 初始化
     _initIaLize(id) {
       this.getUserInfo(id)
-      //   this.getArea()
     },
     ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
 

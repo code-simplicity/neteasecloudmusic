@@ -509,6 +509,7 @@ export default {
       .title {
         margin-bottom: 10px;
         position: relative;
+        color: @color-dark;
         i {
           font-size: 24px;
           margin-top: 1px;
@@ -574,9 +575,11 @@ export default {
         .comment-text {
           margin-right: 40px;
           font-size: 1.2rem;
+          color: @color-dark;
         }
         span {
           font-size: 1rem;
+          color: @color-dark;
         }
       }
     }
@@ -646,6 +649,7 @@ export default {
               margin-bottom: 4px;
               margin-top: 5px;
               min-height: 20px;
+              color: @color-dark;
               i {
                 color: @color-theme;
                 font-size: 1.5rem;
@@ -680,6 +684,7 @@ export default {
       height: 20px;
       margin-bottom: 16px;
       font-weight: 600;
+      color: @color-dark;
     }
   }
 }

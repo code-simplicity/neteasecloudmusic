@@ -53,6 +53,7 @@ export default {
       p {
         font-size: 1.1rem;
         margin-bottom: 6px;
+        color: @color-blank;
       }
     }
     .bind-btn {

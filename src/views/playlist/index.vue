@@ -371,6 +371,7 @@ export default {
         font-size: 1rem;
         align-items: center;
         margin: 0;
+        color: @color-blank;
       }
       ul {
         margin: 0;

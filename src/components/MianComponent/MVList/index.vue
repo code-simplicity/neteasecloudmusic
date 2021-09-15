@@ -211,21 +211,23 @@ export default {
             color: #ffffff;
           }
         }
-        .info {
-          margin-top: 12px;
-          .title {
-            font-size: 1rem;
-            font-weight: 500;
-            display: block;
-            line-height: 1.3;
-          }
-        }
+
         &.live {
           .cover {
             .foot {
               background: rgba(250, 40, 0, 0.75);
             }
           }
+        }
+      }
+      .info {
+        margin-top: 12px;
+        h3 {
+          font-size: 1rem;
+          font-weight: 500;
+          display: block;
+          line-height: 1.3;
+          color: @color-dark;
         }
       }
     }

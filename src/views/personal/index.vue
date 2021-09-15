@@ -414,6 +414,7 @@ export default {
             }
             span {
               padding-left: 10px;
+              color: @color-dark;
             }
             .sex-icon {
               font-size: 0.9rem;
@@ -474,6 +475,7 @@ export default {
             margin-bottom: 16px;
             padding-bottom: 6px;
             font-weight: bold;
+            color: @color-dark;
             .icon-like {
               font-size: 20px;
             }
@@ -512,6 +514,7 @@ export default {
           span {
             font-size: 0.9rem;
             cursor: pointer;
+            color: @color-dark;
             &.active {
               color: @color-theme;
             }

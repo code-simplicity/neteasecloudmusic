@@ -236,11 +236,13 @@ export default {
       flex-grow: 1;
       .song-list {
         margin-right: 40px;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        color: @color-dark;
       }
       span {
         font-size: 1rem;
         flex: 0 0 30%;
+        color: @color-dark;
       }
     }
     .item {

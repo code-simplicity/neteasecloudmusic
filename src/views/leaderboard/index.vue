@@ -77,6 +77,8 @@ export default {
       margin-bottom: 20px;
       padding-bottom: 10px;
       cursor: pointer;
+      color: @color-dark;
+
       i {
         font-size: 1.6rem;
         margin-right: 10px;

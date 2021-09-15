@@ -583,6 +583,7 @@ export default {
           .title {
             font-size: 1.3rem;
             font-weight: 600;
+            color: @color-dark;
             i {
               font-size: 1.3rem;
               margin-right: 6px;

@@ -650,6 +650,7 @@ export default {
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           overflow: hidden;
+          color: @color-dark;
         }
         .user {
           margin-bottom: 15px;
@@ -686,9 +687,7 @@ export default {
         }
         .tag {
           margin-top: 6px;
-          // padding: 0 10px 0 0;
-          // text-: 0 1px #fdfdfd;
-          // background-position: right -27px;
+          color: @color-dark;
           a {
             color: @color-blank;
             background: @tag-background;
@@ -714,13 +713,12 @@ export default {
           display: flex;
           flex-direction: column;
           line-height: 1.6;
-          margin-top: 15px;
+          margin-top: 12px;
           p {
             line-height: 1.6;
             font-weight: 500;
-            flex: 1;
+            // flex: 2;
             font-size: 1rem;
-            margin-left: 10px;
           }
           span {
             flex-shrink: 0;
@@ -753,6 +751,7 @@ export default {
           }
           span {
             font-size: 1rem;
+            color: @color-dark;
           }
         }
       }
@@ -780,6 +779,7 @@ export default {
         margin-bottom: 10px;
         padding-bottom: 4px;
         // border-bottom: 1px solid @color-theme;
+        color: @color-dark;
         cursor: pointer;
         span {
           font-size: 1rem;
@@ -821,6 +821,7 @@ export default {
         text-align: center;
         margin-bottom: 10px;
         padding-bottom: 4px;
+        color: @color-dark;
         // border-bottom: 1px solid @color-theme;
         cursor: pointer;
         span {
@@ -855,12 +856,14 @@ export default {
               font-weight: 400;
               margin-bottom: 10px;
               width: 80%;
+              color: @color-dark;
               &:hover {
                 color: @color-theme;
               }
             }
             span {
               font-size: 0.9rem;
+              color: @color-dark;
             }
           }
         }
@@ -873,6 +876,7 @@ export default {
         text-align: center;
         margin-bottom: 10px;
         padding-bottom: 4px;
+        color: @color-dark;
         // border-bottom: 1px solid @color-theme;
         cursor: pointer;
         span {
@@ -901,11 +905,13 @@ export default {
           }
           .info {
             flex: 1;
-            h2 {
+            h3 {
               font-size: 1rem;
               margin-right: 5px;
               margin-bottom: 10px;
               cursor: pointer;
+              color: @color-dark;
+
               small {
                 font-size: 12px;
                 color: #a5a5c1;
