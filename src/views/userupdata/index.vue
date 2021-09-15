@@ -104,7 +104,6 @@ export default {
         if (res.code === this.constants.code_status) {
           this.$message.success('修改成功')
           this.getUserInfo(this.userId)
-          this.setLoginStatus(true)
         } else {
           this.$message.error('修改失败,请检查重试!!!')
         }
@@ -149,7 +148,7 @@ export default {
           userInfo.listenSongs = res.listenSongs
           userInfo.createTime = res.createTime
           userInfo.createDays = res.createDays
-          this.setUserInfo(res.profile)
+          // this.setUserInfo(res.profile)
           window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
           this.getArea()
         }
@@ -180,6 +179,7 @@ export default {
   margin-top: 10px;
   border-radius: 8px;
   background: @color-dark;
+  opacity: 0.9;
   min-height: 600px;
   .user-content {
     padding: 20px 40px;
