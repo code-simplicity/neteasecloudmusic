@@ -39,7 +39,7 @@ export default {
     this.getNewSongs()
   },
   methods: {
-    //  获取推荐歌单
+    //  获取推荐新音乐
     async getNewSongs() {
       try {
         let res = await getNewSongs(this.limit)
@@ -99,7 +99,7 @@ export default {
 
       .icon-rementuijian-copy {
         font-size: 1.3rem;
-        color: red;
+        color: @color-dark;
         padding-right: 10px;
       }
     }
@@ -109,7 +109,7 @@ export default {
       color: @color-dark;
       .icon-gengduo {
         font-size: 0.8rem;
-        color: red;
+        color: @color-dark;
         padding-left: 6px;
 
         &:hover {

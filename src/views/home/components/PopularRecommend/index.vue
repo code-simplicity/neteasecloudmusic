@@ -61,21 +61,19 @@ export default {
 .p-recommend {
   margin-top: 36px;
   padding: 20px;
-  // background-color: @color-dark;
   border-radius: 8px;
   opacity: 0.9;
   .p-recommend-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border-bottom: 1px solid red;
     .p-recommend-text {
       font-size: 1.4rem;
       float: left;
       color: @color-dark;
       .icon-rementuijian-copy {
         font-size: 1.3rem;
-        color: red;
+        color: @color-dark;
         padding-right: 10px;
       }
     }
@@ -86,7 +84,7 @@ export default {
 
       .icon-gengduo {
         font-size: 0.8rem;
-        color: red;
+        color: @color-dark;
         padding-left: 6px;
         &:hover {
           color: #1890ff;
