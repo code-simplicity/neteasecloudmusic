@@ -48,7 +48,7 @@ export default {
       color: @color-dark;
       .icon-rementuijian-copy {
         font-size: 1.3rem;
-        color: red;
+        color: @color-dark;
         padding-right: 10px;
       }
     }
