@@ -5,8 +5,8 @@
         <div class="cover">
           <div class="avatar">
             <el-image
-              :key="item.img1v1Url"
-              :src="item.img1v1Url"
+              :key="item.img1v1Url || item.avatarUrl"
+              :src="item.img1v1Url || item.avatarUrl"
               fit="cover"
               lazy
             >
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="info">
-          <p class="name">{{ item.name }}</p>
+          <p class="name">{{ item.name || item.nickname }}</p>
           <p class="count" v-if="item.musicSize">单曲数{{ item.musicSize }}</p>
         </div>
       </li>
