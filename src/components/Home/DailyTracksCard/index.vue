@@ -1,9 +1,6 @@
 <template>
   <div class="daily-recommend-card" @click="toDailyDetail">
-    <el-image
-      src="https://p2.music.126.net/0-Ybpa8FrDfRgKYCTJD8Xg==/109951164796696795.jpg"
-      fit="cover"
-    ></el-image>
+    <img :src="coverUrl" />
     <div class="containers">
       <div class="title-box">
         <div class="title">
@@ -21,9 +18,16 @@
 </template>
 
 <script>
+
+import { mapActions, mapGetters } from 'vuex'
+import sample from 'lodash/sample';
 import { getRecommendSongs } from '@/api/service/songer'
 import { createSong } from '@/model/song'
-import { mapActions, mapGetters } from 'vuex'
+const defaultCovers = [
+  'https://p2.music.126.net/0-Ybpa8FrDfRgKYCTJD8Xg==/109951164796696795.jpg',
+  'https://p2.music.126.net/QxJA2mr4hhb9DZyucIOIQw==/109951165422200291.jpg',
+  'https://p1.music.126.net/AhYP9TET8l-VSGOpWAKZXw==/109951165134386387.jpg',
+];
 export default {
   name: 'DailyTracksCard',
   data() {
@@ -35,7 +39,11 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['currentIndex', 'currentSong', 'playing'])
+    ...mapGetters(['currentIndex', 'currentSong', 'playing']),
+    coverUrl() {
+      return `${sample(defaultCovers)
+        }?param=1024y1024`;
+    },
   },
 
   mounted() {
@@ -92,7 +100,7 @@ export default {
   position: relative;
   overflow: hidden;
   margin-top: 10px;
-  .el-image {
+  img {
     position: absolute;
     top: 0;
     left: 0;
