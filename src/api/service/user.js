@@ -78,10 +78,8 @@ export const userInfoUpdate = params => api.get(`/user/update`, {
  * @returns 
  */
 
-export const avatarUpload = (params, config) => api.post(`/avatar/upload`, {
+export const avatarUpload = params => api.post(`/avatar/upload`, {
   params
-}, {
-  config
 })
 
 /**
@@ -137,3 +135,10 @@ export const loginQrCheck = params => api.get(`/login/qr/check`, {
 
 // 获取用户信息（登录之后）
 export const getUserAccount = () => api.get(`/user/account`, {})
+
+/**
+ * 获取用户关注列表
+ * @param {*} uid 
+ * @returns 
+ */
+export const getUserFollows = uid => api.get(`/user/follows?uid=${uid}`, {})
