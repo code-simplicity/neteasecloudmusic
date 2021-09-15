@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     // 图像上传到本地展示
-    cropSuccess(imgDataUrl, field) {
+    cropSuccess() {
       // // eslint-disable-next-line no-debugger
       // debugger
       // let formData = new FormData()
@@ -164,7 +164,7 @@ export default {
     // },
 
     // 上传成功的回调
-    cropUploadSuccess(jsonData, field) {
+    cropUploadSuccess(jsonData) {
       let formData = new FormData()
       formData.append('imgFile', jsonData)
       let params = {
