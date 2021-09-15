@@ -687,11 +687,11 @@ export default {
   // 播放详情
   .player-page {
     width: 100%;
-    height: 100vh;
+    height: 1000vh;
     background-color: @lyric-background;
     background-image: radial-gradient(
         at 47% 33%,
-        hsl(0, 39%, 63%) 0,
+        hsl(0, 9%, 58%) 0,
         transparent 59%
       ),
       radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
@@ -760,7 +760,7 @@ export default {
           margin-bottom: 10px;
           .icon-guanbi {
             font-size: 1.6rem;
-            color: @color-dark;
+            color: @color-blank;
             &:hover {
               color: @color-theme;
             }
