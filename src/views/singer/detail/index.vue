@@ -72,6 +72,7 @@
             :isPerson="isPerson"
             v-if="active === 1"
           ></SongDetailsList>
+          <AlbumList :albums="albums" v-if="active === 2"></AlbumList>
           <MVList :mvs="mvs" type="mv" v-if="active === 3"></MVList>
           <div class="singer-info" v-if="active === 4">
             <h2 class="title">
@@ -107,9 +108,11 @@ import { createSong } from '@/model/song'
 import { createVideo } from '@/model/video'
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import SongerItem from '@/components/MianComponent/SongerItem'
+import AlbumList from '@/components/MianComponent/AlbumList'
 import MVList from '@/components/MianComponent/MVList'
 import { getArtists, getArtisMv, getArtistDesc, getArtistDetail, getSimiArtist } from '@/api/service/songer'
 import { getUserInfo, follow } from '@/api/service/user'
+import { getArtistAlbum } from '@/api/service/album'
 export default {
   name: 'SingerDetail',
   data() {
@@ -126,6 +129,8 @@ export default {
       mvs: [],
       // 相似歌手
       singers: [],
+      // 专辑
+      albums: [],
       // 功能模块
       navList: [
         {
@@ -167,7 +172,8 @@ export default {
   components: {
     SongDetailsList,
     MVList,
-    SongerItem
+    SongerItem,
+    AlbumList
   },
 
   computed: {
@@ -225,6 +231,22 @@ export default {
   },
 
   methods: {
+    // 获取专辑
+    async getArtistAlbum(id) {
+      let params = {
+        id: id,
+        limit: this.userOfSonger.albumSize,
+        offset: this.offset
+      }
+      try {
+        let res = await getArtistAlbum(params)
+        if (res.code === this.constants.code_status) {
+          this.albums = res.hotAlbums
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 去个人主页
     toUser() {
       this.$router.push({
@@ -403,6 +425,7 @@ export default {
       this.getArtistDesc(id)
       this.getArtistDetail(id)
       this.getSimiArtist(id)
+      this.getArtistAlbum(id)
     }
   }
 }
