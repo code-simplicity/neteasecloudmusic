@@ -209,6 +209,17 @@ export const mainRouter = [{
         require(['@/views/home/components/DaySong/detail/index'], resolve)
       }
     },
+    {
+      path: 'album',
+      name: 'album',
+      meta: {
+        title: '专辑详情',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/album/index'], resolve)
+      }
+    },
 
   ]
 }]
