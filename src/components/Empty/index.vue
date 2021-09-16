@@ -11,7 +11,7 @@ export default {
   name: 'Empty',
   data() {
     return {
-      emptyBg: require('../../assets/images/empty-bg.png')
+      emptyBg: require('@/assets/images/empty.png')
     }
   },
 
@@ -37,12 +37,13 @@ export default {
 .empty {
   width: 100%;
   .el-image {
-    width: 500px;
+    width: 300px;
+    height: 300px;
   }
   p {
     margin-top: 10px;
     font-size: 1.3rem;
-    color: @color-blank;
+    color: @color-dark;
   }
 }
 </style>
