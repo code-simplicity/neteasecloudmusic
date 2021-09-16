@@ -340,7 +340,6 @@ export default {
             }
           }
           ul {
-            list-style: none;
             display: flex;
             flex-wrap: wrap;
             li {
@@ -375,22 +374,20 @@ export default {
       }
       ul {
         margin: 0;
-        list-style: none;
         li {
           margin: 0 6px;
           cursor: pointer;
           padding-right: 10px;
-          // background: #808080;
           color: @color-blank;
           border-radius: 20px;
           padding: 0 10px;
           font-size: 1rem;
           &:hover {
-            color: #fff;
+            color: @color-dark;
             background: @color-theme;
           }
           &.active {
-            color: #fff;
+            color: @color-dark;
             background: @color-theme;
           }
         }
