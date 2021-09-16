@@ -32,9 +32,7 @@
         </li>
       </ul>
     </div>
-    <div v-loading="loading">
-      <MVList :mvs="mvs" type="mv"></MVList>
-    </div>
+    <MVList :mvs="mvs" type="mv"></MVList>
     <div class="el-pagination">
       <el-pagination
         @size-change="handleSizeChange"
@@ -136,7 +134,7 @@ export default {
         // 排序
         order: '上升最快',
         // 返回数量
-        limit: 25,
+        limit: 24,
         // 偏移数量
         offset: 0,
       },
@@ -146,7 +144,6 @@ export default {
       totle: 0,
       currentPage: 1,
       limit: 20,
-      loading: false
     }
   },
   components: {
@@ -161,9 +158,6 @@ export default {
     handleSizeChange(val) {
       this.limit = val
       this.params.offset = this.limit * this.currentPage
-      console.log('this.params.offset', this.params.offset)
-      console.log('val', val)
-
       this.getMvAll()
     },
 
@@ -171,22 +165,16 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val
       this.params.offset = val * this.limit
-      console.log('this.params.offset', this.params.offset)
-      console.log('currentPage', this.currentPage)
       this.getMvAll()
     },
 
 
     // 获取mv
     async getMvAll() {
-      this.loading = true
       try {
         let res = await getMvAll(this.params)
         if (res.code === this.constants.code_status) {
-          console.log(res)
           this.mvs = this._normalizeVideos(res.data)
-          console.log('this.mvs', this.mvs)
-          this.loading = false
         }
       } catch (error) {
         console.log(error)
@@ -249,7 +237,7 @@ export default {
         width: 62px;
         height: 30px;
         line-height: 30px;
-        font-size: 0.9rem;
+        font-size: 1rem;
         text-align: center;
         border-radius: 14px;
         cursor: pointer;
@@ -260,10 +248,11 @@ export default {
         &.active {
           background: @color-theme;
           font-weight: 600;
-          color: #ffffff;
+          color: @color-dark;
         }
         &:hover {
-          font-size: 1.1rem;
+          font-size: 1rem;
+          color: @color-theme;
         }
       }
     }
@@ -275,7 +264,6 @@ export default {
     }
   }
   .el-pagination {
-    // margin-top: 10px;
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
