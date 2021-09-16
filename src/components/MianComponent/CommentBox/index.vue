@@ -1,89 +1,74 @@
 <template>
   <div class="comment-content">
     <div class="comment-send-box">
-      <el-row :gutter="8">
-        <el-col :span="2">
-          <div class="avatar">
-            <el-image
-              :src="userInfo.avatarUrl"
-              fit="cover"
-              :title="userInfo.nickname"
-            ></el-image>
-          </div>
-        </el-col>
-        <el-col :span="22">
-          <div class="comment-input">
-            <!-- 输入框 -->
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 3, maxRows: 4 }"
-              placeholder="输入你的精彩评论"
-              v-model="commentContent"
-            >
-            </el-input>
-            <div class="comment-tool">
-              <!-- 表情 -->
-              <el-col :span="1">
-                <div class="comment-expression">
-                  <emoji-picker @emoji="insert">
+      <div class="avatar">
+        <el-image
+          :src="userInfo.avatarUrl"
+          fit="cover"
+          :title="userInfo.nickname"
+        ></el-image>
+      </div>
+      <div class="comment-input">
+        <!-- 输入框 -->
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 3, maxRows: 4 }"
+          placeholder="输入你的精彩评论"
+          v-model="commentContent"
+        >
+        </el-input>
+        <div class="comment-tool flex-between">
+          <!-- 表情 -->
+          <div class="comment-expression flex-row">
+            <emoji-picker @emoji="insert">
+              <div
+                slot="emoji-invoker"
+                slot-scope="{ events: { click: clickEvent } }"
+                @click.stop="clickEvent"
+              >
+                <i class="iconfont icon-biaoqing"></i>
+              </div>
+              <div slot="emoji-picker" slot-scope="{ emojis, insert }">
+                <div class="emoji-picker">
+                  <div>
                     <div
-                      slot="emoji-invoker"
-                      slot-scope="{ events: { click: clickEvent } }"
-                      @click.stop="clickEvent"
+                      v-for="(emojiGroup, category) in emojis"
+                      :key="category"
                     >
-                      <i class="iconfont icon-biaoqing"></i>
-                    </div>
-                    <div slot="emoji-picker" slot-scope="{ emojis, insert }">
-                      <div class="emoji-picker">
-                        <div>
-                          <div
-                            v-for="(emojiGroup, category) in emojis"
-                            :key="category"
-                          >
-                            <h5>{{ category }}</h5>
-                            <div class="emojis">
-                              <span
-                                v-for="(emoji, emojiName) in emojiGroup"
-                                :key="emojiName"
-                                @click="insert(emoji)"
-                                :title="emojiName"
-                                >{{ emoji }}</span
-                              >
-                            </div>
-                          </div>
-                        </div>
+                      <h5>{{ category }}</h5>
+                      <div class="emojis">
+                        <span
+                          v-for="(emoji, emojiName) in emojiGroup"
+                          :key="emojiName"
+                          @click="insert(emoji)"
+                          :title="emojiName"
+                          >{{ emoji }}</span
+                        >
                       </div>
                     </div>
-                  </emoji-picker>
+                  </div>
                 </div>
-              </el-col>
-              <el-col :span="19">
-                <div class="comment-at">
-                  <i class="iconfont icon-aite"></i>
-                </div>
-              </el-col>
-              <el-col :span="2">
-                <el-button
-                  type="primary"
-                  size="small"
-                  autofocus
-                  @click="commentSubmit"
-                  >{{ buttonText }}</el-button
-                >
-              </el-col>
-              <el-col :span="1">
-                <el-button
-                  size="small"
-                  type="info"
-                  autofocus
-                  @click="cancelComment"
-                  >取消</el-button
-                >
-              </el-col>
+              </div>
+            </emoji-picker>
+            <div class="comment-at">
+              <i class="iconfont icon-aite"></i>
             </div>
           </div>
-        </el-col>
-      </el-row>
+
+          <div class="comment-btn">
+            <el-button
+              type="primary"
+              size="small"
+              autofocus
+              @click="commentSubmit"
+              >{{ buttonText }}</el-button
+            >
+            <el-button size="small" type="info" autofocus @click="cancelComment"
+              >取消</el-button
+            >
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -155,19 +140,26 @@ export default {
 .comment-content {
   width: 100%;
   .comment-send-box {
+    display: flex;
+    justify-content: start;
     .avatar {
       width: 50px;
       height: 50px;
+      position: relative;
+      margin-right: 20px;
     }
     .comment-input {
+      flex: 1;
       margin-bottom: 10px;
     }
     .comment-tool {
+      display: flex;
       margin-top: 10px;
       .comment-expression {
         .icon-biaoqing {
           cursor: pointer;
           font-size: 1rem;
+          color: @color-dark;
           &:hover {
             color: @color-theme;
           }
@@ -210,15 +202,20 @@ export default {
             }
           }
         }
-      }
-      .comment-at {
-        .icon-aite {
-          cursor: pointer;
-          font-size: 1rem;
-          &:hover {
-            color: @color-theme;
+        .comment-at {
+          margin-left: 20px;
+          .icon-aite {
+            cursor: pointer;
+            font-size: 1rem;
+            color: @color-dark;
+            &:hover {
+              color: @color-theme;
+            }
           }
         }
+      }
+
+      .comment-btn {
       }
     }
   }
