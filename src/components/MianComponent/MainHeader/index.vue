@@ -28,6 +28,9 @@
         <li>
           <router-link :to="{ name: 'mv' }" tag="a">MV</router-link>
         </li>
+        <li>
+          <router-link :to="{ name: 'video' }" tag="a">视频</router-link>
+        </li>
       </ul>
       <div class="mian-search" @click="openSearchDialog">
         <i class="el-icon-search">点我搜索</i>
