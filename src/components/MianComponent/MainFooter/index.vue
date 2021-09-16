@@ -37,14 +37,16 @@ export default {
 <style lang="less" scoped>
 .main-footer {
   align-items: center;
+  margin: 0 auto;
+  width: 100%;
   .copyright {
     padding: 1.2rem 0;
     .container {
       padding: 0;
-      color: rgb(230, 100, 8);
+      color: @blue;
       font-size: 1.2rem;
       .mian-footer-content {
-        align-items: center;
+        margin: 0 auto;
         a {
           color: @color-dark;
           margin-left: 5px;
