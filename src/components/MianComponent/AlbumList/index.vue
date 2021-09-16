@@ -74,7 +74,7 @@ export default {
   methods: {
     toDetail(id) {
       this.$router.push({
-        name: 'albumdetail',
+        name: 'album',
         query: {
           id
         }
