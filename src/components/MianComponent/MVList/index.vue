@@ -96,7 +96,7 @@ export default {
     },
 
     // 直播跳转
-    toMvLive() {
+    toMvLive(id) {
       let url = `https://iplay.163.com/live?id=${id}`
       window.open(url, '_blank')
     },
