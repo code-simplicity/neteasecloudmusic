@@ -6,6 +6,27 @@
   "description": "网易云项目",
   "glyphs": [
     {
+      "icon_id": "2377708",
+      "name": "视频",
+      "font_class": "shipin2",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "20500893",
+      "name": "视频",
+      "font_class": "shipin3",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "21804710",
+      "name": "视频",
+      "font_class": "shipin1",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
       "icon_id": "1037698",
       "name": "邮箱",
       "font_class": "youxiang",
