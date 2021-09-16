@@ -220,6 +220,28 @@ export const mainRouter = [{
         require(['@/views/album/index'], resolve)
       }
     },
+    {
+      path: 'video',
+      name: 'video',
+      meta: {
+        title: '视频',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/video/index'], resolve)
+      }
+    },
+    {
+      path: 'videodetail',
+      name: 'videodetail',
+      meta: {
+        title: '视频详情',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/video/detail/index'], resolve)
+      }
+    },
 
   ]
 }]
