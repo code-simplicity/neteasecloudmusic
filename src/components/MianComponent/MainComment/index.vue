@@ -1,5 +1,5 @@
 <template>
-  <div class="commen-box container">
+  <div class="commen-box">
     <!-- <div class="commen-header">
       <div class="comment-header-title">
         <span class="comment-text">评论</span>
