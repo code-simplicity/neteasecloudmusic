@@ -87,7 +87,7 @@ export default {
         })
       } else {
         this.$router.push({
-          name: 'videoDetail',
+          name: 'videodetail',
           query: {
             id
           }
