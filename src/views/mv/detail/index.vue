@@ -12,7 +12,7 @@
       </div>
       <div class="video-footer">
         <h3 class="title flex-row">
-          <i class="iconfont"></i>{{ mvDetail.name }}
+          <i class="iconfont icon-MV"></i>{{ mvDetail.name }}
         </h3>
         <div class="tag">
           <a v-for="item of mvDetail.videoGroup" :key="item.id"
@@ -505,13 +505,15 @@ export default {
       }
     }
     .video-footer {
-      margin-top: 8px;
+      margin-top: 10px;
       .title {
         margin-bottom: 10px;
         position: relative;
+        font-size: 1.4rem;
         color: @color-dark;
         i {
-          font-size: 24px;
+          margin-right: 10px;
+          font-size: 1.8rem;
           margin-top: 1px;
           margin-left: -3px;
           color: @color-theme;
@@ -530,7 +532,7 @@ export default {
         span {
           margin-right: 30px;
           font-size: 0.9rem;
-          color: #999;
+          color: @color-dark;
         }
       }
     }
@@ -541,24 +543,24 @@ export default {
         width: auto;
         border-radius: 16px;
         padding: 0 16px;
-        background: rgb(214, 214, 214);
+        background: @color-dark;
         width: 80px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgb(0, 0, 0);
+        color: @color-blank;
         cursor: pointer;
         margin-right: 10px;
         i {
-          font-size: 1.4rem;
-          color: @color-dark;
+          font-size: 1.2rem;
+          color: @color-blank;
           padding-right: 6px;
         }
         &.active {
           color: #fff;
           background: @color-theme;
           .icon-like {
-            color: #fff;
+            color: @color-dark;
           }
         }
       }
