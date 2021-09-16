@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-box container">
+  <div class="detail-box">
     <div class="detail-header">
       <div class="detail-songs-list">
         <span v-if="songListShow" class="song-list">歌曲列表</span>
