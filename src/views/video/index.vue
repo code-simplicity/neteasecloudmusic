@@ -47,6 +47,7 @@
         class="page-btn flex-center trainsition"
         :disabled="offset === 0"
         @click="prev"
+        title="上一页"
       >
         上一页
       </button>
@@ -54,6 +55,7 @@
         class="page-btn flex-center trainsition"
         :disabled="!hasmore"
         @click="next"
+        title="下一页"
       >
         下一页
       </button>
