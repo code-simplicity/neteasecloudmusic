@@ -115,8 +115,8 @@ export default {
     flex-wrap: wrap;
     li {
       padding: 0 16px 30px 16px;
-      flex: 0 0 20%;
-      max-width: 20%;
+      flex: 0 0 25%;
+      max-width: 25%;
       cursor: pointer;
       .cover {
         position: relative;
