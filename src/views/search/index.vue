@@ -126,6 +126,8 @@
           :isPerson="isPerson"
           v-loading="loading"
         ></SongDetailsList>
+        <SongerItem v-if="searchType === 100" :songItem="singers"></SongerItem>
+        <AlbumList v-if="searchType === 10" :albums="albums"></AlbumList>
         <MVList :mvs="videos" v-if="searchType === 1014"></MVList>
         <PopularPlayList
           :songMusic="playList"
@@ -140,6 +142,8 @@
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import MVList from '@/components/MianComponent/MVList'
 import PopularPlayList from '@/components/Home/PopularPlayList'
+import SongerItem from '@/components/MianComponent/SongerItem'
+import AlbumList from '@/components/MianComponent/AlbumList'
 import { search, getSongDetail, searchSuggest } from '@/api/service/api'
 import { createSong } from '@/model/song'
 import { createVideo } from '@/model/video'
@@ -158,7 +162,7 @@ export default {
       // 关闭组件的顶部标题
       songListShow: false,
       // 返回的数量
-      limit: 30,
+      limit: 100,
       // 默认偏移
       offset: 0,
       // 歌手
@@ -181,7 +185,9 @@ export default {
   components: {
     SongDetailsList,
     MVList,
-    PopularPlayList
+    PopularPlayList,
+    SongerItem,
+    AlbumList
   },
 
   computed: {
@@ -269,13 +275,14 @@ export default {
               // 歌手
               this.singers = res.result.artists
               this.result = '个歌手'
-              this.num = 200
+              this.num = res.result.artists.length
               break
             }
             case 10: {
               // 专辑
               this.albums = res.result.albums
               this.result = '首专辑'
+              this.num = res.result.albums.length
               break
             }
             case 1014: {
@@ -289,6 +296,7 @@ export default {
               // 歌单
               this.playList = res.result.playlists
               this.result = '个歌单'
+              this.num = res.result.playlists.length
               break
             }
             default: {
