@@ -10,9 +10,10 @@
           <p
             ref="lyricLine"
             class="lyric-text"
-            :class="currentLyricNum === index ? 'active' : ''"
             v-for="(item, index) in currentLyric.lines"
+            :class="currentLyricNum === index ? 'active' : ''"
             :key="index"
+            @click="clickLyricPlay(item)"
           >
             {{ item.txt }}
           </p>
@@ -44,10 +45,13 @@ export default {
     Scroll
   },
   mounted() {
-    console.log('this====>', this.currentLyric);
-    console.log('currentLyricNum', this.currentLyricNum);
+
   },
   methods: {
+    // 选中某一行播放
+    clickLyricPlay() {
+
+    },
 
   }
 }
@@ -59,24 +63,36 @@ export default {
     display: inline-block;
     vertical-align: top;
     width: 100%;
-    height: 400px;
+    height: 460px;
     overflow: hidden;
     .lyric-wrapper {
       width: 100%;
       margin: 0 auto;
       overflow: hidden;
       .lyric-text {
+        line-height: 40px;
+        height: 40px;
+        border-radius: 10px;
         margin: 6px 2px;
-        line-height: 24px;
-        font-size: 1rem;
-        font-weight: 400;
-        color: @color-blank;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: @color-lyric-color;
+        cursor: pointer;
+        text-align: center;
+        &:hover {
+          background: @lyric-background;
+          color: @color-dark;
+        }
         &.active {
           color: @color-theme;
         }
-        &:after {
-          color: #000000;
+        &::after {
+          color: @color-blank;
         }
+      }
+      .no-lyric {
+        color: @color-dark;
+        text-align: center;
       }
     }
   }
