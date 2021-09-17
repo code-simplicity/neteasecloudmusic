@@ -126,8 +126,7 @@ export default {
             top: 1px;
             height: 24px;
             padding-left: 9px;
-            background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-              no-repeat 0;
+            background: url('../../../assets/images/album-top.png') no-repeat 0;
             background-size: cover;
             color: @color-dark;
             font-size: 12px;
@@ -152,8 +151,8 @@ export default {
               top: 0;
               width: 14px;
               height: 24px;
-              background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-                no-repeat 100%;
+              background: url('../../../assets/images/album-top.png') no-repeat
+                100%;
               background-size: cover;
             }
           }
@@ -197,7 +196,6 @@ export default {
           transform: translateY(-50%);
           width: 100%;
           padding-top: 100%;
-          background-color: #000;
           border-radius: 50%;
           transition: all 0.4s;
         }
