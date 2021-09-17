@@ -1,7 +1,7 @@
 <template>
   <div class="mv-detail container">
     <div class="left">
-      <div class="video-content">
+      <!-- <div class="video-content">
         <video-player
           class="video-player vjs-custom-skin"
           ref="videoPlayer"
@@ -9,7 +9,9 @@
           :playsinline="true"
         >
         </video-player>
-      </div>
+      </div> -->
+      <div v-if="destroy" ref="video"></div>
+
       <div class="video-footer">
         <h3 class="title flex-row">
           <i class="iconfont icon-MV"></i>{{ mvDetail.name }}
@@ -144,12 +146,11 @@
 </template>
 
 <script>
+import Player from "xgplayer"
 import CommentBox from '@/components/MianComponent/CommentBox'
 import MainComment from '@/components/MianComponent/MainComment'
-import {
-  getMvUrl, getMvDetail, getMvDetailInfo, resourceLike,
-  mvSub, getMvComment, sendComment, commentLike, simiNv
-} from '@/api/service/api'
+import { resourceLike, sendComment, commentLike } from '@/api/service/api'
+import { getMvUrl, getMvDetail, getMvDetailInfo, mvSub, getMvComment, simiNv } from '@/api/service/mv'
 export default {
   name: 'MVDetail',
   data() {
@@ -160,28 +161,6 @@ export default {
       currentCommentId: '',
       // 是否清空评论框内容
       clearContent: false,
-      playerOptions: {
-        autoplay: true,
-        muted: false,
-        language: 'en',
-        playbackRates: [0.5, 1.0, 1.5, 2.0],
-        // 是否视频一结束就重新开始。
-        loop: false,
-        preload: 'auto',
-        aspectRatio: '16:9',
-        sources: [{
-          type: "video/mp4",
-          src: ""
-        }],
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
-        controlBar: {
-          timeDivider: true,           // 当前时间和持续时间的分隔符
-          durationDisplay: true,       // 显示持续时间
-          remainingTimeDisplay: false, // 是否显示剩余时间功能
-          fullscreenToggle: true       // 是否显示全屏按钮
-        },
-        poster: "../../../assets/images/mv-bg.png",
-      },
       // mv详情
       mvDetail: {},
       // 资源点赞数据
@@ -201,7 +180,13 @@ export default {
       // 全部评论
       comments: [],
       // 相似mv
-      simiNvList: []
+      simiNvList: [],
+      // 实例化视频
+      videoPlayer: null,
+      destroy: true,
+      // mv地址
+      mvUrl: {},
+      br: ''
     }
   },
   components: {
@@ -210,9 +195,7 @@ export default {
   },
 
   computed: {
-    player() {
-      return this.$refs.videoPlayer.player
-    }
+
   },
 
   watch: {
@@ -223,14 +206,60 @@ export default {
       }
     }
   },
+  created() {
+
+  },
+
   mounted() {
     let id = this.$route.query.id
+    this.videoId = id
     if (id) {
-      this.videoId = id
       this._initialize(id)
     }
   },
   methods: {
+
+    getVideo() {
+      this.videoPlayer = new Player({
+        el: this.$refs.video,
+        url: this.mvUrl.url,
+        // 流式布局
+        fluid: true,
+        // 初始音量
+        volume: 0.6,
+        // 自动播放
+        autoplay: true,
+        // 国际化
+        // lang: 'en',
+        // 内联模式
+        playsinline: true,
+        // 是否直播
+        isLive: true,
+        // 跨域
+        cors: true,
+        // 初始化显示视频首帧
+        videoInit: true,
+        // 倍数
+        playbackRate: [0.5, 0.75, 1, 1.5, 2],
+        // 初始值
+        defaultPlaybackRate: 1.0,
+        // 视频下载
+        download: true,
+        // 画中画
+        pip: true,
+        // 网页全屏
+        cssFullscreen: true,
+        // 清晰度
+        definition: true,
+        errorTips: `请<spa>刷新</spa>测试哦`,
+        // 清晰度切换配置
+        definitionActive: 'hover',
+      });
+      this.videoPlayer.emit('resourceReady', [
+        { name: '超清', url: this.mvUrl.url },
+        { name: '高清', url: this.mvUrl.url },
+        { name: '标清', url: this.mvUrl.url }]);
+    },
 
     // 播放相关的mv
     toDetail(id) {
@@ -239,6 +268,11 @@ export default {
         query: {
           id
         }
+      })
+      // 视频id不同之后销毁dom实例，然后在加载，这样就不在一个页面显示多个内容了
+      this.destroy = false
+      this.$nextTick(() => {
+        this.destroy = true
       })
     },
 
@@ -451,7 +485,7 @@ export default {
             }
           })
           this.mvDetail = res.data
-          console.log('this.mvDetail', this.mvDetail)
+          this.getMvUrl(id)
         }
       } catch (error) {
         console.log(error)
@@ -463,8 +497,18 @@ export default {
       try {
         let res = await getMvUrl(id)
         if (res.code === this.constants.code_status) {
-          this.playerOptions.sources[0].src = res.data.url
-          console.log(this.videoUrl)
+          // if (res.data.r === 240) {
+          //   this.mvUrl = res.data
+          // } else if (res.data.r === 480) {
+          //   this.mvUrl1 = res.data
+          // } else if (res.data.r === 720) {
+          //   this.mvUrl2 = res.data
+          // } else if (res.data.r === 1080) {
+          //   this.mvUrl3 = res.data
+          // }
+          this.mvUrl = res.data
+          this.getVideo()
+          console.log(this.mvUrl)
         }
       } catch (error) {
         console.log(error)
@@ -473,7 +517,6 @@ export default {
 
     // 初始化函数
     _initialize(id) {
-      this.getMvUrl(id)
       this.getMvDetail(id)
       this.getMvDetailInfo(id)
       this.getMvComment(id)
