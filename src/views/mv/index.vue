@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getMvAll } from '@/api/service/api'
+import { getMvAll } from '@/api/service/mv'
 import { createVideo } from '@/model/video'
 import MVList from '@/components/MianComponent/MVList'
 export default {
