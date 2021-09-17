@@ -140,8 +140,7 @@ export default {
           top: 1px;
           height: 24px;
           padding-left: 8px;
-          background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-            no-repeat 0;
+          background: url('../../../assets/images/album-top.png') no-repeat 0;
           background-size: cover;
           color: #fff;
           font-size: 0.9rem;
@@ -166,8 +165,8 @@ export default {
             top: 0;
             width: 14px;
             height: 24px;
-            background: url(https://img.alicdn.com/tfs/TB1xEGRub9YBuNjy0FgXXcxcXXa-268-48.png)
-              no-repeat 100%;
+            background: url('../../../assets/images/album-top.png') no-repeat
+              100%;
             background-size: cover;
           }
         }
