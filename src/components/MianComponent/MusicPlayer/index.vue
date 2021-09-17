@@ -144,7 +144,7 @@
                   </div>
                   <p class="ellipsis">{{ item.name }}</p>
                   <i
-                    class="iconfont icon-guanbi"
+                    class="iconfont icon-shouqi1"
                     @click="deleteSong(item, index)"
                   ></i>
                 </div>
@@ -183,7 +183,7 @@
             <div class="page-right">
               <h3 class="name flex-between">
                 {{ currentSong.name }}
-                <i @click="openLyric" class="iconfont icon-guanbi"></i>
+                <i @click="openLyric" class="iconfont icon-shouqi1"></i>
               </h3>
               <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
               <div class="lyric-wrap">
@@ -207,7 +207,6 @@ import Lyric from 'lyric-parser'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import { playMode } from '@/utils/playConfig'
 import ScrollLyric from '@/components/MianComponent/Lyric'
-// import { getLyric } from '../../../api/service/api'
 import { getLyric } from '@/api/service/api'
 export default {
   name: 'MusicPlayer',
@@ -329,7 +328,7 @@ export default {
   },
 
   mounted() {
-    console.log('this.$refs.audio', this.$refs);
+
   },
   methods: {
     // 关闭底部播放器
@@ -389,7 +388,7 @@ export default {
       try {
         let res = await getLyric(id)
         console.log(res)
-        if (res.code === 200) {
+        if (res.code === this.constants.code_status) {
           let lyric = res.lrc.lyric
           this.currentLyric = new Lyric(lyric, this.lyricHandle)
           if (this.isPureMusic) {
@@ -410,15 +409,16 @@ export default {
       }
     },
 
-    // 歌词的回调
+    // 歌词的回调以及歌词在某一个位子固定
     lyricHandle({ lineNum, txt }) {
       if (!this.$refs.lyricRef.$refs.lyricList) {
         return
       }
       this.currentLyricNum = lineNum
       this.playingLyric = txt
-      if (lineNum > 10) {
-        let line = this.$refs.lyricRef.$refs.lyricLine[lineNum - 10]
+      console.log(' this.playingLyric', this.playingLyric)
+      if (lineNum > 5) {
+        let line = this.$refs.lyricRef.$refs.lyricLine[lineNum - 5]
         if (this.$refs.lyricRef.$refs.lyricList) {
           this.$nextTick(() => {
             this.$refs.lyricRef.$refs.lyricList.scrollToElement(line, 1000)
@@ -687,26 +687,19 @@ export default {
   // 播放详情
   .player-page {
     width: 100%;
-    height: 1000vh;
-    background-color: @lyric-background;
-    background-image: radial-gradient(
-        at 47% 33%,
-        hsl(0, 9%, 58%) 0,
-        transparent 59%
-      ),
-      radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
+    height: 140vh;
+    background-color: #353865;
     position: fixed;
     top: 0px;
     left: 0;
-    padding-top: 100px;
+    padding-top: 30px;
     .container {
       display: flex;
-      .page-left,
-      .page-right {
-        width: 50%;
+      .page-left {
+        width: 40%;
         .cover-image {
-          width: 400px;
-          height: 400px;
+          width: 100%;
+          height: 100%;
           position: relative;
           img {
             width: 100%;
@@ -714,78 +707,79 @@ export default {
             position: relative;
             z-index: 2;
             opacity: 1;
-            border-radius: 40%;
+            border-radius: 16px;
             &.playing {
               animation-duration: 6s;
               animation-delay: 6s;
               animation: loading 6s linear infinite;
             }
           }
-          @keyframes rotate {
-            50% {
-              transform: translate(-50%, -73%) rotate(180deg);
-            }
-            100% {
-              transform: translate(-50%, -70%) rotate(360deg);
-            }
-          }
-          @keyframes loading {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(360deg);
-            }
-          }
-        }
-        .play-icon {
-          position: absolute;
-          height: 100px;
-          min-width: 18px;
-          overflow: hidden;
-          bottom: 80px;
-          .line {
-            width: 4px;
-            height: 100%;
-            margin-left: 2px;
-            background-color: #ff410f;
-            animation: play 1.3s linear infinite alternate;
-          }
+          // @keyframes rotate {
+          //   50% {
+          //     transform: translate(-50%, -73%) rotate(180deg);
+          //   }
+          //   100% {
+          //     transform: translate(-50%, -70%) rotate(360deg);
+          //   }
+          // }
+          // @keyframes loading {
+          //   0% {
+          //     transform: rotate(0deg);
+          //   }
+          //   100% {
+          //     transform: rotate(360deg);
+          //   }
+          // }
         }
       }
+      // .page-right {
+      //   width: 60%;
+      //   .play-icon {
+      //     position: absolute;
+      //     height: 100px;
+      //     min-width: 18px;
+      //     overflow: hidden;
+      //     bottom: 80px;
+      //     .line {
+      //       width: 4px;
+      //       height: 100%;
+      //       margin-left: 2px;
+      //       background-color: #ff410f;
+      //       animation: play 1.3s linear infinite alternate;
+      //     }
+      //   }
+      // }
       .page-right {
+        width: 60%;
+        margin-left: 20px;
         .name {
           font-size: 1.6rem;
           font-weight: bold;
           margin-bottom: 10px;
-          .icon-guanbi {
+          color: @color-dark;
+          .icon-shouqi1 {
             font-size: 1.6rem;
-            color: @color-blank;
+            color: @color-dark;
             &:hover {
               color: @color-theme;
             }
           }
         }
+        p {
+          font-size: 1.2rem;
+        }
         .iconfont {
-          font-size: 1.8rem;
+          font-size: 1.4rem;
           cursor: pointer;
-          transform: rotate(90deg);
         }
         .lyric-wrap {
           width: 100%;
-          min-height: 420px;
+          height: 480px;
           border-radius: 8px;
-          padding: 26px;
+          padding: 0;
           font-size: 1rem;
           overflow: hidden;
           color: @color-blank;
-          background: @lyric-background-color;
-          background-image: radial-gradient(
-              at 47% 33%,
-              hsl(0, 0%, 84%) 0,
-              transparent 59%
-            ),
-            radial-gradient(at 82% 65%, rgb(135, 172, 221) 0, transparent 55%);
           margin-top: 30px;
         }
       }
