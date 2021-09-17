@@ -548,17 +548,6 @@ export default {
     padding: 16px;
     border-radius: 8px;
     margin-right: 10px;
-    .video-content {
-      position: relative;
-      padding-top: 56%;
-      .video-player {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
     .video-footer {
       margin-top: 10px;
       .title {

@@ -1,17 +1,7 @@
 <template>
   <div class="mv-detail container">
     <div class="left">
-      <!-- <div class="video-content">
-        <video-player
-          class="video-player vjs-custom-skin"
-          ref="videoPlayer"
-          :options="playerOptions"
-          :playsinline="true"
-        >
-        </video-player>
-      </div> -->
       <div v-if="destroy" ref="video"></div>
-
       <div class="video-footer">
         <h3 class="title flex-row">
           <i class="iconfont icon-MV"></i>{{ mvDetail.name }}
@@ -536,17 +526,6 @@ export default {
     padding: 16px;
     border-radius: 8px;
     margin-right: 10px;
-    .video-content {
-      position: relative;
-      padding-top: 56%;
-      .video-player {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
     .video-footer {
       margin-top: 10px;
       .title {
