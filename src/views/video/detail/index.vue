@@ -1,15 +1,8 @@
 <template>
   <div class="mv-detail container">
     <div class="left">
-      <div class="video-content">
-        <video-player
-          class="video-player vjs-custom-skin"
-          ref="videoPlayer"
-          :options="playerOptions"
-          :playsinline="true"
-        >
-        </video-player>
-      </div>
+      <!-- xgplayer  -->
+      <div v-if="destroy" ref="video"></div>
       <div class="video-footer">
         <h3 class="title flex-row">
           <i class="iconfont icon-shipin2"></i>{{ videoDetail.title }}
@@ -160,6 +153,7 @@
 </template>
 
 <script>
+import Player from "xgplayer"
 import CommentBox from '@/components/MianComponent/CommentBox'
 import MainComment from '@/components/MianComponent/MainComment'
 import { resourceLike, sendComment, commentLike } from '@/api/service/api'
@@ -177,28 +171,6 @@ export default {
       currentCommentId: '',
       // 是否清空评论框内容
       clearContent: false,
-      playerOptions: {
-        autoplay: true,
-        muted: false,
-        language: 'en',
-        playbackRates: [0.5, 1.0, 1.5, 2.0],
-        // 是否视频一结束就重新开始。
-        loop: false,
-        preload: 'auto',
-        aspectRatio: '16:9',
-        sources: [{
-          type: "video/mp4",
-          src: ""
-        }],
-        notSupportedMessage: '此视频暂无法播放，请稍后再试',
-        controlBar: {
-          timeDivider: true,           // 当前时间和持续时间的分隔符
-          durationDisplay: true,       // 显示持续时间
-          remainingTimeDisplay: false, // 是否显示剩余时间功能
-          fullscreenToggle: true       // 是否显示全屏按钮
-        },
-        poster: "../../../assets/images/mv-bg.png",
-      },
       // 视频详情
       videoDetail: {},
       // 资源点赞数据
@@ -220,7 +192,12 @@ export default {
       // 相似视频
       simiVideoList: [],
       // 创作者
-      creator: {}
+      creator: {},
+      // 实例化视频
+      videoPlayer: null,
+      destroy: true,
+      // 视频地址
+      videoUrl: [],
     }
   },
   components: {
@@ -229,8 +206,14 @@ export default {
   },
 
   computed: {
-    player() {
-      return this.$refs.videoPlayer.player
+
+  },
+
+  created() {
+    let id = this.$route.query.id
+    this.videoId = id
+    if (id) {
+      this._initialize(id)
     }
   },
 
@@ -243,13 +226,51 @@ export default {
     }
   },
   mounted() {
-    let id = this.$route.query.id
-    this.videoId = id
-    if (id) {
-      this._initialize(id)
-    }
+
   },
   methods: {
+
+    getVideo() {
+      this.videoPlayer = new Player({
+        el: this.$refs.video,
+        url: this.videoUrl[0].url,
+        // 流式布局
+        fluid: true,
+        // 初始音量
+        volume: 0.6,
+        // 自动播放
+        autoplay: true,
+        // 国际化
+        // lang: 'en',
+        // 内联模式
+        playsinline: true,
+        // 是否直播
+        isLive: true,
+        // 跨域
+        cors: true,
+        // 初始化显示视频首帧
+        videoInit: true,
+        // 倍数
+        playbackRate: [0.5, 0.75, 1, 1.5, 2],
+        // 初始值
+        defaultPlaybackRate: 1.0,
+        // 视频下载
+        download: true,
+        // 画中画
+        pip: true,
+        // 网页全屏
+        cssFullscreen: true,
+        // 清晰度
+        definition: true,
+        errorTips: `请<spa>刷新</spa>测试哦`,
+        // 清晰度切换配置
+        definitionActive: 'hover',
+      });
+      this.videoPlayer.emit('resourceReady', [
+        { name: '超清', url: this.videoUrl[0].url, },
+        { name: '高清', url: this.videoUrl[0].url, },
+        { name: '标清', url: this.videoUrl[0].url, }]);
+    },
 
     // 去用户列表
     toUser(id) {
@@ -267,6 +288,11 @@ export default {
         query: {
           id
         }
+      })
+      // 视频id不同之后销毁dom实例，然后在加载，这样就不在一个页面显示多个内容了
+      this.destroy = false
+      this.$nextTick(() => {
+        this.destroy = true
       })
     },
 
@@ -474,6 +500,7 @@ export default {
           })
           this.videoDetail = res.data
           this.creator = res.data.creator
+          this.getVideoUrl(id)
         }
       } catch (error) {
         console.log(error)
@@ -485,7 +512,9 @@ export default {
       try {
         let res = await getVideoUrl(id)
         if (res.code === this.constants.code_status) {
-          this.playerOptions.sources[0].src = res.urls[0].url
+          // 获取视频数据
+          this.videoUrl = res.urls
+          this.getVideo()
         }
       } catch (error) {
         console.log(error)
@@ -494,12 +523,17 @@ export default {
 
     // 初始化函数
     _initialize(id) {
-      this.getVideoUrl(id)
       this.getVideoDetail(id)
       this.getVideoDetailInfo(id)
       this.getCommentVideo(id)
       this.getRelatedAllVideo(id)
     }
+  },
+
+  // 销毁vue实例
+  destroyed() {
+    this._initialize()
+    this.getVideoUrl()
   }
 }
 </script>
