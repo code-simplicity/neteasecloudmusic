@@ -2,6 +2,20 @@ import Layout from '@/views/layout/index'
 // import LayoutChild from '../views/home/components/layout/index.vue'
 
 /**
+ * 通配符路由匹配-404
+ */
+export const pageError = {
+  path: '*',
+  name: '404',
+  meta: {
+    title: '404-您访问的页面不存在'
+  },
+  component: resolve => {
+    require(['@/views/error/index'], resolve)
+  }
+}
+
+/**
  * 登录路由
  */
 export const loginRouter = [{
@@ -247,4 +261,4 @@ export const mainRouter = [{
 }]
 
 // 暴露路由
-export const routes = [...loginRouter, ...mainRouter]
+export const routes = [...loginRouter, ...mainRouter, pageError]
