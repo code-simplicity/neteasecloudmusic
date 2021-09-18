@@ -386,7 +386,6 @@ export default {
     async getLyric(id) {
       try {
         let res = await getLyric(id)
-        console.log(res)
         if (res.code === this.constants.code_status) {
           let lyric = res.lrc.lyric
           this.currentLyric = new Lyric(lyric, this.lyricHandle)
