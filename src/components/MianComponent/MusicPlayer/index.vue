@@ -344,7 +344,6 @@ export default {
     // 删除历史播放记录
     deleteSong(item) {
       this.deleteHistoryList(item)
-      console.log('删除的历史记录', item);
     },
 
     // 暂停
@@ -416,7 +415,6 @@ export default {
       }
       this.currentLyricNum = lineNum
       this.playingLyric = txt
-      console.log(' this.playingLyric', this.playingLyric)
       if (lineNum > 5) {
         let line = this.$refs.lyricRef.$refs.lyricLine[lineNum - 5]
         if (this.$refs.lyricRef.$refs.lyricList) {
@@ -525,7 +523,6 @@ export default {
       clearTimeout(this.timer)
       this.songReady = true
       this.canLyricPlay = true
-      console.log('播放准备成功');
       if (this.currentLyric && !this.isPureMusic) {
         this.currentLyric.seek(this.currentTime * 1000)
       }
@@ -535,7 +532,6 @@ export default {
     audioError() {
       clearTimeout(this.timer)
       this.songReady = true
-      console.log('播放错误');
     },
 
     // 播放状态更新
@@ -586,7 +582,6 @@ export default {
           this.togglePlaying()
         }
       }
-      console.log('上一曲')
     },
 
     // 切换播放/暂停
@@ -622,7 +617,6 @@ export default {
           this.togglePlaying()
         }
       }
-      console.log('下一曲')
     },
 
     ...mapMutations({
