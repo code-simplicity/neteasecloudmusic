@@ -55,7 +55,6 @@ export default {
     async getCarousel() {
       try {
         let res = await getCarousel()
-        console.log(res)
         this.carousel = res.banners
         this.bannerBg = res.banners[0].imageUrl
       } catch (error) {

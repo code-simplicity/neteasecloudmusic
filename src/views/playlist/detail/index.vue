@@ -419,7 +419,6 @@ export default {
       try {
         let res = await getHotCommentList(params)
         if (res.code === this.constants.code_status) {
-          console.log('getHotCommentList', res);
           this.commentHotList = res.hotComments
         }
       } catch (error) {
@@ -437,7 +436,6 @@ export default {
       try {
         let res = await getCommentList(params)
         if (res.code === this.constants.code_status) {
-          console.log('getCommentList', res);
           // 获取总数
           this.totle = res.total
           this.commentList = res.comments
@@ -452,7 +450,6 @@ export default {
         let res = await getRelatedList(id)
         if (res.code === this.constants.code_status) {
           this.relatedList = res.playlists
-          console.log('getRelatedList(id)', res);
         }
       } catch (error) {
         console.log(error);
@@ -510,7 +507,6 @@ export default {
       let timestamp = new Date().valueOf()
       try {
         let res = await getPlayListDetail(id, s, timestamp)
-        console.log('res', res);
         if (res.code === this.constants.code_status) {
           if (res.playlist.description !== null) {
             res.playlist.description = res.playlist.description.replace(

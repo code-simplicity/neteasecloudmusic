@@ -205,7 +205,6 @@ export default {
         let res = await playListCatlist()
         if (res.code === this.constants.code_status) {
           this.categorieList = this.categoryGroup(res.sub, 'category')
-          console.log(' this.categorieList', this.categorieList)
         }
       } catch (error) {
         console.log(error)
@@ -226,7 +225,6 @@ export default {
         }
         obj[list[i][filed]].list.push(list[i])
       }
-      console.log('categoryGroup', obj)
       // 存储过滤的数据
       let arr = []
       for (let item in obj) {

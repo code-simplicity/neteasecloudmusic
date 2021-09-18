@@ -69,7 +69,6 @@ export default {
           this.getVideo(res.urls)
 
           this.vUrl = res.urls
-          console.log('this.vUrl', this.vUrl)
         }
       } catch (error) {
         console.log(error)

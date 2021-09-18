@@ -176,7 +176,6 @@ export default {
 
   watch: {
     $route(newVal) {
-      console.log(newVal.query.id)
       // 判断是登录者的id还是账户的id
       if (newVal.query.id) {
         this.getUserDetail(newVal.query.id)
@@ -250,13 +249,11 @@ export default {
         let res = await getUserRecord(this.userProfile.userId, this.type)
         if (res.code === this.constants.code_status) {
           // 判断是一周的播放记录还是全部的播放记录
-          console.log('res ==>', res)
           if (this.type === 1) {
             this.songs = this._normalizeSongs(res.weekData)
           } else {
             this.songs = this._normalizeSongs(res.allData)
           }
-          console.log('getUserRecord', this.songs);
         }
       } catch (error) {
         console.log(error)
@@ -291,7 +288,6 @@ export default {
           let districts = response.data.districts[0]
           let subDistricts = response.data.districts[0].districts
           this.provinceName = districts.name
-          console.log('getArea', response.data.districts[0])
           subDistricts.map(item => {
             if (item.adcode == this.userProfile.city) {
               this.cityName = item.name
@@ -310,7 +306,6 @@ export default {
         if (res.code === this.constants.code_status) {
           this.userProfile = res.profile
           this.userDetail = res
-          console.log('this.userDetail', this.userDetail)
           // 初始化加载初始化函数
           this._initialize()
         }

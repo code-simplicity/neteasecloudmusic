@@ -469,7 +469,6 @@ export default {
       val === 0 ? (this.isMuted = true) : (this.isMuted = false)
       this.volume = val / 100
       this.$refs.audio.volume = val / 100
-      console.log('changeVolume', val)
     },
 
     // 控制音量大小
@@ -482,7 +481,6 @@ export default {
       this.isMuted = state
       this.volumeNum = num
       this.$refs.audio.volume = num / 100
-      console.log('num', num)
     },
 
     // 改变进度条
@@ -540,7 +538,6 @@ export default {
         this.currentTime = e.target.currentTime
         this.progressBar = (e.target.currentTime / this.currentSong.duration) * 100
       }
-      // console.log('改变了播放时间', e);
     },
 
     // 播放结束

@@ -77,7 +77,7 @@ export default {
     ...mapGetters(['currentIndex', 'playing', 'currentSong']),
   },
   mounted() {
-    // console.log('this.songMusic', this.songMusic)
+
   },
   methods: {
     // // 播放歌单
@@ -89,7 +89,6 @@ export default {
 
     // 查看推荐详情
     toDetail(item) {
-      console.log('toDetail', item);
       let query = {
         id: item.id
       }

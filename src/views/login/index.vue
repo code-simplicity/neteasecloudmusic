@@ -192,7 +192,6 @@ export default {
                 },
               }).then(url => {
                 this.qrCodeImage = url;
-                console.log('this.qrCodeImage', this.qrCodeImage)
               }).catch(error => {
                 console.log(error)
               })
@@ -244,7 +243,6 @@ export default {
         loginWithPhone(
           params
         ).then(res => {
-          console.log('res==>', res)
           if (res.code === this.constants.code_status) {
             this.getUserInfo(res.profile.userId)
             window.localStorage.setItem('cookie', res.cookie)
@@ -269,7 +267,6 @@ export default {
           md5_password: md5(this.password).toString(),
         }
         loginWithEmail(params).then(res => {
-          console.log('resemail===>', res)
           if (res.code === this.constants.code_status) {
             this.getUserInfo(res.profile.userId)
             window.localStorage.setItem('cookie', res.cookie)
@@ -312,7 +309,7 @@ export default {
           }, 1000)
         }
       }).catch(error => {
-        console.log(error.message)
+        console.log(error)
       })
     },
 

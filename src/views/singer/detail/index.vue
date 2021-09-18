@@ -283,8 +283,6 @@ export default {
           })
         }
         this.getArtists(this.artistId)
-        console.log('userOfSonger', this.userOfSonger)
-
       } catch (error) {
         console.log(error)
       }
@@ -352,7 +350,6 @@ export default {
         if (res.code === this.constants.code_status) {
           if (res.data.user) {
             this.singerDetail = res.data.user
-            console.log('this.singerDetail', this.singerDetail)
           }
         }
       } catch (error) {
@@ -373,7 +370,6 @@ export default {
           userDetail.followeds = profile.followeds
           // 性别
           userDetail.gender = profile.gender
-          console.log('getUserInfo ==>', res)
           this.userInfo = userDetail
         }
       } catch (error) {

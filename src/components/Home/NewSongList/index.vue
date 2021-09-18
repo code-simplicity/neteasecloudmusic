@@ -86,7 +86,6 @@ export default {
     // 暂停
     pauseSong() {
       this.pausePlay()
-      console.log('暂停了');
     },
     /**
      * 'selectPlay', ==>选择播放

@@ -274,7 +274,6 @@ export default {
         let res = await simiNv(id)
         if (res.code === this.constants.code_status) {
           this.simiNvList = res.mvs
-          console.log('this.simiNvList', this.simiNvList)
         }
       } catch (error) {
         console.log(error)
@@ -389,7 +388,6 @@ export default {
         if (res.code === this.constants.code_status) {
           // 获取评论总数
           this.commentTotle = res.total
-          console.log('this.commentTotle', this.commentTotle)
           if (res.hotComments) {
             // 获取热门评论
             this.hotComments = res.hotComments
@@ -397,8 +395,6 @@ export default {
             this.hotComments = []
           }
           this.comments = res.comments
-          console.log('this.hotComments', this.hotComments)
-          console.log('this.comments', this.comments)
         }
       } catch (error) {
         console.log(error)
@@ -465,7 +461,6 @@ export default {
             commentCount: res.commentCount
           }
           this.videoDetailInfo = detail
-          console.log('this.videoDetailInfo', this.videoDetailInfo)
         }
       } catch (error) {
         console.log(error)
@@ -506,7 +501,6 @@ export default {
           // }
           this.mvUrl = res.data
           this.getVideo()
-          console.log(this.mvUrl)
         }
       } catch (error) {
         console.log(error)

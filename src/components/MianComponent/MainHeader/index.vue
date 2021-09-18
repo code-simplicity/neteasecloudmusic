@@ -255,7 +255,6 @@ export default {
         }
         case 'logout': {
           const res = await logout()
-          console.log(res);
           if (res.code === 200) {
             this.$message.success('退出登录成功!')
             this.$router.push({

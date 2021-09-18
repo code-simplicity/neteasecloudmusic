@@ -168,7 +168,6 @@ export default {
         label: '其他'
       })
       this.initialArr = initial
-      console.log('getInitial', initial)
     },
 
     // 选择类型

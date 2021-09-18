@@ -237,7 +237,6 @@ export default {
         if (JSON.stringify(res.result) !== '{}') {
           this.searchResult = res.result
         }
-        console.log('searchSuggest', res)
       } catch (error) {
         console.log(error)
       }
@@ -257,7 +256,6 @@ export default {
             case 1: {
               // 暂存歌曲
               let list = res.result.songs
-              console.log('list', list)
               // 截断
               let sliceArr = []
               list.map(item => {
@@ -322,7 +320,6 @@ export default {
         let beforeRes = await getSongDetail(ids, timestamp)
         let res = beforeRes.songs
         this.songs = this._normalizeSongs(res)
-        console.log('this.songs', this.songs)
       } catch (error) {
         console.log(error)
       }

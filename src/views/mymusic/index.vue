@@ -99,7 +99,6 @@ export default {
         let res = await getUserFollows(id)
         if (res.code === this.constants.code_status) {
           this.singers = res.follow
-          console.log(' this.singers', this.singers)
         }
       } catch (error) {
         console.log(error)

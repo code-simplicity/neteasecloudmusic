@@ -42,7 +42,6 @@ export default {
       try {
         let res = await getPersonalized(this.limit)
         this.PopularList = res.result
-        console.log('this.PopularList', this.PopularList);
       } catch (error) {
         console.log(error)
       }

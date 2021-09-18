@@ -109,7 +109,7 @@ export default {
     ...mapGetters(['userInfo', 'loginStatus'])
   },
   mounted() {
-    console.log('mapGetters', this.currentCommentId)
+
   },
   methods: {
     insert(emoji) {

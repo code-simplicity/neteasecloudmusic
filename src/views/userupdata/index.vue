@@ -91,7 +91,6 @@ export default {
       if (!content) {
         this.$message.error('输入点内容吧')
       }
-      console.log('content', content);
       let params = {
         nickname: content.nickname,
         signature: content.signature,
