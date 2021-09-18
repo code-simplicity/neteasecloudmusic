@@ -61,7 +61,7 @@
       </div>
       <!-- 中间内容 -->
       <div class="content">
-        <div class="content-song-detail" v-loading="loading">
+        <div class="content-song-detail">
           <SongDetailsList
             :songListShow="songListShow"
             :songs="songs"
@@ -199,16 +199,16 @@ import MainComment from '@/components/MianComponent/MainComment'
 import CommentBox from '@/components/MianComponent/CommentBox'
 import {
   getPlayListDetail, getSongDetail, playlistSubscribe,
-  getSubscribersList, getRelatedList, getCommentList, getHotCommentList,
-  sendComment, commentLike
+  getSubscribersList, getRelatedList,
 } from '@/api/service/api'
+import {
+  sendComment, commentLike, getCommentList, getHotCommentList
+} from '@/api/service/comment'
 import { createSong } from '@/model/song'
 export default {
   name: 'PlayListDetail',
   data() {
     return {
-      // 加载提示
-      loading: false,
       // 歌单详情
       songDetail: {},
       // 歌曲列表
@@ -324,9 +324,14 @@ export default {
       } else {
         params.t = 1
       }
+      let message = liked ? '取消点赞' : '点赞成功'
       try {
         let res = await commentLike(params)
         if (res.code === this.constants.code_status) {
+          this.$message({
+            message: message,
+            type: 'success'
+          })
           // 获取歌单点赞的相关数据
           this.getCommentList(this.articleId)
         }
@@ -360,7 +365,6 @@ export default {
         this.$message.error('没有输入内容啊')
         return
       } else {
-        this.loading = true
         // 获取当前的时间
         let timestamp = new Date().getTime()
         let params = {
@@ -377,21 +381,23 @@ export default {
           params.t = 2
           params.commentId = this.currentCommentId
         }
+        let message = this.currentCommentId === '' ? '评论成功' : '回复成功'
         sendComment(params).then(res => {
           if (res.code === this.constants.code_status) {
-            this.$message.success('提交成功')
+            this.$message({
+              message: message,
+              type: 'success'
+            })
             this.cancelComment()
             // 刷新评论列表
             this.getCommentList(this.articleId)
             this.clearContent = true
-            this.loading = false
           }
         }).catch(error => {
           this.$message.error({
             title: error.data.dialog.title,
             message: error.data.dialog.subtitle
           })
-          this.loading = false
         })
       }
     },
@@ -460,7 +466,6 @@ export default {
         let res = await getSubscribersList(params)
         if (res.code === this.constants.code_status) {
           this.subscribers = res.subscribers
-          console.log('getSubscribersList(id)', res);
         }
       } catch (error) {
         console.log(error);
@@ -516,8 +521,6 @@ export default {
           // 获取歌单详情
           this.songDetail = res.playlist
           this.creator = res.playlist.creator
-          console.log('this.songDetail', this.songDetail)
-          console.log('this.creator', this.creator)
           // 封装歌曲id
           let trackIds = res.playlist.trackIds
           // 数量超过一千，进行分割
@@ -529,7 +532,6 @@ export default {
           }
           // 传参给该函数
           this.getSongDetail(sliceArr)
-          console.log('sliceArr', sliceArr);
         }
       } catch (error) {
         console.log(error);
@@ -538,7 +540,6 @@ export default {
 
     // 获取歌曲列表
     async getSongDetail(sliceArr) {
-      this.loading = true
       let before = sliceArr[0]
       let after = sliceArr[1]
       let timestamp = new Date().valueOf()
@@ -569,8 +570,6 @@ export default {
           let res = beforeRes.songs
           this.songs = this._normaLizeSongs(res)
         }
-        this.loading = false
-        console.log('this.songs', this.songs);
       } catch (error) {
         console.log(error);
       }
