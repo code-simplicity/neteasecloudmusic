@@ -144,7 +144,7 @@
                   </div>
                   <p class="ellipsis">{{ item.name }}</p>
                   <i
-                    class="iconfont icon-shouqi1"
+                    class="iconfont icon-m-clear"
                     @click="deleteSong(item, index)"
                   ></i>
                 </div>
@@ -183,7 +183,7 @@
             <div class="page-right">
               <h3 class="name flex-between">
                 {{ currentSong.name }}
-                <i @click="openLyric" class="iconfont icon-shouqi1"></i>
+                <i @click="openLyric" class="iconfont icon-shouqi"></i>
               </h3>
               <p>{{ currentSong.singer }} -- {{ currentSong.album }}</p>
               <div class="lyric-wrap">
@@ -757,8 +757,8 @@ export default {
           font-weight: bold;
           margin-bottom: 10px;
           color: @color-dark;
-          .icon-shouqi1 {
-            font-size: 1.6rem;
+          .icon-shouqi {
+            font-size: 1.4rem;
             color: @color-dark;
             &:hover {
               color: @color-theme;
@@ -768,10 +768,10 @@ export default {
         p {
           font-size: 1.2rem;
         }
-        .iconfont {
-          font-size: 1.4rem;
-          cursor: pointer;
-        }
+        // .iconfont {
+        //   font-size: 1.4rem;
+        //   cursor: pointer;
+        // }
         .lyric-wrap {
           width: 100%;
           height: 480px;
