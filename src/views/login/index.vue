@@ -304,7 +304,6 @@ export default {
             type: 'success'
           })
           setTimeout(() => {
-            this.loading = false
             this.$router.replace(
               {
                 name: 'home'
