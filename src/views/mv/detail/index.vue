@@ -139,7 +139,8 @@
 import Player from "xgplayer"
 import CommentBox from '@/components/MianComponent/CommentBox'
 import MainComment from '@/components/MianComponent/MainComment'
-import { resourceLike, sendComment, commentLike } from '@/api/service/api'
+import { resourceLike } from '@/api/service/api'
+import { sendComment, commentLike } from '@/api/service/comment'
 import { getMvUrl, getMvDetail, getMvDetailInfo, mvSub, getMvComment, simiNv } from '@/api/service/mv'
 export default {
   name: 'MVDetail',
@@ -189,9 +190,10 @@ export default {
   },
 
   watch: {
-    $route() {
-      let id = this.$route.query.id || this.videoId
+    $route(newVal) {
+      let id = newVal.query.id
       if (id) {
+        this.videoId = id
         this._initialize(id)
       }
     }
@@ -202,8 +204,8 @@ export default {
 
   mounted() {
     let id = this.$route.query.id
-    this.videoId = id
     if (id) {
+      this.videoId = id
       this._initialize(id)
     }
   },
@@ -299,7 +301,6 @@ export default {
         this.$message.error('没有输入内容呢！！！')
         return
       } else {
-        this.loading = true
         let timestamp = new Date().getTime()
         let params = {
           id: this.videoId,
@@ -315,18 +316,20 @@ export default {
           params.t = 2
           params.commentId = this.currentCommentId
         }
+        let message = this.currentCommentId === '' ? '评论成功' : '回复成功'
         sendComment(params).then(res => {
           if (res.code === this.constants.code_status) {
-            this.$message.success('提交成功')
+            this.$message({
+              message,
+              type: 'success'
+            })
             this.cancelComment()
             // 刷新评论
             this.getMvComment(this.videoId)
             this.clearContent = true
-            this.loading = false
           }
         }).catch(error => {
           this.$message.error(error)
-          this.loading = false
         })
       }
     },
@@ -355,9 +358,14 @@ export default {
       } else {
         params.t = 1
       }
+      let message = liked ? '取消点赞' : '点赞成功'
       try {
         let res = await commentLike(params)
         if (res.code === this.constants.code_status) {
+          this.$message({
+            message,
+            type: 'success'
+          })
           // 获取歌单点赞的相关数据
           this.getMvComment(this.videoId)
         }
