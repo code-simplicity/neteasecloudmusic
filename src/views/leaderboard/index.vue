@@ -1,5 +1,5 @@
 <template>
-  <div class="leader-board container" v-loading="loading">
+  <div class="leader-board container">
     <div class="module">
       <h3 class="title flex-row">
         <i class="iconfont icon-geshou"></i>
@@ -25,7 +25,6 @@ export default {
     return {
       // 排行榜列表
       songMusic: [],
-      loading: false
     }
   },
   components: {
@@ -48,12 +47,10 @@ export default {
   methods: {
     // 获取所有榜单内容摘要
     async getToplistDetail() {
-      this.loading = true
       try {
         let res = await getToplistDetail()
         if (res.code === this.constants.code_status) {
           this.songMusic = res.list
-          this.loading = false
         }
       } catch (error) {
         console.log(error)
