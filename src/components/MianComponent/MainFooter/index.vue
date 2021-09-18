@@ -1,7 +1,7 @@
 <template>
   <div class="main-footer">
     <div class="copyright">
-      <div class="container flex-column">
+      <div class="content flex-column">
         <div class="mian-footer-content">
           <span>Copyright © 2021-2022</span>
           <a href="https://www.bugdr.cn" target="_blank">个人网站</a>
@@ -37,16 +37,18 @@ export default {
 <style lang="less" scoped>
 .main-footer {
   align-items: center;
-  margin: 0 auto;
   width: 100%;
+  background: @header-background-color;
   .copyright {
     padding: 1.2rem 0;
-    .container {
+    text-align: center;
+    .content {
       padding: 0;
       color: @blue;
       font-size: 1.2rem;
       .mian-footer-content {
         margin: 0 auto;
+        width: 100%;
         a {
           color: @color-dark;
           margin-left: 5px;
