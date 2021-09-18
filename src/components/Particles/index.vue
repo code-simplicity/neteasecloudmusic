@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import particlesConfig from "../../assets/js/particlesjs-config.json";
+import particlesConfig from "@/assets/js/particlesjs-config.json";
 export default {
   name: 'Particles',
   data() {
