@@ -56,10 +56,7 @@
         </div>
       </div>
     </div>
-    <PopularPlayList
-      :songMusic="songMusic"
-      v-loading="loading"
-    ></PopularPlayList>
+    <PopularPlayList :songMusic="songMusic"></PopularPlayList>
     <!-- 分页 -->
     <div class="el-pagination">
       <el-pagination
@@ -101,8 +98,6 @@ export default {
       offset: 0,
       totle: 0,
       currentPage: 0,
-      // 正在加载
-      loading: false,
       // 分类列表
       typeList: [
         {
@@ -157,7 +152,6 @@ export default {
 
     // 获取歌单(网友精选)
     async getPlayList() {
-      this.loading = true
       let params = {
         order: this.sortType,
         cat: this.currentName,
@@ -169,11 +163,9 @@ export default {
         if (res.code === this.constants.code_status) {
           this.songMusic = res.playlists
           this.totle = res.total
-          this.loading = false
         }
       } catch (error) {
         console.log(error)
-        this.loading = false
       }
 
     },
