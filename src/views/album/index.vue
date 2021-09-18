@@ -124,7 +124,7 @@ import CommentBox from '@/components/MianComponent/CommentBox'
 import { getAlbumData, getArtistAlbum, getCommentAlbum } from '@/api/service/album'
 import {
   sendComment, commentLike
-} from '@/api/service/api'
+} from '@/api/service/comment'
 export default {
   name: 'Album',
   data() {
