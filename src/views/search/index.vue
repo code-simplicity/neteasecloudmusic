@@ -124,7 +124,6 @@
           :songListShow="songListShow"
           :songs="songs"
           :isPerson="isPerson"
-          v-loading="loading"
         ></SongDetailsList>
         <SongerItem v-if="searchType === 100" :songItem="singers"></SongerItem>
         <AlbumList v-if="searchType === 10" :albums="albums"></AlbumList>
@@ -174,7 +173,6 @@ export default {
       // 歌单
       playList: [],
       isPerson: true,
-      loading: false,
       // 搜索结果后缀
       result: '单曲',
       // 搜索结果
@@ -317,7 +315,6 @@ export default {
 
     // 获取歌曲列表
     async getSongDetail(list) {
-      this.loading = true
       let timestamp = new Date().valueOf()
       // 将歌曲以逗号隔开
       let ids = list.join(',')
@@ -326,7 +323,6 @@ export default {
         let res = beforeRes.songs
         this.songs = this._normalizeSongs(res)
         console.log('this.songs', this.songs)
-        this.loading = false
       } catch (error) {
         console.log(error)
       }
