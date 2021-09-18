@@ -29,7 +29,7 @@
             @click="likeResource"
           >
             <i class="iconfont icon-xihuan icon-like"></i>
-            {{ videoDetail.praisedCount }}
+            {{ videoDetailInfo.likeCount }}
           </div>
           <div
             class="box"
@@ -41,7 +41,7 @@
           </div>
           <div class="box">
             <i class="iconfont icon-fenxiang icon-share"></i>
-            {{ videoDetail.shareCount }}
+            {{ videoDetailInfo.shareCount }}
           </div>
         </div>
       </div>
@@ -156,7 +156,10 @@
 import Player from "xgplayer"
 import CommentBox from '@/components/MianComponent/CommentBox'
 import MainComment from '@/components/MianComponent/MainComment'
-import { resourceLike, sendComment, commentLike } from '@/api/service/api'
+import { resourceLike } from '@/api/service/api'
+import {
+  sendComment, commentLike
+} from '@/api/service/comment'
 import {
   getVideoDetail, getVideoUrl, getRelatedAllVideo,
   getCommentVideo, getVideoSub, getVideoDetailInfo
@@ -210,23 +213,25 @@ export default {
   },
 
   created() {
-    let id = this.$route.query.id
-    this.videoId = id
-    if (id) {
-      this._initialize(id)
-    }
+
   },
 
   watch: {
-    $route() {
-      let id = this.$route.query.id || this.videoId
+    $route(newVal, oldVal) {
+      console.log(newVal, oldVal)
+      let id = newVal.query.id
       if (id) {
+        this.videoId = id
         this._initialize(id)
       }
     }
   },
   mounted() {
-
+    let id = this.$route.query.id
+    if (id) {
+      this.videoId = id
+      this._initialize(id)
+    }
   },
   methods: {
 
@@ -328,7 +333,6 @@ export default {
         this.$message.error('没有输入内容呢！！！')
         return
       } else {
-        this.loading = true
         let timestamp = new Date().getTime()
         let params = {
           id: this.videoId,
@@ -344,18 +348,20 @@ export default {
           params.t = 2
           params.commentId = this.currentCommentId
         }
+        let message = this.currentCommentId === '' ? '评论成功' : '回复成功'
         sendComment(params).then(res => {
           if (res.code === this.constants.code_status) {
-            this.$message.success('提交成功')
+            this.$message({
+              message: message,
+              type: 'success'
+            })
             this.cancelComment()
             // 刷新评论
             this.getCommentVideo(this.videoId)
             this.clearContent = true
-            this.loading = false
           }
         }).catch(error => {
           this.$message.error(error)
-          this.loading = false
         })
       }
     },
@@ -384,10 +390,15 @@ export default {
       } else {
         params.t = 1
       }
+      let message = liked ? '取消点赞' : '点赞成功'
       try {
         let res = await commentLike(params)
         if (res.code === this.constants.code_status) {
-          // 获取歌单点赞的相关数据
+          this.$message({
+            message: message,
+            type: 'success'
+          })
+          // 获取视频点赞的相关数据
           this.getCommentVideo(this.videoId)
         }
       } catch (error) {
@@ -423,7 +434,7 @@ export default {
       }
     },
 
-    // 收藏mv/取消收藏
+    // 收藏视频/取消收藏
     async getVideoSub() {
       this.isVideoSubLike = true
       let t = 1
@@ -432,38 +443,40 @@ export default {
       } else {
         t = 2
       }
+      let message = this.isVideoSubLike ? '收藏成功' : '取消收藏成功'
       try {
         let res = await getVideoSub(this.videoId, t)
         if (res.code === this.constants.code_status) {
-          this.$message.success('收藏成功')
-          this.getVideoDetailInfo(this.videoId)
-          this.isVideoSubLike = false
-        } else {
-          this.$message.success('取消收藏成功')
-          this.isVideoSubLike = true
+          this.$message({
+            message: message,
+            type: 'success'
+          })
+          this.getVideoDetail(this.videoId)
         }
       } catch (error) {
         console.log(error)
       }
     },
 
-    // mv资源点赞
+    // 视频资源点赞
     async likeResource() {
       let type = 5
-      let t = 1
+      let t = null
       if (this.videoDetailInfo.isLike) {
         t = 2
       } else {
         t = 1
       }
       let id = this.videoId
+      let message = this.videoDetailInfo.isLike ? '取消点赞' : '点赞成功'
       try {
         let res = await resourceLike(type, t, id)
         if (res.code === this.constants.code_status) {
-          this.$message.success('点赞成功')
+          this.$message({
+            message: message,
+            type: 'success'
+          })
           this.getVideoDetailInfo(this.videoId)
-        } else {
-          this.$message.success('取消点赞')
         }
       } catch (error) {
         console.log(error)
@@ -500,7 +513,6 @@ export default {
           })
           this.videoDetail = res.data
           this.creator = res.data.creator
-          this.getVideoUrl(id)
         }
       } catch (error) {
         console.log(error)
@@ -523,18 +535,14 @@ export default {
 
     // 初始化函数
     _initialize(id) {
+      this.getVideoUrl(id)
       this.getVideoDetail(id)
-      this.getVideoDetailInfo(id)
       this.getCommentVideo(id)
       this.getRelatedAllVideo(id)
+      this.getVideoDetailInfo(id)
     }
   },
 
-  // 销毁vue实例
-  destroyed() {
-    this._initialize()
-    this.getVideoUrl()
-  }
 }
 </script>
 
