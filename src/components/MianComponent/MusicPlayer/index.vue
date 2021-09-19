@@ -1013,6 +1013,7 @@ export default {
         }
         .ant-slider {
           margin: 12px 5px 0 5px;
+          z-index: 2002;
         }
         .time {
           margin-left: 10px;
