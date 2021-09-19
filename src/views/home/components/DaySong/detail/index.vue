@@ -1,6 +1,6 @@
 <template>
   <div class="day-song-wrap container">
-    <div class="title gradient">每日歌曲推荐</div>
+    <div class="title">每日歌曲推荐</div>
     <div class="subtitle">根据你的音乐口味生成 · 每天6:00更新</div>
     <SongDetailsList
       v-if="songs.length > 0"
@@ -88,8 +88,7 @@ export default {
     letter-spacing: 4px;
     animation-duration: 0.8s;
     animation-name: letterSpacing4;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: @color-theme;
   }
 
   .subtitle {
@@ -101,9 +100,5 @@ export default {
     text-transform: uppercase;
     color: @color-dark;
   }
-}
-
-.gradient {
-  background: linear-gradient(to right, #d492b0, #fa2a00);
 }
 </style>
