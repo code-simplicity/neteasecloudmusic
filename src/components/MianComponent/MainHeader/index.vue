@@ -329,6 +329,7 @@ export default {
         font-size: 1rem;
         position: relative;
         transition: all 0.4s;
+        color: @color-font;
         &.router-link-active {
           color: @color-dark;
           &::after {
