@@ -2,10 +2,12 @@
 import axios from 'axios'
 import config from '../config'
 import qs from 'qs'
+import '@/utils/nprogress'
 import {
   Message
 } from 'element-ui'
 import router from '@/router'
+import NProgress from '@/utils/nprogress'
 const {
   // eslint-disable-next-line camelcase
   api_base_url
@@ -39,6 +41,8 @@ instance.defaults.validateStatus = function () {
 // 添加请求拦截器
 instance.interceptors.request.use(
   config => {
+    // 进度条开始
+    NProgress.start()
     return config
   },
   error => {
@@ -53,6 +57,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use((response) => {
   let data = response.data
   let status = response.status
+  // 进度条结束
+  NProgress.done()
   if (status === 200) {
     return Promise.resolve(data)
   } else if (status === 301) {
