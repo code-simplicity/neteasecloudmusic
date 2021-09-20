@@ -22,7 +22,8 @@ import VueParticles from 'vue-particles'
 // 引入vue-video-player播放器插件
 import VueVideoPlayer from 'vue-video-player'
 
-
+// 引入浏览器加载进度条
+// import NProgress from '@/utils/nprogress'
 
 // 引入常用的常量工具、
 import constants from './utils/constant'
@@ -64,7 +65,6 @@ Vue.use(particlesJs)
 
 Vue.use(VueParticles)
 Vue.use(VueVideoPlayer)
-
 
 // 配置全局事件总线，这样在任何地方都可以使用了，不需要单独引入
 // Vue.prototype.$api = getApi
