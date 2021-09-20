@@ -65,7 +65,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters('user', ['userInfo'])
   },
 
   watch: {
@@ -165,7 +165,7 @@ export default {
     _initIaLize(id) {
       this.getUserInfo(id)
     },
-    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
+    ...mapMutations('user', { setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
 
   }
 }

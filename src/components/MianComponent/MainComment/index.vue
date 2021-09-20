@@ -94,7 +94,7 @@ export default {
     CommentBox,
   },
   computed: {
-    ...mapGetters(['userInfo', 'loginStatu'])
+    ...mapGetters('user', ['userInfo', 'loginStatu'])
   },
   mounted() {
 

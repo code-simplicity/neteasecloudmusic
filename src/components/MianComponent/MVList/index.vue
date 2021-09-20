@@ -101,7 +101,7 @@ export default {
       window.open(url, '_blank')
     },
 
-    ...mapActions(['movePlay'])
+    ...mapActions('player', ['movePlay'])
   }
 }
 </script>

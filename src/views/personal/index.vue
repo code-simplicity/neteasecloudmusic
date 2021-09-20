@@ -165,7 +165,7 @@ export default {
     PopularPlayList
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters('user', ['userInfo']),
     age() {
       return this.utils.getAstro(this.userProfile.birthday)
     },

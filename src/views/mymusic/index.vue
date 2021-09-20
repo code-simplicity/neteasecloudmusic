@@ -57,7 +57,7 @@ export default {
     PopularPlayList
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters('user', ['userInfo'])
   },
 
   mounted() {

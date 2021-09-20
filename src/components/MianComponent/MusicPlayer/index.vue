@@ -34,7 +34,6 @@
           <div class="music-player-center">
             <div class="cover">
               <el-image
-                style="width: 60px"
                 :src="currentSong.image ? currentSong.image : defaultCover"
                 fit="cover"
                 @click="toUser(currentSong)"
@@ -42,11 +41,11 @@
             </div>
             <div class="info">
               {{ currentLyricTxt }}
-              <div class="top flex-between">
+              <div class="top flex-row">
                 <h2 class="name">
                   {{ currentSong.name ? currentSong.name : '未选择播放歌曲' }}
-                  <span>{{ currentSong.singer }}</span>
                 </h2>
+                <span @click="toUser">{{ currentSong.singer }}</span>
               </div>
               <div class="progress-wrap flex-row">
                 <a-slider
@@ -251,7 +250,16 @@ export default {
   },
   // 计算属性
   computed: {
-    ...mapGetters([
+    // ...mapGetters([
+    //   'playList',
+    //   'playing',
+    //   'currentSong',
+    //   'currentIndex',
+    //   'mode',
+    //   'sequenceList',
+    //   'historyList'
+    // ]),
+    ...mapGetters('player', [
       'playList',
       'playing',
       'currentSong',
@@ -615,19 +623,20 @@ export default {
       }
     },
 
-    ...mapMutations({
+    ...mapMutations('player', {
       setPlayingState: 'PLAYING_STATUS',
       setCurrentIndex: 'CURRENT_INDEX',
       setPlayMode: 'PLAY_MODE',
       setPlayList: 'PLAY_LIST'
     }),
-    ...mapActions([
-      'selectPlay',
-      'pausePlay',
-      'saveHistoryList',
-      'deleteHistoryList',
-      'clearHistoryList'
-    ])
+    ...mapActions('player',
+      {
+        selectPlay: 'selectPlay',
+        pausePlay: 'pausePlay',
+        saveHistoryList: 'saveHistoryList',
+        deleteHistoryList: 'deleteHistoryList',
+        clearHistoryList: 'clearHistoryList'
+      })
   }
 }
 </script>
@@ -971,14 +980,14 @@ export default {
     align-items: center;
     flex: 1;
     .cover {
-      width: 50px;
+      width: 60px;
       height: 50px;
       margin-right: 10px;
       border-radius: 4px;
       cursor: pointer;
-      el-image {
-        width: 60px;
-        height: 40px;
+      .el-image {
+        width: 100%;
+        height: 100%;
       }
     }
     .info {
@@ -997,11 +1006,20 @@ export default {
           font-weight: bold;
           margin-right: 10px;
           color: @color-font-size-White;
-          span {
-            font-size: 1rem;
-            color: @color-font-size-White;
-            font-weight: 400;
-            margin-left: 16px;
+          cursor: pointer;
+          &:hover {
+            color: @color-theme;
+          }
+        }
+        span {
+          margin-top: 6px;
+          font-size: 1rem;
+          color: @color-font-size-White;
+          font-weight: 400;
+          margin-left: 16px;
+          cursor: pointer;
+          &:hover {
+            color: @color-theme;
           }
         }
       }

@@ -70,7 +70,7 @@ export default {
   },
   // 计算属性获取vuex状态
   computed: {
-    ...mapGetters(['currentIndex', 'currentSong', 'playing'])
+    ...mapGetters('player', ['currentIndex', 'currentSong', 'playing'])
   },
   mounted() {
 
@@ -92,7 +92,7 @@ export default {
      *  'pausePlay', ==>暂停
      *  'playAll'==>播放全部
      */
-    ...mapActions(['selectPlay', 'pausePlay', 'playAll'])
+    ...mapActions('player', ['selectPlay', 'pausePlay', 'playAll'])
   }
 }
 </script>

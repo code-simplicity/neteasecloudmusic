@@ -115,7 +115,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo', 'loginStatus']),
+    ...mapGetters('user', ['userInfo', 'loginStatus']),
   },
 
   watch: {

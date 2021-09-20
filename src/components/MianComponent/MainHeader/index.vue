@@ -155,7 +155,8 @@ export default {
   },
   // 计算属性
   computed: {
-    ...mapGetters(['loginStatus', 'userInfo', 'searchHistory'])
+    ...mapGetters('user', { loginStatus: 'loginStatus', userInfo: 'userInfo' }),
+    ...mapGetters('search', { searchHistory: 'searchHistory' })
   },
 
   mounted() {
@@ -279,9 +280,9 @@ export default {
       })
     },
     // mapActions,响应状态的改变
-    ...mapActions(['saveSearchHistory', 'deleteSearchHistory', 'clearSearchHistory']),
+    ...mapActions('search', ['saveSearchHistory', 'deleteSearchHistory', 'clearSearchHistory']),
     // 提交状态，
-    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
+    ...mapMutations('user', { setLoginStatus: 'loginStatus', setUserInfo: 'userInfo' }),
   }
 }
 </script>

@@ -103,7 +103,7 @@ export default {
 
   computed: {
     // 获取登录状态和用户信息
-    ...mapGetters(['userInfo', 'loginStatus']),
+    ...mapGetters('user', ['userInfo', 'loginStatus']),
   },
 
   watch: {

@@ -314,7 +314,7 @@ export default {
     },
 
     // 提交状态，
-    ...mapMutations({ setLoginStatus: 'LOGIN_STATUS', setUserInfo: 'USER_INFO' }),
+    ...mapMutations('user', { setLoginStatus: 'loginStatus', setUserInfo: 'userInfo' }),
   }
 }
 </script>

@@ -151,7 +151,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentIndex', 'playing', 'currentSong']),
+    ...mapGetters('player', ['currentIndex', 'playing', 'currentSong']),
     // 计算歌曲长度，切割进行分页
     songer() {
       return this.songs.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
@@ -211,7 +211,7 @@ export default {
       this.pausePlay()
     },
 
-    ...mapActions([
+    ...mapActions('player', [
       'selectPlay',
       'playAll',
       'pausePlay'

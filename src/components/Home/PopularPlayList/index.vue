@@ -74,7 +74,7 @@ export default {
     numClass() {
       return this.num == 2 ? 'two' : 'eight'
     },
-    ...mapGetters(['currentIndex', 'playing', 'currentSong']),
+    ...mapGetters('player', ['currentIndex', 'playing', 'currentSong']),
   },
   mounted() {
 
@@ -98,7 +98,7 @@ export default {
       })
     },
 
-    ...mapActions(['playAll'])
+    ...mapActions('player', ['playAll'])
   }
 }
 </script>

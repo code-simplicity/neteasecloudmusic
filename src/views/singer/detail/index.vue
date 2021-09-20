@@ -177,7 +177,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['singer']),
+    ...mapGetters('singer', ['singer']),
     // 歌手信息与用户信息连接起立
     userOfSonger() {
       // 拷贝对象的值，返回一个新的值

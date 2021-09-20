@@ -39,7 +39,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['currentIndex', 'currentSong', 'playing']),
+    ...mapGetters('player', ['currentIndex', 'currentSong', 'playing']),
     coverUrl() {
       return `${sample(defaultCovers)
         }?param=1024y1024`;
@@ -86,7 +86,7 @@ export default {
       return res
     },
 
-    ...mapActions(['selectPlay', 'playAll'])
+    ...mapActions('player', ['selectPlay', 'playAll'])
 
   }
 }
