@@ -10,28 +10,38 @@
             <span class="name">{{ albumDetail.name }}</span>
           </div>
           <div class="user flex-row">
-            <div class="avatar">
+            <div class="avatar" @click="toUser(albumCreator.id)">
               <img :src="albumCreator.picUrl" :alt="albumCreator.picUrl" />
             </div>
-            <p class="nikename">{{ albumCreator.name }}</p>
+            <p class="nikename" @click="toUser(albumCreator.id)">
+              {{ albumCreator.name }}
+            </p>
             <p class="create-time">
               {{ utils.dateFormat(albumDetail.publishTime, 'YYYY-MM-DD') }}创建
             </p>
           </div>
           <div class="tag flex-row">发行公司：{{ albumDetail.company }}</div>
           <div class="desc">
+            <p>介绍:</p>
             <p class="ellipsis-two" v-html="albumDetail.description"></p>
             <span
               class="flex-row"
               v-if="txtLength(albumDetail.description) > 50"
+              @click="openDes(albumDetail.name, albumDetail.description)"
             >
-              全部<i class="iconfont"></i>
+              展示<i class="iconfont icon-zhankai"></i>
             </span>
           </div>
         </div>
       </div>
       <div class="content">
-        <SongDetailsList :songs="songs"></SongDetailsList>
+        <SongDetailsList
+          :songListShow="songListShow"
+          :songs="songs"
+          :isPerson="ordered ? true : false"
+          :subscribed="albumDetail.subscribed"
+          @playlistSubscribe="getAlbumSub"
+        ></SongDetailsList>
         <div class="commen-header">
           <span class="comment-text">评论</span>
           <span>{{ totle }}条评论</span>
@@ -75,16 +85,22 @@
         </div>
         <ul>
           <li v-for="item of hotAlbums" :key="item.id">
-            <div class="avatar">
-              <img :src="item.picUrl" :alt="item.name" :title="item.name" />
+            <div class="avatar" @click="toAlbumInfo(item.id)">
+              <el-image
+                :src="item.picUrl"
+                :alt="item.name"
+                :title="item.name"
+                fit="cover"
+                lazy
+              ></el-image>
             </div>
             <div class="info">
               <h2 class="ellipsis" :title="item.name">
                 {{ item.name }}
-                <span
-                  >by. <small> {{ item.artist.name }}</small></span
-                >
               </h2>
+              <span
+                >by. <small> {{ item.artist.name }}</small></span
+              >
             </div>
           </li>
         </ul>
@@ -95,7 +111,7 @@
         </div>
         <ul>
           <li v-for="item of albumComments" :key="item.id">
-            <div class="avatar">
+            <div class="avatar" @click="toPersonal(item.user.userId)">
               <img
                 :src="item.user.avatarUrl"
                 :alt="item.user.nickname"
@@ -103,7 +119,7 @@
               />
             </div>
             <div class="info">
-              <h2>
+              <h2 @click="toPersonal(item.user.userId)">
                 {{ item.user.nickname }}
                 <small> · {{ utils.formatMsgTime(item.time) }}</small>
               </h2>
@@ -121,7 +137,7 @@ import { createSong } from '@/model/song'
 import SongDetailsList from '@/components/MianComponent/SongDetailsList'
 import MainComment from '@/components/MianComponent/MainComment'
 import CommentBox from '@/components/MianComponent/CommentBox'
-import { getAlbumData, getArtistAlbum, getCommentAlbum } from '@/api/service/album'
+import { getAlbumData, getArtistAlbum, getCommentAlbum, getAlbumSub } from '@/api/service/album'
 import {
   sendComment, commentLike
 } from '@/api/service/comment'
@@ -155,6 +171,10 @@ export default {
       commentList: [],
       // 专辑热门评论列表
       commentHotList: [],
+      // 关闭组件的底部标题
+      songListShow: true,
+      // 是否是我喜欢的歌单
+      ordered: false,
     }
   },
   components: {
@@ -189,6 +209,68 @@ export default {
     }
   },
   methods: {
+    // 去个人中心
+    toPersonal(id) {
+      this.$router.push({
+        name: 'personal',
+        query: {
+          id
+        }
+      })
+    },
+
+    // 热门专辑
+    toAlbumInfo(id) {
+      this.$router.push({
+        name: 'album',
+        query: {
+          id
+        }
+      })
+    },
+
+    // 去歌手信息列表
+    toUser(id) {
+      this.$router.push({
+        name: 'singerdetail',
+        query: {
+          id
+        }
+      })
+    },
+
+    // 收藏/取消收藏专辑
+    async getAlbumSub() {
+      let t = this.albumDetail.subscribed ? 2 : 1
+      let message = this.albumDetail.subscribed ? '已取消收藏' : '收藏成功'
+      try {
+        let res = await getAlbumSub(this.albumId, t)
+        if (res.code === this.constants.code_status) {
+          this.$message({
+            message,
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.getAlbumData(this.albumId)
+          }, 500)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // 展开介绍
+    openDes(title, content) {
+      this.$confirm(content, title, {
+        closeOnClickModal: true,
+        customClass: 'descBox',
+        showConfirmButton: false,
+        dangerouslyUseHTMLString: true,
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
     // 给评论点赞
     async commentLike(id, liked) {
       let timestamp = new Date().getTime()
@@ -204,11 +286,16 @@ export default {
       } else {
         params.t = 1
       }
+      let message = liked ? '取消点赞' : '点赞成功'
       try {
         let res = await commentLike(params)
         if (res.code === this.constants.code_status) {
           // 获取歌单点赞的相关数据
           this.getCommentAlbum(this.albumId)
+          this.$message({
+            message,
+            type: 'success'
+          })
         }
       } catch (error) {
         console.log(error);
@@ -246,9 +333,13 @@ export default {
           params.t = 2
           params.commentId = this.currentCommentId
         }
+        let message = this.currentCommentId === '' ? '评论成功' : '回复成功'
         sendComment(params).then(res => {
           if (res.code === this.constants.code_status) {
-            this.$message.success('提交成功')
+            this.$message({
+              message,
+              type: 'success'
+            })
             this.cancelComment()
             // 刷新评论列表
             this.getCommentAlbum(this.albumId)
@@ -368,11 +459,12 @@ export default {
         position: relative;
         margin-right: 30px;
         flex-shrink: 0;
-        .img {
+        img {
           width: 100%;
           height: 100%;
           border-radius: 8px;
           position: relative;
+          cursor: pointer;
         }
         &::before {
           content: '';
@@ -417,12 +509,17 @@ export default {
               height: 100%;
               position: relative;
               border-radius: 50%;
+              cursor: pointer;
             }
           }
           .nikename {
             font-size: 1rem;
             margin-right: 30px;
-            color: @color-dark;
+            color: @blue;
+            cursor: pointer;
+            &:hover {
+              color: @color-dark;
+            }
           }
           .create-time {
             font-size: 1rem;
@@ -457,13 +554,14 @@ export default {
           p {
             line-height: 1.6;
             font-weight: 400;
-            flex: 1;
             font-size: 1rem;
           }
           span {
             flex-shrink: 0;
-            color: @color-dark;
+            color: @color-theme;
             cursor: pointer;
+            margin-left: 10px;
+            width: 60px;
           }
         }
       }
@@ -504,19 +602,19 @@ export default {
           margin-bottom: 16px;
           cursor: pointer;
           .avatar {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 8px;
             margin-right: 15px;
             flex-shrink: 0;
-            img {
+            .el-image {
               width: 100%;
               border-radius: 8px;
             }
           }
           .info {
             width: calc(100% - 60px);
-            height: 50px;
+            height: 90px;
             flex: 1;
             display: flex;
             justify-content: center;
@@ -524,10 +622,11 @@ export default {
             h2 {
               width: 100%;
               font-size: 1rem;
-              margin-bottom: 10px;
+              margin-bottom: 0px;
               color: @color-dark;
             }
             span {
+              padding-top: 10px;
               font-size: 0.9rem;
               color: @color-dark;
             }
@@ -555,6 +654,7 @@ export default {
             border-radius: 50%;
             margin-right: 12px;
             flex-shrink: 0;
+            cursor: pointer;
             img {
               width: 100%;
               border-radius: 50%;
@@ -567,10 +667,14 @@ export default {
               margin-right: 5px;
               margin-bottom: 10px;
               color: @color-dark;
+              cursor: pointer;
               small {
                 font-size: 12px;
                 color: #a5a5c1;
                 font-weight: 200;
+              }
+              &:hover {
+                color: @color-theme;
               }
             }
             p {
