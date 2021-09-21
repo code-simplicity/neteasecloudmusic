@@ -142,3 +142,11 @@ export const getUserAccount = () => api.get(`/user/account`, {})
  * @returns 
  */
 export const getUserFollows = uid => api.get(`/user/follows?uid=${uid}`, {})
+
+/**
+ * 获取用户等级信息
+ * 说明 : 登录后调用此接口 , 可以获取用户等级信息,包含当前登录天数,
+ * 听歌次数,下一等级需要的登录天数和听歌次数,当前等级进度,对应 https://music.163.com/#/user/level
+ * @returns 
+ */
+export const userLevel = () => api.get(`/user/level`, {})
