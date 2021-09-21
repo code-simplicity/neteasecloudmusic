@@ -53,32 +53,6 @@ export const mainRouter = [{
       component: resolve => {
         require(['@/views/home/index'], resolve)
       },
-      children: [
-        // {
-        //   path: 'recommend',
-        //   name: 'recommend',
-        //   meta: {
-        //     title: '推荐',
-        //     keepAlive: true
-        //   },
-        //   // component: LayoutChild
-        //   component: resolve => {
-        //     require(['@/views/home/recommend/index'], resolve)
-        //   },
-        // },
-
-        // {
-        //   path: 'leaderboard',
-        //   name: 'leaderBoard',
-        //   meta: {
-        //     title: '详情',
-        //     keepAlive: true
-        //   },
-        //   component: resolve => {
-        //     require(['@/views/leaderboard/index'], resolve)
-        //   },
-        // },
-      ]
     },
     {
       path: 'playlistdetail',
@@ -102,17 +76,6 @@ export const mainRouter = [{
         require(['@/views/mymusic/index'], resolve)
       }
     },
-    // {
-    //   path: 'recommend',
-    //   name: 'recommend',
-    //   meta: {
-    //     title: '推荐',
-    //     keepAlive: true
-    //   },
-    //   component: resolve => {
-    //     require(['@/views/recommend/index'], resolve)
-    //   }
-    // },
     {
       path: 'leaderboard',
       name: 'leaderboard',
@@ -254,6 +217,17 @@ export const mainRouter = [{
       },
       component: resolve => {
         require(['@/views/video/detail/index'], resolve)
+      }
+    },
+    {
+      path: 'userlevel',
+      name: 'userlevel',
+      meta: {
+        title: '我的等级',
+        keepAlive: true
+      },
+      component: resolve => {
+        require(['@/views/userlevel/index'], resolve)
       }
     },
 
