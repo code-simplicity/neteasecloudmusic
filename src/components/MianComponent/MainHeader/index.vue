@@ -54,7 +54,7 @@
               <el-dropdown-item icon="el-icon-setting" command="personalSetting"
                 >个人设置</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-medal" command="myRank"
+              <el-dropdown-item icon="el-icon-medal" command="userlevel"
                 >我的等级</el-dropdown-item
               >
               <el-dropdown-item
@@ -238,19 +238,22 @@ export default {
         }
         case 'myMessage': {
           this.$router.push({
-            name: 'myMessage'
+            name: 'userupdata'
           })
           break
         }
         case 'personalSetting': {
           this.$router.push({
-            name: 'personalSetting'
+            name: 'userupdata',
+            query: {
+              id: this.userInfo.userId
+            }
           })
           break
         }
-        case 'myRank': {
+        case 'userlevel': {
           this.$router.push({
-            name: 'myRank'
+            name: 'userlevel'
           })
           break
         }
