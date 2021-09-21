@@ -8563,6 +8563,11 @@
   dependencies:
     "has-flag" "^4.0.0"
 
+"svg-progress-bar@^0.1.17":
+  "integrity" "sha1-L7hGoDITt07ux/V0WK0+gBfEWgc="
+  "resolved" "https://registry.nlark.com/svg-progress-bar/download/svg-progress-bar-0.1.17.tgz"
+  "version" "0.1.17"
+
 "svg-tags@^1.0.0":
   "integrity" "sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q="
   "resolved" "https://registry.nlark.com/svg-tags/download/svg-tags-1.0.0.tgz"
