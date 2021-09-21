@@ -32,7 +32,7 @@
           ></i>
           <i class="iconfont icon-zanting2 pause-btn" @click="pauseSong"></i>
         </div>
-        <div class="r-info">
+        <div class="r-info" @click="toAlbum(item.albumId)">
           <div class="r-name">
             <span>{{ item.name }}</span>
           </div>
@@ -76,6 +76,15 @@ export default {
 
   },
   methods: {
+    // 到专辑列表
+    toAlbum(albumId) {
+      this.$router.push({
+        name: 'album',
+        query: {
+          id: albumId
+        }
+      })
+    },
     // 播放
     playSong(item, index) {
       this.selectPlay({
@@ -148,16 +157,19 @@ export default {
           }
         }
         .play-btn {
-          color: @color-theme;
-          font-size: 1.6rem;
+          color: @color-dark;
+          font-size: 2rem;
           display: none;
           text-align: left;
           cursor: pointer;
           position: relative;
+          &:hover {
+            color: rgb(180, 182, 179);
+          }
         }
         .pause-btn {
           color: @color-theme;
-          font-size: 1.6rem;
+          font-size: 2rem;
           display: none;
           text-align: left;
           cursor: pointer;
@@ -166,6 +178,7 @@ export default {
       }
       .r-info {
         flex: 1;
+        cursor: pointer;
         .r-name {
           font-size: 1rem;
           font-weight: 600;
