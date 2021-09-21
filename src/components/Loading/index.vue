@@ -37,7 +37,7 @@ export default {
   span {
     margin-top: -40px;
     font-size: 1.1rem;
-    color: #000;
+    color: @color-dark;
   }
   .loading-box {
     width: 40px;
