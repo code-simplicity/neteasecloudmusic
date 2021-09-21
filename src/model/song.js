@@ -13,6 +13,7 @@ export default class Song {
         url,==>播放地址
         playCount,==>播放次数
         score,==>评分
+        albumId,==>专辑id
      * @param {*} param0 
      */
     constructor({
@@ -24,7 +25,8 @@ export default class Song {
         image,
         url,
         playCount,
-        score
+        score,
+        albumId
     }) {
         this.id = id
         this.name = name
@@ -35,6 +37,7 @@ export default class Song {
         this.url = url
         this.playCount = playCount
         this.score = score
+        this.albumId = albumId
     }
 }
 
@@ -48,11 +51,11 @@ export function createSong(musicData) {
         duration: utils.formatSecond(musicData.dt || musicData.duration),
         album: musicData.al ? musicData.al.name : musicData.album.name,
         image: musicData.al ?
-            musicData.al.picUrl :
-            musicData.album.artist.img1v1Url,
+            musicData.al.picUrl : musicData.album.artist.img1v1Url,
         url: `https://music.163.com/song/media/outer/url?id=${musicData.id}.mp3`,
         playCount: musicData.playCount || '',
-        score: musicData.score || ''
+        score: musicData.score || '',
+        albumId: musicData.al.id
     })
 }
 
