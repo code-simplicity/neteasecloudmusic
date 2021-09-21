@@ -64,6 +64,7 @@ export default {
         let res = await getSongDetail(idsList, time)
         // 处理歌曲
         this.PopularList = this.formatSongs(res.songs)
+        console.log(res.songs)
       } catch (error) {
         console.log(error)
       }
