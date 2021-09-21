@@ -33,3 +33,12 @@ export const getAlbumData = id => api.get(`/album?id=${id}`, {})
 export const getCommentAlbum = params => api.get(`/comment/album`, {
     params
 })
+
+/**
+ * 收藏/取消收藏专辑
+ * 说明 : 调用此接口,可收藏/取消收藏专辑
+ * @param {*} id 专辑 id
+ * @param {*} t 1 为收藏,其他为取消收藏
+ * @returns 
+ */
+export const getAlbumSub = (id, t) => api.get(`/album/sub?id=${id}&t=${t}`, {})
