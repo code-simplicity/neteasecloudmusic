@@ -93,7 +93,7 @@ export default {
       // 最热
       sortType: 'hot',
       // 返回的数据
-      limit: 42,
+      limit: 45,
       // 偏移
       offset: 0,
       totle: 0,
